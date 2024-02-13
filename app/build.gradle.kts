@@ -22,12 +22,16 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            isDebuggable = true
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        }
+
+        release {
+            isDebuggable = false
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+//            signingConfig = signingConfigs.getByName(AppConfigs.name)
         }
     }
     compileOptions {
@@ -35,10 +39,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget =  JavaVersion.VERSION_1_8.toString()
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.9"
@@ -51,6 +56,22 @@ android {
 }
 
 dependencies {
+//    timber
+    val timberVersion = "5.0.1"
+    implementation("com.jakewharton.timber:timber:$timberVersion")
+
+//    lottie
+    implementation("com.airbnb.android:lottie-compose:6.1.0")
+
+//    storyly
+    implementation("com.appsamurai.storyly:storyly:2.13.0")
+
+////    network
+//    val chuckerVersion = "4.0.0"
+//    debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
+//    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
+
+
 //    koin
     val koinVersion = "3.5.3"
     implementation("io.insert-koin:koin-android:$koinVersion")

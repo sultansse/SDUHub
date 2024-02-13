@@ -1,11 +1,12 @@
 package com.softwareit.sduhub.application
 
 import android.app.Application
+import com.softwareit.sduhub.BuildConfig
 import com.softwareit.sduhub.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-
+import timber.log.Timber
 
 class App: Application() {
 
@@ -16,7 +17,9 @@ class App: Application() {
     }
 
     private fun initTimber() {
-//        Timber.i("Timber logging is ready");
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 
     private fun initKoin() {
