@@ -51,11 +51,16 @@ android {
 }
 
 dependencies {
+//    koin
+    val koinVersion = "3.5.3"
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
 
 //    navigation
-    implementation("io.github.raamcosta.compose-destinations:animations-core:1.9.63")
-    implementation("io.github.raamcosta.compose-destinations:core:1.9.63")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.63")
+    val navVersion = "1.9.63"
+    implementation("io.github.raamcosta.compose-destinations:animations-core:$navVersion")
+    implementation("io.github.raamcosta.compose-destinations:core:$navVersion")
+    ksp("io.github.raamcosta.compose-destinations:ksp:$navVersion")
 
 //    core
     implementation("androidx.core:core-ktx:1.12.0")
@@ -66,6 +71,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+
+//    test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
