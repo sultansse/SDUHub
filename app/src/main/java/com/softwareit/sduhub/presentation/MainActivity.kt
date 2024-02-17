@@ -1,31 +1,39 @@
 package com.softwareit.sduhub.presentation
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.databinding.ActivityMainBinding
+import com.softwareit.sduhub.screens_navigation.NavigationScreens
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
-
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+    private val router: Router by inject()
+    private val navHolder: NavigatorHolder by inject()
+    private val navigator = AppNavigator(this, R.id.nav_host_fragment)
+
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        navHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        navHolder.removeNavigator()
+        super.onPause()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setupBottomNavigationView()
-        setupBottomNavViewVisibility()
+        router.navigateTo(NavigationScreens.home())
         setupBottomNavViewClicks()
     }
 
@@ -33,28 +41,22 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home_screen -> {
-                    navController.navigate(R.id.homeFragment)
+                    router.navigateTo(NavigationScreens.home())
                     true
                 }
 
-                R.id.favorites_screen -> {
-                    Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
-//                    navController.navigate(R.id.favoritesFragment)
+                R.id.news_screen -> {
+                    router.navigateTo(NavigationScreens.news())
                     true
                 }
 
-                R.id.new_post_screen -> {
-                    Toast.makeText(this, "New Post", Toast.LENGTH_SHORT).show()
-                    true
-                }
-
-                R.id.messages_screen -> {
-                    Toast.makeText(this, "Messages", Toast.LENGTH_SHORT).show()
+                R.id.map_screen -> {
+                    router.navigateTo(NavigationScreens.map())
                     true
                 }
 
                 R.id.profile_screen -> {
-                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                    router.navigateTo(NavigationScreens.profile())
                     true
                 }
 
@@ -62,27 +64,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun setupBottomNavViewVisibility() {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.homeFragment -> {
-                    binding.bottomNavigationView.isVisible = true
-                }
-
-                else -> {
-                    binding.bottomNavigationView.isVisible = false
-                }
-            }
-        }
-    }
-
-    private fun setupBottomNavigationView() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
-        navController = navHostFragment.navController
-        binding.bottomNavigationView.setupWithNavController(navController)
-    }
-
 }

@@ -5,15 +5,11 @@
         android:icon="@drawable/sl_home"
         android:title="@string/app_name" />
     <item
-        android:id="@+id/favorites_screen"
+        android:id="@+id/news_screen"
         android:icon="@drawable/sl_favorite"
         android:title="favorites" />
     <item
-        android:id="@+id/new_post_screen"
-        android:icon="@drawable/sl_add_new"
-        android:title="add_new" />
-    <item
-        android:id="@+id/messages_screen"
+        android:id="@+id/map_screen"
         android:icon="@drawable/sl_message"
         android:title="messages" />
     <item

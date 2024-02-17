@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.appsamurai.storyly.StoryGroupSize
 import com.appsamurai.storyly.StorylyInit
 import com.appsamurai.storyly.StorylyView
@@ -27,8 +28,12 @@ import com.appsamurai.storyly.config.styling.group.StorylyStoryGroupStyling
 import com.example.compose.SDUHubTheme
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.presentation.utils.Constants.Companion.STORYLY_INSTANCE_TOKEN
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HomeFragment : Fragment() {
+
+    private val viewModel: HomeScreenViewModel by viewModel()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreateView(
@@ -43,7 +48,7 @@ class HomeFragment : Fragment() {
                 }
             ) {
                 Box(modifier = Modifier.padding(it)) {
-                    HomeScreen()
+                    HomeScreen(viewModel)
                 }
             }
         }
@@ -52,13 +57,14 @@ class HomeFragment : Fragment() {
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(viewModel: HomeScreenViewModel) {
+
     Column {
         Stories()
         Text(text = "Home Screen")
         Button(
             onClick = {
-
+                viewModel.goToCategory()
             }
         ) {
             Text(text = "Click me")
@@ -101,5 +107,6 @@ fun Stories() {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+     val viewModel: HomeScreenViewModel = viewModel()
+    HomeScreen(viewModel)
 }

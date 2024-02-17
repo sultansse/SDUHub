@@ -61,6 +61,7 @@ dependencies {
     implementation("com.airbnb.android:lottie-compose:6.1.0")
     implementation("com.appsamurai.storyly:storyly:2.13.0")
 
+
 //    debug
     val chuckerVersion = "4.0.0"
     debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
@@ -93,6 +94,9 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
 
+//   cicerone
+    implementation("com.github.terrakok:cicerone:7.1")
+
 //    lifecycle
     val lifecycleVersion = "2.7.0"
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
@@ -109,6 +113,7 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.fragment:fragment-compose:1.7.0-alpha10")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
