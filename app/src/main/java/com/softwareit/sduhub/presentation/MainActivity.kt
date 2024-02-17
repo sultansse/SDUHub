@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -36,26 +37,26 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-//                R.id.favorites_screen -> {
-//                    Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
-////                    navController.navigate(R.id.favoritesFragment)
-//                    true
-//                }
-//
-//                R.id.new_post_screen -> {
-//                    Toast.makeText(this, "New Post", Toast.LENGTH_SHORT).show()
-//                    true
-//                }
-//
-//                R.id.messages_screen -> {
-//                    Toast.makeText(this, "Messages", Toast.LENGTH_SHORT).show()
-//                    true
-//                }
-//
-//                R.id.profile_screen -> {
-//                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
-//                    true
-//                }
+                R.id.favorites_screen -> {
+                    Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
+//                    navController.navigate(R.id.favoritesFragment)
+                    true
+                }
+
+                R.id.new_post_screen -> {
+                    Toast.makeText(this, "New Post", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                R.id.messages_screen -> {
+                    Toast.makeText(this, "Messages", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                R.id.profile_screen -> {
+                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                    true
+                }
 
                 else -> false
             }

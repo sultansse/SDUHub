@@ -37,6 +37,12 @@ import org.koin.core.module.Module
 //
 //val viewModelModule = module {
 //    viewModel {
+//        HomeScreenViewModel(
+//            router = get(),
+//        )
+//    }
+//}
+//    viewModel {
 //        HomeViewModel(
 //            getCars = get(),
 //        )
@@ -60,6 +66,21 @@ import org.koin.core.module.Module
 //    }
 //}
 
+//val navigationModule = module {
+//
+//    single<Cicerone<Router>> { Cicerone.create() }
+//
+//    single { get<Cicerone<Router>>().router }
+//
+//    single { get<Cicerone<Router>>().getNavigatorHolder() }
+//}
+
+//val fragmentModule = module {
+//    factory { HomeFragment() }
+//    factory { DetailsFragment(text = get()) }
+//
+//
+//}
 
 val appModule = emptyList<Module>(
 //    otherClassesModule,

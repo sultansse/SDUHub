@@ -4,20 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
+import androidx.fragment.compose.content
+import com.appsamurai.storyly.StoryGroupSize
+import com.appsamurai.storyly.StorylyInit
+import com.appsamurai.storyly.StorylyView
+import com.appsamurai.storyly.config.StorylyConfig
+import com.appsamurai.storyly.config.styling.group.StorylyStoryGroupStyling
 import com.example.compose.SDUHubTheme
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.presentation.utils.Constants.Companion.STORYLY_INSTANCE_TOKEN
 
 class HomeFragment : Fragment() {
 
@@ -26,37 +35,71 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ComposeView(requireContext()).apply {
-        setContent {
-            SDUHubTheme {
-                Surface {
-                    Scaffold(
-                        topBar = {
-                            TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
-                        }
-                    ) {
-                        Box(modifier = Modifier.padding(it)) {
-                            HomeScreen()
-                        }
-
-                    }
-
+    ) = content {
+        SDUHubTheme {
+            Scaffold(
+                topBar = {
+                    TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
+                }
+            ) {
+                Box(modifier = Modifier.padding(it)) {
+                    HomeScreen()
                 }
             }
+        }
+    }
+}
 
 
+@Composable
+fun HomeScreen() {
+    Column {
+        Stories()
+        Text(text = "Home Screen")
+        Button(
+            onClick = {
+
+            }
+        ) {
+            Text(text = "Click me")
         }
     }
 
-    @Composable
-    fun HomeScreen() {
-        Text(text = "Home Screen")
-    }
+}
 
+@Composable
+fun Stories() {
+    Row {
+        AndroidView(
+            factory = { context ->
+                StorylyView(context).apply {
+                    storylyInit = StorylyInit(
+                        storylyId = STORYLY_INSTANCE_TOKEN,
+                        config = StorylyConfig
+                            .Builder()
+                            .setStoryGroupStyling(
+                                styling = StorylyStoryGroupStyling
+                                    .Builder()
+                                    .setTitleVisibility(isVisible = false)
+                                    .setSize(
+                                        size = StoryGroupSize.Custom
+                                    )
+                                    .setIconCornerRadius(60)
+                                    .setIconHeight(600)
+                                    .setIconWidth(540)
+                                    .build()
+                            )
+                            .build()
+                    )
+
+                }
+            }
+        )
+    }
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeFragment().HomeScreen()
+    HomeScreen()
 }
