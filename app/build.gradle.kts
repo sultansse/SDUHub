@@ -44,6 +44,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.9"
@@ -56,21 +57,31 @@ android {
 }
 
 dependencies {
-//    timber
-    val timberVersion = "5.0.1"
-    implementation("com.jakewharton.timber:timber:$timberVersion")
-
-//    lottie
+//    ui
     implementation("com.airbnb.android:lottie-compose:6.1.0")
-
-//    storyly
     implementation("com.appsamurai.storyly:storyly:2.13.0")
 
-////    network
-//    val chuckerVersion = "4.0.0"
-//    debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
-//    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
+//    debug
+    val chuckerVersion = "4.0.0"
+    debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
+//    retrofit
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+
+//    room
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+
+//    coroutines
+    val coroutinesVersion = "1.7.1"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
 //    koin
     val koinVersion = "3.5.3"
@@ -78,14 +89,24 @@ dependencies {
     implementation("io.insert-koin:koin-core:$koinVersion")
 
 //    navigation
-    val navVersion = "1.9.63"
-    implementation("io.github.raamcosta.compose-destinations:animations-core:$navVersion")
-    implementation("io.github.raamcosta.compose-destinations:core:$navVersion")
-    ksp("io.github.raamcosta.compose-destinations:ksp:$navVersion")
+    val navigationVersion = "2.7.7"
+    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+
+//    lifecycle
+    val lifecycleVersion = "2.7.0"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+
+//    ktx
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.activity:activity-ktx:1.8.2")
 
 //    core
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
@@ -101,4 +122,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+//    implementation("com.google.android.material:material:1.11.0")
+//    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
