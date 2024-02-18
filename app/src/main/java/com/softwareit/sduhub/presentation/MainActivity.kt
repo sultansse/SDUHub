@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private val router: Router by inject()
     private val navHolder: NavigatorHolder by inject()
-    private val navigator = AppNavigator(this, R.id.nav_host_fragment)
+    private val navigator = AppNavigator(this, R.id.main_container)
 
 
     override fun onResumeFragments() {

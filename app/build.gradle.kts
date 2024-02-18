@@ -67,6 +67,7 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
     implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("io.github.theapache64:rebugger:1.0.0-rc02")
 
 //    retrofit
     val retrofitVersion = "2.9.0"
@@ -88,11 +89,6 @@ dependencies {
     val koinVersion = "3.5.3"
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-core:$koinVersion")
-
-//    navigation
-    val navigationVersion = "2.7.7"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
 
 //   cicerone
     implementation("com.github.terrakok:cicerone:7.1")

@@ -2,7 +2,7 @@ package com.softwareit.sduhub.di
 
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
-import com.softwareit.sduhub.presentation.screens.HomeScreenViewModel
+import com.softwareit.sduhub.presentation.screens.home_screen.HomeScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module

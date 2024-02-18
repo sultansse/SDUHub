@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.screens
+package com.softwareit.sduhub.presentation.screens.home_screen
 
 import androidx.lifecycle.ViewModel
 import com.github.terrakok.cicerone.Router
