@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.screens
+package com.softwareit.sduhub.ui.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ import androidx.fragment.compose.content
 import com.example.compose.SDUHubTheme
 import com.softwareit.sduhub.R
 
-class CategoryFragment : Fragment() {
+class MapFragment : Fragment() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreateView(
@@ -35,7 +35,7 @@ class CategoryFragment : Fragment() {
                     }
                 ) {
                     Box(modifier = Modifier.padding(it)) {
-                        CategoryScreen()
+                        MapScreen()
                     }
                 }
             }
@@ -45,12 +45,12 @@ class CategoryFragment : Fragment() {
 }
 
 @Composable
-fun CategoryScreen() {
-    Text(text = "Category Screen")
+fun MapScreen() {
+    Text(text = "Map Screen")
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun CategoryScreenPreview() {
-    CategoryScreen()
+fun MapScreenPreview() {
+    MapScreen()
 }

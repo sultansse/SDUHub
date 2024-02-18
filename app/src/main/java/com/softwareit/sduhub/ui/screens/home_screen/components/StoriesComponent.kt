@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.screens.home_screen.components
+package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import com.appsamurai.storyly.StorylyInit
 import com.appsamurai.storyly.StorylyView
 import com.appsamurai.storyly.config.StorylyConfig
 import com.appsamurai.storyly.config.styling.group.StorylyStoryGroupStyling
-import com.softwareit.sduhub.presentation.utils.Constants
+import com.softwareit.sduhub.common.utils.Constants
 
 @Composable
 fun Stories() {

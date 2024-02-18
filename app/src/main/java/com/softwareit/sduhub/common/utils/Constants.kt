@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.utils
+package com.softwareit.sduhub.common.utils
 
 class Constants {
     companion object {

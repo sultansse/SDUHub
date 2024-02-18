@@ -1,8 +1,8 @@
-package com.softwareit.sduhub.presentation.screens.home_screen
+package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.lifecycle.ViewModel
 import com.github.terrakok.cicerone.Router
-import com.softwareit.sduhub.screens_navigation.NavigationScreens
+import com.softwareit.sduhub.ui.navigation.NavigationScreens
 
 class HomeScreenViewModel(
     private val router: Router,

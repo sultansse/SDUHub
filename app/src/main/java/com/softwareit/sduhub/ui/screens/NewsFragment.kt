@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.screens
+package com.softwareit.sduhub.ui.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ import androidx.fragment.compose.content
 import com.example.compose.SDUHubTheme
 import com.softwareit.sduhub.R
 
-class ProfileFragment : Fragment() {
+class NewsFragment : Fragment() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreateView(
@@ -35,7 +35,7 @@ class ProfileFragment : Fragment() {
                     }
                 ) {
                     Box(modifier = Modifier.padding(it)) {
-                        ProfileScreen()
+                        NewsScreen()
                     }
                 }
             }
@@ -45,12 +45,12 @@ class ProfileFragment : Fragment() {
 }
 
 @Composable
-fun ProfileScreen() {
-    Text(text = "Profile Screen")
+fun NewsScreen() {
+    Text(text = "News Screen")
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun ProfileScreenPreview() {
-    ProfileScreen()
+fun NewsScreenPreview() {
+    NewsScreen()
 }

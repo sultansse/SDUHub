@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.utils
+package com.softwareit.sduhub.common.utils
 
 import android.content.Context
 import android.os.Build

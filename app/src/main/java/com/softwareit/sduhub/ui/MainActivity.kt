@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation
+package com.softwareit.sduhub.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.databinding.ActivityMainBinding
-import com.softwareit.sduhub.screens_navigation.NavigationScreens
+import com.softwareit.sduhub.ui.navigation.NavigationScreens
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {

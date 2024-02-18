@@ -17,7 +17,7 @@
         android:theme="@style/Theme.SDUHubTheme"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SDUHubTheme">
             <intent-filter>

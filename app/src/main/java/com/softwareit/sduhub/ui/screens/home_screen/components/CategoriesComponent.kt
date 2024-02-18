@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.screens.home_screen.components
+package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

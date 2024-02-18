@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.presentation.screens.home_screen
+package com.softwareit.sduhub.ui.screens.home_screen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +19,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
 import com.example.compose.SDUHubTheme
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.presentation.screens.home_screen.components.Categories
-import com.softwareit.sduhub.presentation.screens.home_screen.components.Stories
+import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
+import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -71,5 +71,6 @@ fun HomeScreen(viewModel: HomeScreenViewModel) {
             Text(text = "Click me")
         }
     }
+
 
 }
