@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp") version "1.9.22-1.0.17"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -30,7 +31,10 @@ android {
         release {
             isDebuggable = false
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
 //            signingConfig = signingConfigs.getByName(AppConfigs.name)
         }
     }
@@ -39,7 +43,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget =  JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     buildFeatures {
         compose = true
@@ -68,6 +72,11 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.github.theapache64:rebugger:1.0.0-rc02")
+
+//    firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database")
 
 //    retrofit
     val retrofitVersion = "2.9.0"

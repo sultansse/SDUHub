@@ -3,6 +3,7 @@ package com.softwareit.sduhub.di
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
+import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDao
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -25,11 +26,15 @@ val viewModelModule = module {
     }
 }
 
+val otherClassesModule = module {
+    single { ImportantInfoDao() }
+}
+
 
 
 val appModule = listOf<Module>(
     navigationModule,
-//    otherClassesModule,
+    otherClassesModule,
 //    mapperModule,
 //    databaseModule,
 //    dataSourceModule,
