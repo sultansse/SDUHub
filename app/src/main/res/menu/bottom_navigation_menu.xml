@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home_screen"
-        android:icon="@drawable/sl_home"
-        android:title="@string/app_name" />
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
     <item
-        android:id="@+id/news_screen"
-        android:icon="@drawable/sl_favorite"
-        android:title="favorites" />
+        android:id="@+id/resources_screen"
+        android:icon="@drawable/ic_resources"
+        android:title="@string/resources" />
     <item
         android:id="@+id/map_screen"
-        android:icon="@drawable/sl_message"
-        android:title="messages" />
+        android:icon="@drawable/ic_map"
+        android:title="@string/map" />
     <item
         android:id="@+id/profile_screen"
-        android:icon="@drawable/sl_menu"
-        android:title="menu" />
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile" />
 </menu>
