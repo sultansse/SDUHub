@@ -4,16 +4,20 @@ import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.domain.AddNoteUseCase
+import com.softwareit.sduhub.domain.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.ui.base.BaseViewModel
 import com.softwareit.sduhub.ui.navigation.NavigationScreens
 import kotlinx.coroutines.launch
 
+
 class HomeScreenViewModel(
     private val router: Router,
     private val getNotes: GetNotesUseCase,
     private val addNote: AddNoteUseCase,
+    private val deleteNotes: DeleteNotesUseCase,
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
+
     /* Navigation functions */
     fun onBackPressed() = router.exit()
     fun goToCategory() = router.navigateTo(NavigationScreens.category())
@@ -41,15 +45,19 @@ class HomeScreenViewModel(
 //        db.setValue(data)
 //    }
 
-    init { fetchNotes() }
+    init {
+        fetchNotes()
+    }
+
 
     override fun setInitialState(): HomeContract.State {
         return HomeContract.State(
-            notes = emptyList(),
+            importantInfoState = HomeContract.ImportantInfoState.Idle,
+            notesState = HomeContract.NotesState.Idle,
         )
     }
 
-    override fun handleEvents(event: HomeContract.Event) {
+    override fun handleEvent(event: HomeContract.Event) {
         when (event) {
             is HomeContract.Event.OnFetchImportantInfo -> {
 //                fetchNotes()
@@ -60,17 +68,28 @@ class HomeScreenViewModel(
             }
 
             is HomeContract.Event.OnNoteClicked -> {
-                setEffect { HomeContract.Effect.ShowError("note is clicked") }
+                setEffect {
+                    HomeContract.Effect.ShowError("note is clicked")
+                }
             }
 
             is HomeContract.Event.OnNoteAdded -> {
                 addNoteUseCase(event.note)
-                setEffect { HomeContract.Effect.ShowError("note is added") }
+                setEffect {
+                    HomeContract.Effect.ShowError("note is added")
+                }
+            }
+
+            HomeContract.Event.OnNotesDeleted -> {
+                viewModelScope.launch {
+                    deleteNotes()
+                    setState {
+                        copy(notesState = HomeContract.NotesState.Empty)
+                    }
+                }
             }
         }
     }
-
-
 
     private fun addNoteUseCase(note: NoteDTO) {
         viewModelScope.launch {
@@ -81,8 +100,7 @@ class HomeScreenViewModel(
     private fun fetchNotes() {
         viewModelScope.launch {
             getNotes().collect() {
-                // got data
-                setState { copy(notes = it) }
+                setState { copy(notesState = HomeContract.NotesState.Success(it)) }
             }
         }
     }

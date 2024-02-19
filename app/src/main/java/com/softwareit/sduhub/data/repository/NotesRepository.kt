@@ -13,6 +13,8 @@ interface NotesRepository {
 
     suspend fun addNote(note: NoteDTO)
 
+    suspend fun updateNote(note: NoteDTO)
+
     suspend fun deleteNote(id: Int)
 
     suspend fun deleteNotes()
@@ -32,6 +34,10 @@ class NotesRepositoryImpl(
 
     override suspend fun addNote(note: NoteDTO) {
         localDataSource.addNote(note)
+    }
+
+    override suspend fun updateNote(note: NoteDTO) {
+        localDataSource.updateNote(note)
     }
 
     override suspend fun deleteNote(id: Int) {

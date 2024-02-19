@@ -7,8 +7,8 @@ import com.softwareit.sduhub.common.utils.empty
 
 @Entity(tableName = NOTE_TABLE)
 data class NoteDTO(
-    @PrimaryKey
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val title: String,
     val description: String,
     val notifyTime: String? = String.empty,

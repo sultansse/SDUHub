@@ -1,13 +1,12 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -19,21 +18,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.base.SIDE_EFFECTS_KEY
+import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.Notes
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
 import com.softwareit.sduhub.ui.theme.SDUHubTheme
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -48,6 +48,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ) = content {
         SDUHubTheme {
+
             Scaffold(
                 topBar = {
                     TopAppBar(
@@ -61,10 +62,16 @@ class HomeFragment : Fragment() {
                 },
                 floatingActionButtonPosition = FabPosition.End,
                 floatingActionButton = {
+                    var counter by remember {
+                        mutableIntStateOf(0)
+                    }
                     FloatingActionButton(
-                        shape = CircleShape,
+//                        shape = CircleShape,
                         onClick = {
-                            Toast.makeText(requireContext(), "fab is clicked", Toast.LENGTH_LONG).show()
+                            counter++
+                            val data =
+                                NoteDTO(title = "some $counter text", description = "some desc")
+                            viewModel.setEvent(HomeContract.Event.OnNoteAdded(data))
                         }
                     ) {
                         Icon(Icons.Filled.Add, contentDescription = "Add")
@@ -72,37 +79,32 @@ class HomeFragment : Fragment() {
                 },
             ) {
                 Box(modifier = Modifier.padding(it)) {
-                    HomeScreen(
-                        state = viewModel.viewState.value,
-                        effectFlow = viewModel.effect,
-                        onEventSent = { event -> viewModel.setEvent(event) }
-                    )
+                    HomeScreen(viewModel)
                 }
             }
         }
     }
 
     @Composable
-    fun HomeScreen(
-        state: HomeContract.State,
-        effectFlow: Flow<HomeContract.Effect>?,
-        onEventSent: (event: HomeContract.Event) -> Unit,
-    ) {
+    fun HomeScreen(viewModel: HomeScreenViewModel) {
 
 //        val importantInfo by viewModel.data.collectAsState()
+        val state = viewModel.uiState.collectAsState().value
 
-        LaunchedEffect(SIDE_EFFECTS_KEY) {
-            effectFlow?.onEach { effect ->
-                when (effect) {
-                    is HomeContract.Effect.ShowError -> {
-                        Toast.makeText(requireContext(),"show error", Toast.LENGTH_LONG).show()
-                    }
-
-                }
-            }?.collect()
-        }
+//        LaunchedEffect(SIDE_EFFECTS_KEY) {
+//            effectFlow?.onEach { effect ->
+//                when (effect) {
+//                    is HomeContract.Effect.ShowError -> {
+//                        Toast.makeText(requireContext(), effect.message, Toast.LENGTH_SHORT).show()
+//                    }
+//
+//                }
+//            }?.collect()
+//
+//        }
 
         Column {
+
             Stories()
             Categories()
 //            AnimatedVisibility(visible = (importantInfo != null)) {
@@ -111,17 +113,28 @@ class HomeFragment : Fragment() {
             Text(text = "Home Screen")
             Button(
                 onClick = {
-                    viewModel.setEvent(HomeContract.Event.OnNoteAdded())
 //                viewModel.goToCategory()
 //                    viewModel.setData(ImportantInfoDTO("some title 1", "some description 2" ))
+//                    onEventSent { HomeContract.Event.OnNotesDeleted}
+                    viewModel.setEvent(HomeContract.Event.OnNotesDeleted)
                 }
             ) {
-                Text(text = "save to db")
+                Text(text = "clear db")
             }
+            when (state.notesState) {
+                is HomeContract.NotesState.Success -> {
+                    Log.e("TAG", ">>>> HomeFragment.kt -> HomeScreen (130): state.notesState.data = ${state.notesState.data}");
+                    Notes(notes = state.notesState.data)
+                }
 
-            Notes(notes = state.notes)
+                is HomeContract.NotesState.Idle -> {
+                    Text(text = "Idle of notes")
+                }
+
+                HomeContract.NotesState.Empty -> {
+                    Text(text = "DB is empty or cleared")
+                }
+            }
         }
     }
-
 }
-

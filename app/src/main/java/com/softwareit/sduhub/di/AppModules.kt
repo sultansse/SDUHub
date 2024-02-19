@@ -5,6 +5,7 @@ import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.data.repository.NotesRepositoryImpl
 import com.softwareit.sduhub.domain.AddNoteUseCase
+import com.softwareit.sduhub.domain.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import org.koin.android.ext.koin.androidContext
@@ -32,6 +33,7 @@ val repositoryModule = module {
 val useCaseModule = module {
     factory { GetNotesUseCase(repository = get()) }
     factory { AddNoteUseCase(repository = get()) }
+    factory { DeleteNotesUseCase(repository = get()) }
 }
 
 val viewModelModule = module {
@@ -40,6 +42,7 @@ val viewModelModule = module {
             router = get(),
             getNotes = get(),
             addNote = get(),
+            deleteNotes = get(),
         )
     }
 }
