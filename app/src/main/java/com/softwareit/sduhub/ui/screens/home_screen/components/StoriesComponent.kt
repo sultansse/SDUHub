@@ -12,24 +12,23 @@ import com.softwareit.sduhub.common.utils.Constants
 
 @Composable
 fun Stories() {
+//    todo change to LazyRow
     Row {
         AndroidView(
             factory = { context ->
                 StorylyView(context).apply {
                     storylyInit = StorylyInit(
                         storylyId = Constants.STORYLY_INSTANCE_TOKEN,
-                        config = StorylyConfig
-                            .Builder()
+                        config = StorylyConfig.Builder()
                             .setStoryGroupStyling(
-                                styling = StorylyStoryGroupStyling
-                                    .Builder()
+                                StorylyStoryGroupStyling.Builder()
                                     .setTitleVisibility(isVisible = false)
                                     .setSize(
                                         size = StoryGroupSize.Custom
                                     )
                                     .setIconCornerRadius(60)
-                                    .setIconHeight(600)
-                                    .setIconWidth(540)
+                                    .setIconHeight(420)
+                                    .setIconWidth(380)
                                     .build()
                             )
                             .build()

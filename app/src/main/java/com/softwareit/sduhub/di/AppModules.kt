@@ -2,12 +2,14 @@ package com.softwareit.sduhub.di
 
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
+import com.softwareit.sduhub.data.repository.NotesRepository
+import com.softwareit.sduhub.data.repository.NotesRepositoryImpl
+import com.softwareit.sduhub.domain.AddNoteUseCase
+import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
-import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDao
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.module.Module
 import org.koin.dsl.module
-
 
 val navigationModule = module {
 
@@ -18,27 +20,34 @@ val navigationModule = module {
     single { get<Cicerone<Router>>().getNavigatorHolder() }
 }
 
+val databaseModule = module {
+    single { provideAppDatabase(context = androidContext()) }
+    single { provideCarDAO(appDatabase = get()) }
+}
+
+val repositoryModule = module {
+    single<NotesRepository> { NotesRepositoryImpl(localDataSource = get()) }
+}
+
+val useCaseModule = module {
+    factory { GetNotesUseCase(repository = get()) }
+    factory { AddNoteUseCase(repository = get()) }
+}
+
 val viewModelModule = module {
     viewModel {
         HomeScreenViewModel(
             router = get(),
+            getNotes = get(),
+            addNote = get(),
         )
     }
 }
 
-val otherClassesModule = module {
-    single { ImportantInfoDao() }
-}
-
-
-
-val appModule = listOf<Module>(
+val appModule = listOf(
     navigationModule,
-    otherClassesModule,
-//    mapperModule,
-//    databaseModule,
-//    dataSourceModule,
-//    repositoryModule,
-//    useCaseModule,
+    databaseModule,
+    repositoryModule,
+    useCaseModule,
     viewModelModule
 )

@@ -15,14 +15,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softwareit.sduhub.common.utils.empty
-import com.softwareit.sduhub.data.network.FirebaseRealtimeDatabaseWrapper
 
 
 @Composable
 fun ImportantInfo(data: ImportantInfoDTO) {
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(10))
+            .clip(RoundedCornerShape(8))
             .border(
                 width = 2.dp,
                 color = Color.Red,
@@ -49,10 +48,4 @@ data class ImportantInfoDTO(
     val tags: List<String> = emptyList(),
 ) {
     constructor() : this(String.empty, String.empty)
-}
-
-class ImportantInfoDao : FirebaseRealtimeDatabaseWrapper<ImportantInfoDTO>() {
-    override fun getTableName(): String = "important_info_table"
-
-    override fun getClassType(): Class<ImportantInfoDTO> = ImportantInfoDTO::class.java
 }

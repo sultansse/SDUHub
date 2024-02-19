@@ -16,8 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
-import com.example.compose.SDUHubTheme
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.ui.theme.SDUHubTheme
 
 class NewsFragment : Fragment() {
 
