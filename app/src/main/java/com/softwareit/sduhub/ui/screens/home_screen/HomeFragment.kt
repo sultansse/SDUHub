@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -130,12 +131,12 @@ class HomeFragment : Fragment() {
             mutableIntStateOf(0)
         }
         FloatingActionButton(
-//                        shape = CircleShape,
+            shape = CircleShape,
             onClick = {
                 counter++
                 val data = NoteDTO(
-                    title = "some $counter text",
-                    description = "some desc",
+                    title = "My #$counter note title",
+                    description = "Some description to my note to check how it looks in layout",
                     created_at = getFormattedTime()
                 )
                 viewModel.setEvent(HomeContract.Event.OnNoteAdded(data))
