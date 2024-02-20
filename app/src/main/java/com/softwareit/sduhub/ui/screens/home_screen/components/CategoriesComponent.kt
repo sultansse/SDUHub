@@ -87,7 +87,7 @@ fun Category(
             painter = painterResource(icon),
             contentDescription = title,
             modifier = Modifier
-                .size(50.dp)
+                .size(56.dp)
                 .shadow(elevation = 4.dp, shape = CircleShape)
                 .clip(CircleShape)
         )
