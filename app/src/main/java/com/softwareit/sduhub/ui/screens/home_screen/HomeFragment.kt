@@ -3,6 +3,11 @@ package com.softwareit.sduhub.ui.screens.home_screen
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,16 +16,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -41,7 +47,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeScreenViewModel by viewModel()
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,33 +55,8 @@ class HomeFragment : Fragment() {
         SDUHubTheme {
 
             Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title = {
-                            Text(
-                                text = stringResource(R.string.app_name),
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    )
-                },
-                floatingActionButtonPosition = FabPosition.End,
-                floatingActionButton = {
-                    var counter by remember {
-                        mutableIntStateOf(0)
-                    }
-                    FloatingActionButton(
-//                        shape = CircleShape,
-                        onClick = {
-                            counter++
-                            val data =
-                                NoteDTO(title = "some $counter text", description = "some desc")
-                            viewModel.setEvent(HomeContract.Event.OnNoteAdded(data))
-                        }
-                    ) {
-                        Icon(Icons.Filled.Add, contentDescription = "Add")
-                    }
-                },
+                topBar = { HomeTopAppBar() },
+                floatingActionButton = { HomeAddNoteFAB() },
             ) {
                 Box(
                     modifier = Modifier.padding(it)
@@ -85,6 +65,19 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun HomeTopAppBar() {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(R.string.app_name),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        )
     }
 
     @Composable
@@ -104,9 +97,7 @@ class HomeFragment : Fragment() {
 //            }?.collect()
 //
 //        }
-
         LazyColumn {
-
 
             item { Stories() }
             item { Categories() }
@@ -128,15 +119,47 @@ class HomeFragment : Fragment() {
             when (state.notesState) {
 
                 is HomeContract.NotesState.Success -> {
-                    items(state.notesState.data) {
-                        NoteItem(note = it)
+
+                    items(state.notesState.data, key = { note -> note.id }) { note ->
+                        val visibleState = remember { mutableStateOf(false) }
+
+                        LaunchedEffect(key1 = note) {
+                            visibleState.value = true
+                        }
+
+                        AnimatedVisibility(
+                            visible = visibleState.value,
+                            enter = fadeIn(animationSpec = tween(durationMillis = 300)) +
+                                    expandVertically(animationSpec = tween(durationMillis = 300)),
+                            exit = fadeOut(animationSpec = tween(durationMillis = 300))
+                        ) {
+                            NoteItem(note = note)
+                        }
                     }
                 }
 
-                HomeContract.NotesState.Idle -> {
+                is HomeContract.NotesState.Idle -> {
                     item { Text(text = "DB is empty") }
                 }
             }
+        }
+    }
+
+    @Composable
+    fun HomeAddNoteFAB() {
+        var counter by remember {
+            mutableIntStateOf(0)
+        }
+        FloatingActionButton(
+//                        shape = CircleShape,
+            onClick = {
+                counter++
+                val data =
+                    NoteDTO(title = "some $counter text", description = "some desc")
+                viewModel.setEvent(HomeContract.Event.OnNoteAdded(data))
+            }
+        ) {
+            Icon(Icons.Filled.Add, contentDescription = "Add")
         }
     }
 }
