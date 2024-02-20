@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -22,11 +21,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -35,8 +32,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.common.utils.getFormattedTime
+import com.softwareit.sduhub.common.utils.isNotNull
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
+import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
 import com.softwareit.sduhub.ui.theme.SDUHubTheme
@@ -83,55 +83,34 @@ class HomeFragment : Fragment() {
     @Composable
     fun HomeScreen(viewModel: HomeScreenViewModel) {
 
-//        val importantInfo by viewModel.data.collectAsState()
         val state = viewModel.uiState.collectAsState().value
 
-//        LaunchedEffect(SIDE_EFFECTS_KEY) {
-//            effectFlow?.onEach { effect ->
-//                when (effect) {
-//                    is HomeContract.Effect.ShowError -> {
-//                        Toast.makeText(requireContext(), effect.message, Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                }
-//            }?.collect()
-//
-//        }
         LazyColumn {
 
             item { Stories() }
             item { Categories() }
-//            AnimatedVisibility(visible = (importantInfo != null)) {
-//                ImportantInfo(data = importantInfo!!)
-//            }
-            item {
-                Button(
-                    onClick = {
-//                viewModel.goToCategory()
-//                    viewModel.setData(ImportantInfoDTO("some title 1", "some description 2" ))
-//                    onEventSent { HomeContract.Event.OnNotesDeleted}
-                        viewModel.setEvent(HomeContract.Event.OnNotesDeleted)
+
+            when (state.importantInfoState) {
+                is HomeContract.ImportantInfoState.Idle -> {
+                    item { Text("Welcome back dear user!") }
+                }
+                is HomeContract.ImportantInfoState.Success -> {
+                    item {
+                        AnimatedVisibility(visible = (state.importantInfoState.data.isNotNull())) {
+                            ImportantInfo(data = state.importantInfoState.data)
+                        }
                     }
-                ) {
-                    Text(text = "clear db")
                 }
             }
+
             when (state.notesState) {
-
                 is HomeContract.NotesState.Success -> {
-
-                    items(state.notesState.data, key = { note -> note.id }) { note ->
-                        val visibleState = remember { mutableStateOf(false) }
-
-                        LaunchedEffect(key1 = note) {
-                            visibleState.value = true
-                        }
-
+                    items(state.notesState.data) { note ->
                         AnimatedVisibility(
-                            visible = visibleState.value,
-                            enter = fadeIn(animationSpec = tween(durationMillis = 300)) +
-                                    expandVertically(animationSpec = tween(durationMillis = 300)),
-                            exit = fadeOut(animationSpec = tween(durationMillis = 300))
+                            visible = true,
+                            enter = fadeIn(tween(300)) +
+                                    expandVertically(tween(300)),
+                            exit = fadeOut(tween(300))
                         ) {
                             NoteItem(note = note)
                         }
@@ -154,8 +133,11 @@ class HomeFragment : Fragment() {
 //                        shape = CircleShape,
             onClick = {
                 counter++
-                val data =
-                    NoteDTO(title = "some $counter text", description = "some desc")
+                val data = NoteDTO(
+                    title = "some $counter text",
+                    description = "some desc",
+                    created_at = getFormattedTime()
+                )
                 viewModel.setEvent(HomeContract.Event.OnNoteAdded(data))
             }
         ) {

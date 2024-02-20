@@ -1,10 +1,12 @@
 package com.softwareit.sduhub.ui.screens.home_screen.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,23 +23,43 @@ import com.softwareit.sduhub.common.utils.empty
 fun ImportantInfo(data: ImportantInfoDTO) {
     Box(
         modifier = Modifier
+            .fillMaxWidth()
             .clip(RoundedCornerShape(8))
+            .padding(16.dp)
             .border(
                 width = 2.dp,
                 color = Color.Red,
                 shape = RoundedCornerShape(10),
             )
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
             Text(
                 text = data.title,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
             )
-            Spacer(modifier = Modifier.size(20.dp))
             Text(
-                text = data.description
+                text = data.description,
+                modifier = Modifier.padding(top = 16.dp)
             )
+            if (data.tags.isNotEmpty()) {
+                Row(
+                    modifier = Modifier.padding(top = 8.dp),
+                ) {
+                    data.tags.forEach {
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .border(BorderStroke(1.dp, Color.Red), RoundedCornerShape(20))
+                                .padding(8.dp)
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -47,5 +69,5 @@ data class ImportantInfoDTO(
     val description: String,
     val tags: List<String> = emptyList(),
 ) {
-    constructor() : this(String.empty, String.empty)
+    constructor() : this(String.empty, String.empty, emptyList())
 }

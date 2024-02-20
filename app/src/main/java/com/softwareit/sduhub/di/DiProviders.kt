@@ -7,7 +7,7 @@ import com.softwareit.sduhub.data.local.notes.NotesDatabase
 
 
 //db
-fun provideCarDAO(appDatabase: NotesDatabase) = appDatabase.noteDao()
+fun provideNoteDao(appDatabase: NotesDatabase) = appDatabase.noteDao()
 fun provideAppDatabase(context: Context): NotesDatabase {
     return Room.databaseBuilder(
         context,

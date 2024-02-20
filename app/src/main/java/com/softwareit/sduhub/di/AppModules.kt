@@ -2,10 +2,15 @@ package com.softwareit.sduhub.di
 
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
+import com.google.firebase.database.FirebaseDatabase
+import com.softwareit.sduhub.data.network.firebase.ImportantInfoDao
+import com.softwareit.sduhub.data.repository.NetworkRepository
+import com.softwareit.sduhub.data.repository.NetworkRepositoryImpl
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.data.repository.NotesRepositoryImpl
 import com.softwareit.sduhub.domain.AddNoteUseCase
 import com.softwareit.sduhub.domain.DeleteNotesUseCase
+import com.softwareit.sduhub.domain.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import org.koin.android.ext.koin.androidContext
@@ -23,17 +28,24 @@ val navigationModule = module {
 
 val databaseModule = module {
     single { provideAppDatabase(context = androidContext()) }
-    single { provideCarDAO(appDatabase = get()) }
+    single { provideNoteDao(appDatabase = get()) }
+}
+
+val networkModule = module {
+    single { FirebaseDatabase.getInstance() }
+    single { ImportantInfoDao(database = get()) }
 }
 
 val repositoryModule = module {
     single<NotesRepository> { NotesRepositoryImpl(localDataSource = get()) }
+    single<NetworkRepository> { NetworkRepositoryImpl(networkDataSource = get())}
 }
 
 val useCaseModule = module {
     factory { GetNotesUseCase(repository = get()) }
     factory { AddNoteUseCase(repository = get()) }
     factory { DeleteNotesUseCase(repository = get()) }
+    factory { GetImportantInfoUseCase(repository = get()) }
 }
 
 val viewModelModule = module {
@@ -43,6 +55,7 @@ val viewModelModule = module {
             getNotes = get(),
             addNote = get(),
             deleteNotes = get(),
+            getImportantInfo = get()
         )
     }
 }
@@ -50,6 +63,7 @@ val viewModelModule = module {
 val appModule = listOf(
     navigationModule,
     databaseModule,
+    networkModule,
     repositoryModule,
     useCaseModule,
     viewModelModule

@@ -37,19 +37,19 @@ fun Categories() {
             title = "Gmail"
         ),
         CategoryDto(
-            icon = R.drawable.img_sdu,
+            icon = R.drawable.img_mysdu,
             title = "MySDU"
         ),
         CategoryDto(
-            icon = R.drawable.img_sdu,
-            title = "sdu.kz"
+            icon = R.drawable.img_sdukz,
+            title = "Sdu.kz"
         ),
         CategoryDto(
-            icon = R.drawable.img_sdu,
+            icon = R.drawable.img_mysdu,
             title = "Student clubs"
         ),
         CategoryDto(
-            icon = R.drawable.img_sdu,
+            icon = R.drawable.img_mysdu,
             title = "Free Offices"
         ),
         CategoryDto(
@@ -57,7 +57,7 @@ fun Categories() {
             title = "Moodle"
         ),
         CategoryDto(
-            icon = R.drawable.img_sdu,
+            icon = R.drawable.img_library,
             title = "Library"
         ),
     )

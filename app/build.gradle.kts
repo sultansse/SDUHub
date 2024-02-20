@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.softwareit.sduhub"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -65,7 +65,7 @@ dependencies {
     implementation("com.airbnb.android:lottie-compose:6.1.0")
     implementation("com.appsamurai.storyly:storyly:2.13.0")
     implementation("io.woong.compose.grid:grid:1.2.1")
-
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
 
 //    debug

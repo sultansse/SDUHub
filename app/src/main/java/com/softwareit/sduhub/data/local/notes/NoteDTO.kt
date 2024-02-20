@@ -11,5 +11,6 @@ data class NoteDTO(
     val id: Int = 0,
     val title: String,
     val description: String,
+    val created_at: String,
     val notifyTime: String? = String.empty,
 )
