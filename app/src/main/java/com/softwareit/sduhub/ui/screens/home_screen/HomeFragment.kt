@@ -27,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.common.utils.getFormattedTime
 import com.softwareit.sduhub.common.utils.isNotNull
@@ -101,6 +105,7 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+
                 is HomeContract.ImportantInfoState.Idle -> {
                     item {
                         Text(
@@ -128,7 +133,15 @@ class HomeFragment : Fragment() {
                 }
 
                 is HomeContract.NotesState.Idle -> {
-                    item { Text(text = "DB is empty") }
+                    item {
+                        val composition =
+                            rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_not_found))
+                        LottieAnimation(
+                            composition = composition.value,
+                            iterations = Int.MAX_VALUE,
+                            alignment = Alignment.TopCenter
+                        )
+                    }
                 }
             }
         }

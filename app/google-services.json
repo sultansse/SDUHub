@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "338124730381",
+    "firebase_url": "https://sduhub-30f21-default-rtdb.firebaseio.com",
+    "project_id": "sduhub-30f21",
+    "storage_bucket": "sduhub-30f21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338124730381:android:93a255c6e585c570202544",
+        "android_client_info": {
+          "package_name": "com.softwareit.sduhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338124730381-v5hgvrc5i4kovgtfq6v4cpj9l3vriml6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.softwareit.sduhub",
+            "certificate_hash": "7e1aae808f64e33dc92dceb13ea2766ab5d671e8"
+          }
+        },
+        {
+          "client_id": "338124730381-e9387msgg7q1tpo7rv48gcgpd4bacikm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIbDFXXu5Mppo3cl3ATg0xD5w6NG81UKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338124730381-e9387msgg7q1tpo7rv48gcgpd4bacikm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
