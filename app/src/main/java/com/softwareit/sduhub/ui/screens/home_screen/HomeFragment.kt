@@ -1,12 +1,12 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -31,7 +31,7 @@ import androidx.fragment.compose.content
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
-import com.softwareit.sduhub.ui.screens.home_screen.components.Notes
+import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
 import com.softwareit.sduhub.ui.theme.SDUHubTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -78,7 +78,9 @@ class HomeFragment : Fragment() {
                     }
                 },
             ) {
-                Box(modifier = Modifier.padding(it)) {
+                Box(
+                    modifier = Modifier.padding(it)
+                ) {
                     HomeScreen(viewModel)
                 }
             }
@@ -103,36 +105,36 @@ class HomeFragment : Fragment() {
 //
 //        }
 
-        Column {
+        LazyColumn {
 
-            Stories()
-            Categories()
+
+            item { Stories() }
+            item { Categories() }
 //            AnimatedVisibility(visible = (importantInfo != null)) {
 //                ImportantInfo(data = importantInfo!!)
 //            }
-            Text(text = "Home Screen")
-            Button(
-                onClick = {
+            item {
+                Button(
+                    onClick = {
 //                viewModel.goToCategory()
 //                    viewModel.setData(ImportantInfoDTO("some title 1", "some description 2" ))
 //                    onEventSent { HomeContract.Event.OnNotesDeleted}
-                    viewModel.setEvent(HomeContract.Event.OnNotesDeleted)
+                        viewModel.setEvent(HomeContract.Event.OnNotesDeleted)
+                    }
+                ) {
+                    Text(text = "clear db")
                 }
-            ) {
-                Text(text = "clear db")
             }
             when (state.notesState) {
+
                 is HomeContract.NotesState.Success -> {
-                    Log.e("TAG", ">>>> HomeFragment.kt -> HomeScreen (130): state.notesState.data = ${state.notesState.data}");
-                    Notes(notes = state.notesState.data)
+                    items(state.notesState.data) {
+                        NoteItem(note = it)
+                    }
                 }
 
-                is HomeContract.NotesState.Idle -> {
-                    Text(text = "Idle of notes")
-                }
-
-                HomeContract.NotesState.Empty -> {
-                    Text(text = "DB is empty or cleared")
+                HomeContract.NotesState.Idle -> {
+                    item { Text(text = "DB is empty") }
                 }
             }
         }

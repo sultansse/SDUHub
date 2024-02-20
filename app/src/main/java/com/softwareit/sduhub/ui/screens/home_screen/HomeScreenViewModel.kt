@@ -84,7 +84,7 @@ class HomeScreenViewModel(
                 viewModelScope.launch {
                     deleteNotes()
                     setState {
-                        copy(notesState = HomeContract.NotesState.Empty)
+                        copy(notesState = HomeContract.NotesState.Idle)
                     }
                 }
             }
@@ -100,7 +100,11 @@ class HomeScreenViewModel(
     private fun fetchNotes() {
         viewModelScope.launch {
             getNotes().collect() {
-                setState { copy(notesState = HomeContract.NotesState.Success(it)) }
+                if (it.isEmpty()) {
+                    setState { copy(notesState = HomeContract.NotesState.Idle) }
+                } else {
+                    setState { copy(notesState = HomeContract.NotesState.Success(it)) }
+                }
             }
         }
     }

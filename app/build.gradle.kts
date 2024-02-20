@@ -64,6 +64,8 @@ dependencies {
 //    ui
     implementation("com.airbnb.android:lottie-compose:6.1.0")
     implementation("com.appsamurai.storyly:storyly:2.13.0")
+    implementation("io.woong.compose.grid:grid:1.2.1")
+
 
 
 //    debug
