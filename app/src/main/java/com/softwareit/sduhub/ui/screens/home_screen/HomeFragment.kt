@@ -30,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
 import com.softwareit.sduhub.R
@@ -92,14 +94,21 @@ class HomeFragment : Fragment() {
             item { Categories() }
 
             when (state.importantInfoState) {
-                is HomeContract.ImportantInfoState.Idle -> {
-                    item { Text("Welcome back dear user!") }
-                }
                 is HomeContract.ImportantInfoState.Success -> {
                     item {
                         AnimatedVisibility(visible = (state.importantInfoState.data.isNotNull())) {
                             ImportantInfo(data = state.importantInfoState.data)
                         }
+                    }
+                }
+                is HomeContract.ImportantInfoState.Idle -> {
+                    item {
+                        Text(
+                            text = "Welcome back dear user!",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp,
+                            modifier = Modifier.padding(20.dp)
+                        )
                     }
                 }
             }

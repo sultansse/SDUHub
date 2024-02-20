@@ -49,7 +49,7 @@ fun Categories() {
             title = "Student clubs"
         ),
         CategoryDto(
-            icon = R.drawable.img_mysdu,
+            icon = R.drawable.img_free_offices,
             title = "Free Offices"
         ),
         CategoryDto(

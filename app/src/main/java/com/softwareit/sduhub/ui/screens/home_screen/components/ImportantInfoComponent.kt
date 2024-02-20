@@ -67,7 +67,7 @@ fun ImportantInfo(data: ImportantInfoDTO) {
 data class ImportantInfoDTO(
     val title: String,
     val description: String,
-    val tags: List<String> = emptyList(),
+    val tags: List<String>,
 ) {
     constructor() : this(String.empty, String.empty, emptyList())
 }

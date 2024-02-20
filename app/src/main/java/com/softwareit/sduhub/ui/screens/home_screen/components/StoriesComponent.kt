@@ -12,7 +12,6 @@ import com.softwareit.sduhub.common.utils.Constants
 
 @Composable
 fun Stories() {
-//    todo change to LazyRow
     Row {
         AndroidView(
             factory = { context ->
