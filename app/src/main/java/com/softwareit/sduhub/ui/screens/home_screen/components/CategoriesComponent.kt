@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.softwareit.sduhub.R
+import io.woong.compose.grid.SimpleGridCells
+import io.woong.compose.grid.VerticalGrid
 
 
 data class CategoryDto(
@@ -63,13 +62,11 @@ fun Categories() {
         ),
     )
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.padding(16.dp),
+    VerticalGrid(
+        columns = SimpleGridCells.Fixed(4),
+        modifier = Modifier.padding(8.dp)
     ) {
-        items(categories) { category ->
+        categories.forEach { category ->
             Category(category.icon, category.title)
         }
     }
@@ -85,8 +82,6 @@ fun Category(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(horizontal = 2.dp, vertical = 8.dp)
-
-
     ) {
         Image(
             painter = painterResource(icon),
