@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -44,7 +39,7 @@ import com.softwareit.sduhub.common.utils.isNotNull
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
-import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
+import com.softwareit.sduhub.ui.screens.home_screen.components.NotesComponent
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
 import com.softwareit.sduhub.ui.theme.SDUHubTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -95,19 +90,18 @@ class HomeFragment : Fragment() {
         LazyColumn {
 
             item { Stories() }
+
             item { Categories() }
 
-            when (state.importantInfoState) {
-                is HomeContract.ImportantInfoState.Success -> {
-                    item {
+            item {
+                when (state.importantInfoState) {
+                    is HomeContract.ImportantInfoState.Success -> {
                         AnimatedVisibility(visible = (state.importantInfoState.data.isNotNull())) {
                             ImportantInfo(data = state.importantInfoState.data)
                         }
                     }
-                }
 
-                is HomeContract.ImportantInfoState.Idle -> {
-                    item {
+                    is HomeContract.ImportantInfoState.Idle -> {
                         Text(
                             text = "Welcome back dear user!",
                             fontWeight = FontWeight.Bold,
@@ -118,22 +112,13 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            when (state.notesState) {
-                is HomeContract.NotesState.Success -> {
-                    items(state.notesState.data) { note ->
-                        AnimatedVisibility(
-                            visible = true,
-                            enter = fadeIn(tween(300)) +
-                                    expandVertically(tween(300)),
-                            exit = fadeOut(tween(300))
-                        ) {
-                            NoteItem(note = note)
-                        }
+            item {
+                when (state.notesState) {
+                    is HomeContract.NotesState.Success -> {
+                        NotesComponent(notes = state.notesState.data)
                     }
-                }
 
-                is HomeContract.NotesState.Idle -> {
-                    item {
+                    is HomeContract.NotesState.Idle -> {
                         val composition =
                             rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_not_found))
                         LottieAnimation(
@@ -144,6 +129,7 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+
         }
     }
 

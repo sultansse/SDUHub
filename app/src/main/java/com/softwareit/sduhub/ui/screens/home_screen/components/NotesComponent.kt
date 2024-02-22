@@ -28,6 +28,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 
+@Composable
+fun NotesComponent(notes: List<NoteDTO>) {
+    Column {
+        notes.forEach {
+            NoteItem(note = it)
+        }
+    }
+}
+
 
 @Composable
 fun NoteItem(note: NoteDTO) {
