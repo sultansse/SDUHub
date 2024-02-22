@@ -1,4 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--    configs     -->
+    <string name="mapbox_access_token" translatable="false"
+        tools:ignore="UnusedResources">sk.eyJ1IjoiMjAxMDcxMDYiLCJhIjoiY2xzeGxsdWY5MDNrdDJrb2VqNGd4aGd4YyJ9.SE1I7_OtKcY60BBOp_aurQ</string>
+
     <string name="app_name">SDUHub</string>
     <string name="resources">Resources</string>
     <string name="home">Home</string>

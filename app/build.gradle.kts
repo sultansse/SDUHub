@@ -67,13 +67,16 @@ dependencies {
     implementation("io.woong.compose.grid:grid:1.2.1")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
-
 //    debug
     val chuckerVersion = "4.0.0"
     debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.github.theapache64:rebugger:1.0.0-rc02")
+
+//    mapbox indoor
+    implementation("com.mapbox.maps:android:11.1.0")
+    implementation("com.mapbox.extension:maps-compose:11.1.0")
 
 //    firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
@@ -92,7 +95,7 @@ dependencies {
     ksp("androidx.room:room-compiler:$roomVersion")
 
 //    coroutines
-    val coroutinesVersion = "1.7.1"
+    val coroutinesVersion = "1.8.0"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
