@@ -23,7 +23,6 @@ class HomeScreenViewModel(
 
     /* Navigation functions */
     fun onBackPressed() = router.exit()
-    fun goToCategory() = router.navigateTo(NavigationScreens.category())
     fun goToEditNote(noteId: Int = NEW_NOTE_ID) = router.navigateTo(NavigationScreens.Home.editNote(noteId))
 
 

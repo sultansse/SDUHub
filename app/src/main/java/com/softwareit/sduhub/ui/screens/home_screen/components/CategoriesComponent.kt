@@ -1,6 +1,11 @@
 package com.softwareit.sduhub.ui.screens.home_screen.components
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,9 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import com.softwareit.sduhub.R
 import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
@@ -67,7 +74,12 @@ fun Categories() {
         modifier = Modifier.padding(8.dp)
     ) {
         categories.forEach { category ->
-            Category(category.icon, category.title)
+            val context = LocalContext.current
+            Category(
+                category.icon,
+                category.title,
+                onCategoryClick = { navigateToCategory(context, category.title) },
+            )
         }
     }
 }
@@ -76,12 +88,14 @@ fun Categories() {
 fun Category(
     icon: Int,
     title: String,
+    onCategoryClick: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(horizontal = 2.dp, vertical = 8.dp)
+            .clickable { onCategoryClick() }
     ) {
         Image(
             painter = painterResource(icon),
@@ -95,5 +109,41 @@ fun Category(
             text = title,
             textAlign = TextAlign.Center,
         )
+    }
+}
+
+fun navigateToCategory(context: Context, title: String) {
+    when (title) {
+        "Gmail" -> {
+            openGmail(context)
+        }
+        "Sdu.kz" -> {
+            openMySdu(context)
+        }
+    }
+}
+
+fun openMySdu(context: Context) {
+//    todo navigate to sdu.kz fragment
+}
+
+private fun openGmail(context: Context) {
+
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:")
+        putExtra(Intent.EXTRA_EMAIL, arrayOf("recipient@example.com"))
+        putExtra(Intent.EXTRA_SUBJECT, "Subject")
+        putExtra(Intent.EXTRA_TEXT, "Body")
+    }
+
+    try {
+        startActivity(context, intent, null)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        Toast.makeText(
+            context,
+            "not found any email client to open the email",
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
