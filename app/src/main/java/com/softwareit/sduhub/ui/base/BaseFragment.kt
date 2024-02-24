@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
-import com.softwareit.sduhub.ui.common.ui_extensions.hideKeyboardOnOutsideClick
+import com.softwareit.sduhub.ui.common.hideKeyboardOnOutsideClick
 import com.softwareit.sduhub.ui.theme.SDUHubTheme
 
 abstract class BaseFragment : Fragment() {

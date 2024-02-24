@@ -13,6 +13,7 @@ import com.softwareit.sduhub.domain.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
+import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -38,7 +39,7 @@ val networkModule = module {
 
 val repositoryModule = module {
     single<NotesRepository> { NotesRepositoryImpl(localDataSource = get()) }
-    single<NetworkRepository> { NetworkRepositoryImpl(networkDataSource = get())}
+    single<NetworkRepository> { NetworkRepositoryImpl(networkDataSource = get()) }
 }
 
 val useCaseModule = module {
@@ -55,7 +56,15 @@ val viewModelModule = module {
             getNotes = get(),
             addNote = get(),
             deleteNotes = get(),
-            getImportantInfo = get()
+            getImportantInfo = get(),
+        )
+    }
+    viewModel {
+        EditNoteViewModel(
+            router = get(),
+            getNotes = get(),
+            addNote = get(),
+            deleteNotes = get(),
         )
     }
 }

@@ -16,9 +16,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,13 +26,12 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.ui.base.BaseFragment
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NotesComponent
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
-import com.softwareit.sduhub.utils.getFormattedTime
+import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_IDENTIFIER
 import com.softwareit.sduhub.utils.isNotNull
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -124,19 +120,10 @@ class HomeFragment : BaseFragment() {
 
     @Composable
     fun HomeAddNoteFAB() {
-        var counter by remember {
-            mutableIntStateOf(0)
-        }
         FloatingActionButton(
             shape = CircleShape,
             onClick = {
-                counter++
-                val data = NoteDTO(
-                    title = "My #$counter note title",
-                    description = "Some description to my note to check how it looks in layout",
-                    created_at = getFormattedTime()
-                )
-                viewModel.setEvent(HomeContract.Event.OnNoteAdded(data))
+                viewModel.goToEditNote(NEW_NOTE_IDENTIFIER)
             }
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Add")

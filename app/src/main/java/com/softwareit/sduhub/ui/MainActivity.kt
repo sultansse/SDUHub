@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        router.navigateTo(NavigationScreens.home())
+        router.navigateTo(NavigationScreens.Home.home())
         setupBottomNavViewClicks()
     }
 
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home_screen -> {
-                    router.navigateTo(NavigationScreens.home())
+                    router.navigateTo(NavigationScreens.Home.home())
                     true
                 }
 

@@ -9,9 +9,6 @@ import com.softwareit.sduhub.domain.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.ui.base.BaseViewModel
 import com.softwareit.sduhub.ui.navigation.NavigationScreens
-import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
@@ -26,15 +23,8 @@ class HomeScreenViewModel(
     /* Navigation functions */
     fun onBackPressed() = router.exit()
     fun goToCategory() = router.navigateTo(NavigationScreens.category())
+    fun goToEditNote(noteId: Int) = router.navigateTo(NavigationScreens.Home.editNote(noteId))
 
-    private val _data = MutableStateFlow<ImportantInfoDTO?>(null)
-    val data: StateFlow<ImportantInfoDTO?> = _data
-
-//    val db = database.reference.child("important_info_table")
-
-//    fun setData(data: ImportantInfoDTO) {
-//        db.setValue(data)
-//    }
 
     init {
         fetchImportantInfo()
