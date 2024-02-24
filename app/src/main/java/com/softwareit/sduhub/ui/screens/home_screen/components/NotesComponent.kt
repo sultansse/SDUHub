@@ -25,21 +25,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 
 @Composable
 fun NotesComponent(notes: List<NoteDTO>) {
+    val viewModel: HomeScreenViewModel = viewModel()
     Column {
         notes.forEach {
-            NoteItem(note = it)
+            NoteItem(note = it) {
+                viewModel.goToEditNote(noteId = it.id)
+            }
         }
     }
 }
 
 
 @Composable
-fun NoteItem(note: NoteDTO) {
+fun NoteItem(
+    note: NoteDTO,
+    onNoteClick: () -> Unit
+) {
+
     val context = LocalContext.current
     val backgroundImage: Painter = painterResource(id = R.drawable.img_bg_note)
 
@@ -48,6 +57,10 @@ fun NoteItem(note: NoteDTO) {
             .fillMaxWidth()
             .padding(16.dp)
             .clip(RoundedCornerShape(16.dp))
+            .clickable {
+                Toast.makeText(context, "Note ${note.id } is clicked", Toast.LENGTH_SHORT).show()
+                onNoteClick()
+            }
     ) {
         Image(
             painter = backgroundImage,

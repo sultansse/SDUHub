@@ -1,10 +1,8 @@
 package com.softwareit.sduhub.data.local.notes
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
+import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 
@@ -17,11 +15,8 @@ interface NoteDao {
     @Query("SELECT * FROM NOTES_TABLE ORDER BY created_at DESC")
     fun getNotes(): Flow<List<NoteDTO>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addNote(note: NoteDTO)
-
-    @Update
-    suspend fun updateNote(note: NoteDTO)
+    @Upsert
+    suspend fun upsertNote(note: NoteDTO)
 
     @Query("DELETE FROM NOTES_TABLE WHERE id = :id")
     suspend fun deleteNote(id: Int)

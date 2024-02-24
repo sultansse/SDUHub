@@ -2,12 +2,18 @@ package com.softwareit.sduhub.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.databinding.ActivityMainBinding
 import com.softwareit.sduhub.ui.navigation.NavigationScreens
+import com.softwareit.sduhub.ui.screens.MapFragment
+import com.softwareit.sduhub.ui.screens.NewsFragment
+import com.softwareit.sduhub.ui.screens.ProfileFragment
+import com.softwareit.sduhub.ui.screens.home_screen.HomeFragment
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +41,21 @@ class MainActivity : AppCompatActivity() {
 
         router.navigateTo(NavigationScreens.Home.home())
         setupBottomNavViewClicks()
+        setupBottomNavViewVisibility()
+    }
+
+    private fun setupBottomNavViewVisibility() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            when (supportFragmentManager.findFragmentById(R.id.main_container)) {
+                is HomeFragment, is NewsFragment, is MapFragment, is ProfileFragment -> {
+                    binding.bottomNavigationView.isVisible = true
+                }
+
+                else -> {
+                    binding.bottomNavigationView.isGone = true
+                }
+            }
+        }
     }
 
     private fun setupBottomNavViewClicks() {
@@ -60,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                else -> false
+                else -> { false}
             }
         }
     }

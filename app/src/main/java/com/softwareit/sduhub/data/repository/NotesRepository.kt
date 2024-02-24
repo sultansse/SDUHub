@@ -11,9 +11,7 @@ interface NotesRepository {
 
     fun getNotes(): Flow<List<NoteDTO>>
 
-    suspend fun addNote(note: NoteDTO)
-
-    suspend fun updateNote(note: NoteDTO)
+    suspend fun upsertNote(note: NoteDTO)
 
     suspend fun deleteNote(id: Int)
 
@@ -32,12 +30,8 @@ class NotesRepositoryImpl(
         return localDataSource.getNotes()
     }
 
-    override suspend fun addNote(note: NoteDTO) {
-        localDataSource.addNote(note)
-    }
-
-    override suspend fun updateNote(note: NoteDTO) {
-        localDataSource.updateNote(note)
+    override suspend fun upsertNote(note: NoteDTO) {
+        localDataSource.upsertNote(note)
     }
 
     override suspend fun deleteNote(id: Int) {

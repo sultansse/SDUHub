@@ -10,6 +10,6 @@ class Constants {
         const val NOTE_TABLE = "notes_table"
         const val IMPORTANT_INFO_TABLE = "important_info_table"
 
-        const val NEW_NOTE_IDENTIFIER = -1
+        const val NEW_NOTE_ID = 0
     }
 }

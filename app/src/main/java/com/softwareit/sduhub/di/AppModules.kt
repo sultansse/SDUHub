@@ -8,13 +8,12 @@ import com.softwareit.sduhub.data.repository.NetworkRepository
 import com.softwareit.sduhub.data.repository.NetworkRepositoryImpl
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.data.repository.NotesRepositoryImpl
-import com.softwareit.sduhub.domain.AddNoteUseCase
 import com.softwareit.sduhub.domain.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.GetNoteUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
-import com.softwareit.sduhub.domain.UpdateNoteUseCase
+import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteViewModel
 import org.koin.android.ext.koin.androidContext
@@ -50,8 +49,7 @@ val useCaseModule = module {
 
     factory { GetNotesUseCase(repository = get()) }
     factory { GetNoteUseCase(repository = get()) }
-    factory { AddNoteUseCase(repository = get()) }
-    factory { UpdateNoteUseCase(repository = get()) }
+    factory { UpsertNoteUseCase(repository = get()) }
     factory { DeleteNoteUseCase(repository = get()) }
     factory { DeleteNotesUseCase(repository = get()) }
 
@@ -62,7 +60,7 @@ val viewModelModule = module {
         HomeScreenViewModel(
             router = get(),
             getNotes = get(),
-            addNote = get(),
+            upsertNote = get(),
             deleteNotes = get(),
             getImportantInfo = get(),
         )
@@ -71,8 +69,7 @@ val viewModelModule = module {
         EditNoteViewModel(
             router = get(),
             getNote = get(),
-            addNote = get(),
-            updateNote = get(),
+            upsertNote = get(),
             deleteNote = get(),
         )
     }

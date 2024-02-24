@@ -3,19 +3,20 @@ package com.softwareit.sduhub.ui.screens.home_screen
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.domain.AddNoteUseCase
 import com.softwareit.sduhub.domain.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
+import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.base.BaseViewModel
 import com.softwareit.sduhub.ui.navigation.NavigationScreens
+import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import kotlinx.coroutines.launch
 
 
 class HomeScreenViewModel(
     private val router: Router,
     private val getNotes: GetNotesUseCase,
-    private val addNote: AddNoteUseCase,
+    private val upsertNote: UpsertNoteUseCase,
     private val deleteNotes: DeleteNotesUseCase,
     private val getImportantInfo: GetImportantInfoUseCase,
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
@@ -23,7 +24,7 @@ class HomeScreenViewModel(
     /* Navigation functions */
     fun onBackPressed() = router.exit()
     fun goToCategory() = router.navigateTo(NavigationScreens.category())
-    fun goToEditNote(noteId: Int) = router.navigateTo(NavigationScreens.Home.editNote(noteId))
+    fun goToEditNote(noteId: Int = NEW_NOTE_ID) = router.navigateTo(NavigationScreens.Home.editNote(noteId))
 
 
     init {
@@ -84,7 +85,7 @@ class HomeScreenViewModel(
 
     private fun addNoteUseCase(note: NoteDTO) {
         viewModelScope.launch {
-            addNote(note)
+            upsertNote(note)
         }
     }
 

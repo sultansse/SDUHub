@@ -31,7 +31,6 @@ import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NotesComponent
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
-import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_IDENTIFIER
 import com.softwareit.sduhub.utils.isNotNull
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -123,7 +122,7 @@ class HomeFragment : BaseFragment() {
         FloatingActionButton(
             shape = CircleShape,
             onClick = {
-                viewModel.goToEditNote(NEW_NOTE_IDENTIFIER)
+                viewModel.goToEditNote()
             }
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Add")

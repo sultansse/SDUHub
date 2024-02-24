@@ -25,6 +25,5 @@ class EditNoteContract {
         data object Idle : NoteState()
         data object Empty : NoteState()
         data class Success(val data: NoteDTO) : NoteState()
-        data class Error(val message: String) : NoteState()
     }
 }
