@@ -103,6 +103,7 @@ dependencies {
     val koinVersion = "3.5.3"
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
 
 //   cicerone
     implementation("com.github.terrakok:cicerone:7.1")

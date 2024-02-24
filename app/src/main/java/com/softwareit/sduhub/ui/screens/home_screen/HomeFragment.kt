@@ -49,7 +49,7 @@ class HomeFragment : BaseFragment() {
             Box(
                 modifier = Modifier.padding(it)
             ) {
-                HomeScreen(viewModel)
+                HomeScreen()
             }
         }
     }
@@ -68,7 +68,7 @@ class HomeFragment : BaseFragment() {
     }
 
     @Composable
-    fun HomeScreen(viewModel: HomeScreenViewModel) {
+    fun HomeScreen() {
 
         val uiState by viewModel.uiState.collectAsState()
 

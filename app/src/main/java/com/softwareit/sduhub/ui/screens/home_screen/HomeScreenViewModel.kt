@@ -27,6 +27,8 @@ class HomeScreenViewModel(
 
 
     init {
+        // todo make better, to move logic to idle,
+        //  so when its started it will automatically call request
         fetchImportantInfo()
         fetchNotes()
     }

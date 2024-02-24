@@ -8,5 +8,8 @@ import kotlinx.coroutines.flow.Flow
 class GetNotesUseCase(
     private val repository: NotesRepository,
 ) {
-    operator fun invoke(): Flow<List<NoteDTO>> = repository.getNotes()
+
+    operator fun invoke(): Flow<List<NoteDTO>> {
+        return repository.getNotes()
+    }
 }

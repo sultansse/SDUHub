@@ -8,7 +8,7 @@ import com.softwareit.sduhub.ui.base.UiState
 class EditNoteContract {
 
     sealed class Event : UiEvent {
-        data object OnFetchNote : Event()
+        data class OnFetchNote(val noteId: Int) : Event()
         data class OnSaveNote(val note: NoteDTO) : Event()
         data class OnDeleteNote(val note: NoteDTO) : Event()
     }
@@ -24,7 +24,7 @@ class EditNoteContract {
     sealed class NoteState {
         data object Idle : NoteState()
         data object Empty : NoteState()
-        data class Success(val data: List<NoteDTO>) : NoteState()
+        data class Success(val data: NoteDTO) : NoteState()
         data class Error(val message: String) : NoteState()
     }
 }
