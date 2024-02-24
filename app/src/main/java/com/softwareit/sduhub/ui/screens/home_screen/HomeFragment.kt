@@ -74,7 +74,7 @@ class HomeFragment : BaseFragment() {
     @Composable
     fun HomeScreen(viewModel: HomeScreenViewModel) {
 
-        val state = viewModel.uiState.collectAsState().value
+        val uiState by viewModel.uiState.collectAsState()
 
         LazyColumn {
 
@@ -83,10 +83,10 @@ class HomeFragment : BaseFragment() {
             item { Categories() }
 
             item {
-                when (state.importantInfoState) {
+                when (val state = uiState.importantInfoState) {
                     is HomeContract.ImportantInfoState.Success -> {
-                        AnimatedVisibility(visible = (state.importantInfoState.data.isNotNull())) {
-                            ImportantInfo(data = state.importantInfoState.data)
+                        AnimatedVisibility(visible = (state.data.isNotNull())) {
+                            ImportantInfo(data = state.data)
                         }
                     }
 
@@ -102,9 +102,9 @@ class HomeFragment : BaseFragment() {
             }
 
             item {
-                when (state.notesState) {
+                when (val state = uiState.notesState) {
                     is HomeContract.NotesState.Success -> {
-                        NotesComponent(notes = state.notesState.data)
+                        NotesComponent(notes = state.data)
                     }
 
                     is HomeContract.NotesState.Idle -> {
