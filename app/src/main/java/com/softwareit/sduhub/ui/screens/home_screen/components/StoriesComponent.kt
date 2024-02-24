@@ -8,7 +8,7 @@ import com.appsamurai.storyly.StorylyInit
 import com.appsamurai.storyly.StorylyView
 import com.appsamurai.storyly.config.StorylyConfig
 import com.appsamurai.storyly.config.styling.group.StorylyStoryGroupStyling
-import com.softwareit.sduhub.common.utils.Constants
+import com.softwareit.sduhub.utils.Constants
 
 @Composable
 fun Stories() {

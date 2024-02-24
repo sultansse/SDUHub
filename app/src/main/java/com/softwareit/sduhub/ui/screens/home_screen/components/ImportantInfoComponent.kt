@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.softwareit.sduhub.common.utils.empty
+import com.softwareit.sduhub.utils.empty
 
 
 @Composable

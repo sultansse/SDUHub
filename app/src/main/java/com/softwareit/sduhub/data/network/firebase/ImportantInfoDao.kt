@@ -1,8 +1,8 @@
 package com.softwareit.sduhub.data.network.firebase
 
 import com.google.firebase.database.FirebaseDatabase
-import com.softwareit.sduhub.common.utils.Constants.Companion.IMPORTANT_INFO_TABLE
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
+import com.softwareit.sduhub.utils.Constants.Companion.IMPORTANT_INFO_TABLE
 import kotlinx.coroutines.tasks.await
 
 class ImportantInfoDao(

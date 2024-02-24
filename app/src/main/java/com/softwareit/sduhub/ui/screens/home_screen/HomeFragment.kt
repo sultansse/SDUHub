@@ -1,8 +1,5 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -28,43 +25,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.Fragment
-import androidx.fragment.compose.content
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.common.utils.getFormattedTime
-import com.softwareit.sduhub.common.utils.isNotNull
 import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.ui.base.BaseFragment
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NotesComponent
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
-import com.softwareit.sduhub.ui.theme.SDUHubTheme
+import com.softwareit.sduhub.utils.getFormattedTime
+import com.softwareit.sduhub.utils.isNotNull
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private val viewModel: HomeScreenViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = content {
-        SDUHubTheme {
-
-            Scaffold(
-                topBar = { HomeTopAppBar() },
-                floatingActionButton = { HomeAddNoteFAB() },
+    @Composable
+    override fun SetContent() {
+        Scaffold(
+            topBar = { HomeTopAppBar() },
+            floatingActionButton = { HomeAddNoteFAB() },
+        ) {
+            Box(
+                modifier = Modifier.padding(it)
             ) {
-                Box(
-                    modifier = Modifier.padding(it)
-                ) {
-                    HomeScreen(viewModel)
-                }
+                HomeScreen(viewModel)
             }
         }
     }

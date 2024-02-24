@@ -2,8 +2,8 @@ package com.softwareit.sduhub.di
 
 import android.content.Context
 import androidx.room.Room
-import com.softwareit.sduhub.common.utils.Constants.Companion.NOTE_TABLE
 import com.softwareit.sduhub.data.local.notes.NotesDatabase
+import com.softwareit.sduhub.utils.Constants.Companion.NOTE_TABLE
 
 
 //db
