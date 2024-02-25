@@ -9,6 +9,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,6 +20,7 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.ui.base.BaseFragment
 import com.softwareit.sduhub.ui.screens.profile_screen.components.LogoutComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
+import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardDialog
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileScreenListItemComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchComponent
 
@@ -39,11 +44,19 @@ class ProfileFragment : BaseFragment() {
             modifier = Modifier.fillMaxSize(),
         ) {
             item {
+                var dialogOpen by remember { mutableStateOf(false) }
+
                 ProfileHeaderComponent(
                     onClick = {
-                        // todo open profile id card
+                        dialogOpen = true
                     }
                 )
+
+                if (dialogOpen) {
+                    ProfileIdCardDialog(
+                        onClose = { dialogOpen = false }
+                    )
+                }
             }
 
             item {

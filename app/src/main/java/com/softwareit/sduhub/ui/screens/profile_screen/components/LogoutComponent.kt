@@ -20,18 +20,18 @@ fun LogoutComponent() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp, horizontal = 32.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Favorite,
-            contentDescription = "Logout"
+            contentDescription = "Logout",
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 32.dp)
         )
         Text(
             text = "Logout",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp)
         )
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 
@@ -22,23 +23,31 @@ fun ProfileScreenListItemComponent(onClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp, horizontal = 32.dp)
             .clickable { onClick() }
     ) {
         Icon(
             imageVector = Icons.Default.Favorite,
-            contentDescription = "Logout"
+            contentDescription = "Logout",
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 32.dp)
+
         )
         Text(
             text = "Some element in list",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp)
         )
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
-            contentDescription = "Open this block"
-        )
+            contentDescription = "Open this block",
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 32.dp)        )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProfileScreenListItemComponentPreview() {
+    ProfileScreenListItemComponent(onClick = {})
 }

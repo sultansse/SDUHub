@@ -21,24 +21,26 @@ fun ThemeSwitchComponent() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp, horizontal = 32.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Favorite,
-            contentDescription = "Dark mode"
+            contentDescription = "Dark mode",
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 32.dp)
         )
         Text(
             text = "Dark mode",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp)
         )
         Switch(
             checked = false,
             onCheckedChange = {
 //          todo make change of theme to night theme
-            }
+            },
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 32.dp)
         )
     }
 }
