@@ -3,10 +3,10 @@ package com.softwareit.sduhub.ui.navigation
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.softwareit.sduhub.ui.screens.MapFragment
 import com.softwareit.sduhub.ui.screens.NewsFragment
-import com.softwareit.sduhub.ui.screens.ProfileFragment
 import com.softwareit.sduhub.ui.screens.home_screen.HomeFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen.SduKzFragment
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteFragment
+import com.softwareit.sduhub.ui.screens.profile_screen.ProfileFragment
 
 object NavigationScreens {
 

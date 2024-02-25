@@ -12,3 +12,6 @@ val Pink40 = Color(0xFF7D5260)
 
 val Dark200 = Color(0xff44475a)
 val Dark500 = Color(0xff2d2f3c)
+
+val SduBlue = Color(0xFF212153)
+val SduOrange = Color(0xFFFF8040)
