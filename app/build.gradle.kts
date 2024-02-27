@@ -9,6 +9,23 @@ android {
     namespace = "com.softwareit.sduhub"
     compileSdk = 34
 
+    signingConfigs {
+//        create("debug") {
+//            storeFile = file("debug.keystore")
+//            storePassword = "android"
+//            keyAlias = "androiddebugkey"
+//            keyPassword = "android"
+//        }
+
+
+        create("release") {
+            storeFile = file("Keys/SDUHubKey.keystore")
+            storePassword = "sduHub"
+            keyAlias = "sduhub"
+            keyPassword = "sduHub"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.softwareit.sduhub"
         minSdk = 26
@@ -30,12 +47,13 @@ android {
 
         release {
             isDebuggable = false
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
 //            signingConfig = signingConfigs.getByName(AppConfigs.name)
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -73,10 +91,6 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.github.theapache64:rebugger:1.0.0-rc02")
-
-//    mapbox indoor
-    implementation("com.mapbox.maps:android:11.1.0")
-    implementation("com.mapbox.extension:maps-compose:11.1.0")
 
 //    firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
@@ -139,7 +153,4 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-//    implementation("com.google.android.material:material:1.11.0")
-//    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
