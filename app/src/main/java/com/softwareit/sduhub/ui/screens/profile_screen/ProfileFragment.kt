@@ -29,9 +29,11 @@ class ProfileFragment : BaseFragment() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun SetContent() {
-        Scaffold(topBar = {
-            TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
-        }) {
+        Scaffold(
+            topBar = {
+                TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
+            }
+        ) {
             Box(modifier = Modifier.padding(it)) {
                 ProfileScreen()
             }
@@ -80,6 +82,6 @@ class ProfileFragment : BaseFragment() {
     @Preview(showSystemUi = true, showBackground = true)
     @Composable
     fun ProfileScreenPreview() {
-        ProfileScreen()
+        SetContent()
     }
 }

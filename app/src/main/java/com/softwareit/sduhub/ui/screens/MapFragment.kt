@@ -29,15 +29,15 @@ class MapFragment : BaseFragment() {
         }
     }
 
+    @Composable
+    fun MapScreen() {
+        Text(text = "Map Screen")
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    fun MapScreenPreview() {
+        SetContent()
+    }
 }
 
-@Composable
-fun MapScreen() {
-    Text(text = "Map Screen")
-}
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun MapScreenPreview() {
-    MapScreen()
-}
