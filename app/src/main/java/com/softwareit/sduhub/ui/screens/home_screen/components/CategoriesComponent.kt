@@ -18,13 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
+import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
+import okhttp3.internal.immutableListOf
 
 
 data class CategoryDto(
@@ -34,7 +35,8 @@ data class CategoryDto(
 
 @Composable
 fun Categories() {
-    val categories = listOf(
+//    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val categories = immutableListOf(
         CategoryDto(
             icon = R.drawable.img_ai,
             title = "Ai assistant"
@@ -90,6 +92,9 @@ fun Category(
     title: String,
     onCategoryClick: () -> Unit,
 ) {
+
+    val categoryIcon = rememberAsyncImagePainter(icon)
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -98,7 +103,7 @@ fun Category(
             .clickable { onCategoryClick() }
     ) {
         Image(
-            painter = painterResource(icon),
+            painter = categoryIcon,
             contentDescription = title,
             modifier = Modifier
                 .size(56.dp)

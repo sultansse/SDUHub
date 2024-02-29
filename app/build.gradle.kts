@@ -119,6 +119,10 @@ dependencies {
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
 
+//    coil
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("com.github.skydoves:landscapist-coil:2.2.3")
+
 //   cicerone
     implementation("com.github.terrakok:cicerone:7.1")
 

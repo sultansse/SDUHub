@@ -16,16 +16,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
@@ -50,7 +49,7 @@ fun NoteItem(
 ) {
 
     val context = LocalContext.current
-    val backgroundImage: Painter = painterResource(id = R.drawable.img_bg_note)
+    val backgroundImage = rememberAsyncImagePainter(R.drawable.img_bg_note)
 
     Box(
         modifier = Modifier

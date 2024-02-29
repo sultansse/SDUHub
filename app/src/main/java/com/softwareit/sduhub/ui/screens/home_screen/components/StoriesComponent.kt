@@ -1,6 +1,6 @@
 package com.softwareit.sduhub.ui.screens.home_screen.components
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 import com.appsamurai.storyly.StoryGroupSize
@@ -12,29 +12,35 @@ import com.softwareit.sduhub.utils.Constants
 
 @Composable
 fun Stories() {
-    Row {
-        AndroidView(
-            factory = { context ->
-                StorylyView(context).apply {
-                    storylyInit = StorylyInit(
-                        storylyId = Constants.STORYLY_INSTANCE_TOKEN,
-                        config = StorylyConfig.Builder()
-                            .setStoryGroupStyling(
-                                StorylyStoryGroupStyling.Builder()
-                                    .setTitleVisibility(isVisible = false)
-                                    .setSize(
-                                        size = StoryGroupSize.Custom
-                                    )
-                                    .setIconCornerRadius(60)
-                                    .setIconHeight(420)
-                                    .setIconWidth(380)
-                                    .build()
-                            )
-                            .build()
-                    )
-
-                }
-            }
-        )
+    LazyRow {
+        item {
+            StorylyViewComponent()
+        }
     }
+}
+
+@Composable
+fun StorylyViewComponent() {
+    AndroidView(
+        factory = { context ->
+            StorylyView(context).apply {
+
+                val storyGroupStylyng = StorylyStoryGroupStyling.Builder()
+                    .setTitleVisibility(isVisible = false)
+                    .setSize(StoryGroupSize.Custom)
+                    .setIconHeight(420)
+                    .setIconWidth(380)
+                    .setIconCornerRadius(60)
+                    .build()
+
+                storylyInit = StorylyInit(
+                    storylyId = Constants.STORYLY_INSTANCE_TOKEN,
+                    config = StorylyConfig.Builder()
+                        .setStoryGroupStyling(storyGroupStylyng)
+                        .build()
+                )
+
+            }
+        }
+    )
 }

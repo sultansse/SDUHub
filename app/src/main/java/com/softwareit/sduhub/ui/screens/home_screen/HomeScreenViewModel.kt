@@ -10,6 +10,7 @@ import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.base.BaseViewModel
 import com.softwareit.sduhub.ui.navigation.NavigationScreens
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -34,7 +35,7 @@ class HomeScreenViewModel(
     }
 
     private fun fetchImportantInfo() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getImportantInfo()?.let {
                 setState { copy(importantInfoState = HomeContract.ImportantInfoState.Success(it)) }
             }
@@ -72,7 +73,7 @@ class HomeScreenViewModel(
             }
 
             HomeContract.Event.OnNotesDeleted -> {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     deleteNotes()
                     setState {
                         copy(notesState = HomeContract.NotesState.Idle)
@@ -83,13 +84,13 @@ class HomeScreenViewModel(
     }
 
     private fun addNoteUseCase(note: NoteDTO) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             upsertNote(note)
         }
     }
 
     private fun fetchNotes() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getNotes().collect() {
                 if (it.isEmpty()) {
                     setState { copy(notesState = HomeContract.NotesState.Idle) }
