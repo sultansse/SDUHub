@@ -100,7 +100,7 @@ fun NoteItem(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
-                    text = note.created_at
+                    text = note.updatedAt
                 )
             }
 
