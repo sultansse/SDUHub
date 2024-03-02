@@ -34,9 +34,15 @@ fun NotesComponent(notes: List<NoteDTO>) {
     val viewModel: HomeScreenViewModel = viewModel()
     Column {
         notes.forEach {
-            NoteItem(note = it) {
-                viewModel.goToEditNote(noteId = it.id)
-            }
+            NoteItem(
+                note = it,
+                onNoteClick = {
+                    viewModel.goToEditNote(noteId = it.id)
+                },
+                onNoteMenuClick = {
+                    // TODO open dropdown menu
+                },
+            )
         }
     }
 }
@@ -45,7 +51,8 @@ fun NotesComponent(notes: List<NoteDTO>) {
 @Composable
 fun NoteItem(
     note: NoteDTO,
-    onNoteClick: () -> Unit
+    onNoteClick: () -> Unit,
+    onNoteMenuClick: () -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -57,7 +64,9 @@ fun NoteItem(
             .padding(16.dp)
             .clip(RoundedCornerShape(16.dp))
             .clickable {
-                Toast.makeText(context, "Note ${note.id } is clicked", Toast.LENGTH_SHORT).show()
+                Toast
+                    .makeText(context, "Note ${note.id} is clicked", Toast.LENGTH_SHORT)
+                    .show()
                 onNoteClick()
             }
     ) {
@@ -105,6 +114,7 @@ fun NoteItem(
                         Toast
                             .makeText(context, "More is clicked", Toast.LENGTH_SHORT)
                             .show()
+                        onNoteMenuClick()
                     }
                     .constrainAs(moreIcon) {
                         top.linkTo(parent.top)

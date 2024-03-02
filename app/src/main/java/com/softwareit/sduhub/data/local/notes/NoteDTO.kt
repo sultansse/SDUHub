@@ -13,4 +13,11 @@ data class NoteDTO(
     val description: String,
     val created_at: String,
     val notifyTime: String? = String.empty,
-)
+) {
+    constructor() : this(
+        title = String.empty,
+        description = String.empty,
+        created_at = String.empty,
+        notifyTime = String.empty,
+    )
+}

@@ -1,7 +1,7 @@
-@file:OptIn(FlowPreview::class)
-
 package com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.data.local.notes.NoteDTO
@@ -10,7 +10,6 @@ import com.softwareit.sduhub.domain.GetNoteUseCase
 import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.base.BaseViewModel
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 
 class EditNoteViewModel(
@@ -22,6 +21,22 @@ class EditNoteViewModel(
 ) : BaseViewModel<EditNoteContract.Event, EditNoteContract.State, EditNoteContract.Effect>() {
 
     fun onBackPressed() = router.exit()
+
+    private val _noteCurrentData = mutableStateOf<NoteDTO>(NoteDTO())
+    val noteCurrentData: State<NoteDTO> = _noteCurrentData
+
+    fun setNoteTitle(title: String) {
+        _noteCurrentData.value = noteCurrentData.value.copy(title = title)
+    }
+
+    fun setNoteDescription(description: String) {
+        _noteCurrentData.value = noteCurrentData.value.copy(description = description)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        saveNote(noteCurrentData.value)
+    }
 
     override fun setInitialState(): EditNoteContract.State {
         return EditNoteContract.State(
@@ -38,11 +53,13 @@ class EditNoteViewModel(
                     fetchNote(noteId = event.noteId)
                 }
             }
-            is EditNoteContract.Event.OnSaveNote -> {
-                saveNote(event.note)
-            }
+
             is EditNoteContract.Event.OnDeleteNote -> {
                 deleteNote()
+            }
+
+            is EditNoteContract.Event.OnSaveNote -> {
+                saveNote(event.note)
             }
         }
     }
