@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.data.common
+package com.softwareit.sduhub.common.data
 
 import com.bumptech.glide.load.HttpException
 import kotlinx.coroutines.Dispatchers

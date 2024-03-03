@@ -9,8 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.softwareit.sduhub.ui.base.BaseFragment
-import com.softwareit.sduhub.ui.common.WebViewWithLoading
+import com.softwareit.sduhub.base.BaseFragment
+import com.softwareit.sduhub.common.ui.WebViewWithLoading
 
 class MoodleFragment : BaseFragment() {
 

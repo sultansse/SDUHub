@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.common
+package com.softwareit.sduhub.common.ui
 
 import android.annotation.SuppressLint
 import android.webkit.WebView

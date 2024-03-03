@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.base
+package com.softwareit.sduhub.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
-import com.softwareit.sduhub.ui.common.hideKeyboardOnOutsideClick
+import com.softwareit.sduhub.common.ui.hideKeyboardOnOutsideClick
 import com.softwareit.sduhub.ui.theme.SDUHubTheme
 
 abstract class BaseFragment : Fragment() {

@@ -9,7 +9,7 @@ import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.databinding.ActivityMainBinding
-import com.softwareit.sduhub.ui.navigation.NavigationScreens
+import com.softwareit.sduhub.navigation.NavigationScreens
 import com.softwareit.sduhub.ui.screens.MapFragment
 import com.softwareit.sduhub.ui.screens.NewsFragment
 import com.softwareit.sduhub.ui.screens.home_screen.HomeFragment

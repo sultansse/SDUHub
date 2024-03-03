@@ -1,9 +1,9 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
+import com.softwareit.sduhub.base.UiEffect
+import com.softwareit.sduhub.base.UiEvent
+import com.softwareit.sduhub.base.UiState
 import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.ui.base.UiEffect
-import com.softwareit.sduhub.ui.base.UiEvent
-import com.softwareit.sduhub.ui.base.UiState
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
 
 class HomeContract {

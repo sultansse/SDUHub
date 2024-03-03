@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.common
+package com.softwareit.sduhub.common.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

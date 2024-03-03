@@ -36,8 +36,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.base.BaseFragment
 import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.ui.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNoteFragment(

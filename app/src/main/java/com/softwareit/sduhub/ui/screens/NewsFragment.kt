@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.base.BaseFragment
+import com.softwareit.sduhub.base.BaseFragment
 
 class NewsFragment : BaseFragment() {
 

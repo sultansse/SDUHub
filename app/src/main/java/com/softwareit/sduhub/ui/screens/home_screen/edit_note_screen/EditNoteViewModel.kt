@@ -2,11 +2,11 @@ package com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen
 
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
+import com.softwareit.sduhub.base.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.domain.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.GetNoteUseCase
 import com.softwareit.sduhub.domain.UpsertNoteUseCase
-import com.softwareit.sduhub.ui.base.BaseViewModel
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow

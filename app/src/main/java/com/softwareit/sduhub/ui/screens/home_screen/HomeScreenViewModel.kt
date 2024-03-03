@@ -2,13 +2,13 @@ package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
+import com.softwareit.sduhub.base.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.domain.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.domain.UpsertNoteUseCase
-import com.softwareit.sduhub.ui.base.BaseViewModel
-import com.softwareit.sduhub.ui.navigation.NavigationScreens
+import com.softwareit.sduhub.navigation.NavigationScreens
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

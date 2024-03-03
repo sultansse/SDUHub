@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.navigation
+package com.softwareit.sduhub.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.softwareit.sduhub.ui.screens.MapFragment
