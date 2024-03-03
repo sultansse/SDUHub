@@ -88,7 +88,7 @@ class HomeFragment : BaseFragment() {
 
             item { Stories() }
 
-            item { Categories() }
+            item { Categories(viewModel) }
 
             item {
                 when (val state = uiState.importantInfoState) {

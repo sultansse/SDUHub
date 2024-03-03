@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen
+package com.softwareit.sduhub.ui.screens.home_screen.categories.moodle_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,16 +12,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.softwareit.sduhub.ui.base.BaseFragment
 import com.softwareit.sduhub.ui.common.WebViewWithLoading
 
-class SduKzFragment : BaseFragment() {
+class MoodleFragment : BaseFragment() {
 
     @Composable
     override fun SetContent() {
-        SduKzScreen()
+        MoodleScreen()
     }
 }
 
 @Composable
-fun SduKzScreen() {
+fun MoodleScreen() {
     val isLoading = remember { mutableStateOf(true) }
 
     Column(
@@ -30,7 +30,7 @@ fun SduKzScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         WebViewWithLoading(
-            url = "https://sdu.edu.kz/language/ru/",
+            url = "https://moodle.sdu.edu.kz/login/index.php/",
             isLoading = isLoading
         )
     }
@@ -38,6 +38,6 @@ fun SduKzScreen() {
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun SduKzScreenPreview() {
-    SduKzScreen()
+fun MoodleScreenPreview() {
+    MoodleScreen()
 }

@@ -19,11 +19,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
 import okhttp3.internal.immutableListOf
@@ -33,10 +33,9 @@ data class CategoryDto(
     val icon: Int,
     val title: String
 )
-
+// TODO do not pass viewmodel to composable
 @Composable
-fun Categories() {
-//    val screenWidth = LocalConfiguration.current.screenWidthDp
+fun Categories(viewModel: HomeScreenViewModel) {
     val categories = immutableListOf(
         CategoryDto(
             icon = R.drawable.img_ai,
@@ -81,7 +80,7 @@ fun Categories() {
             Category(
                 category.icon,
                 category.title,
-                onCategoryClick = { navigateToCategory(context, category.title) },
+                onCategoryClick = { navigateToCategory(context, category.title, viewModel) },
             )
         }
     }
@@ -118,20 +117,26 @@ fun Category(
     }
 }
 
-fun navigateToCategory(context: Context, title: String) {
+fun navigateToCategory(context: Context, title: String, viewModel: HomeScreenViewModel) {
     when (title) {
-        "Gmail" -> {
-            openGmail(context)
-        }
-        "Sdu.kz" -> {
-            openMySdu(context)
-        }
+        "Gmail" -> { openGmail(context) }
+
+        "MySDU" -> { viewModel.goToMySdu() }
+
+        "Sdu.kz" -> { viewModel.goToSduKz() }
+
+        "Ai assistant" -> { viewModel.goToAiAssistant() }
+
+        "Student clubs" -> { viewModel.goToStudentClubs() }
+
+        "Free Offices" -> { openTelegramToUser("sduflexbot", context) }
+
+        "Moodle" -> { viewModel.goToMoodle() }
+
+        "Library" -> { viewModel.goToSduLibrary() }
     }
 }
 
-fun openMySdu(context: Context) {
-//    todo navigate to sdu.kz fragment
-}
 
 private fun openGmail(context: Context) {
 
@@ -154,8 +159,19 @@ private fun openGmail(context: Context) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CategoriesComponentPreview() {
-    Categories()
+
+fun openTelegramToUser(username: String, context: Context) {
+    val telegramUri = Uri.parse("https://t.me/$username")
+    val telegramIntent = Intent(Intent.ACTION_VIEW, telegramUri)
+
+    // Check if the Telegram app is installed
+    val packageManager = context.packageManager
+    if (telegramIntent.resolveActivity(packageManager) != null) {
+        // Telegram app is installed, open it
+        context.startActivity(telegramIntent)
+    } else {
+        // Telegram app is not installed, open in web browser
+        telegramIntent.data = telegramUri
+        context.startActivity(telegramIntent)
+    }
 }
