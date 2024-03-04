@@ -4,12 +4,14 @@ import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.base.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.domain.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.navigation.NavigationScreens
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
+import com.softwareit.sduhub.utils.getFormattedTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -18,6 +20,7 @@ class HomeScreenViewModel(
     private val router: Router,
     private val getNotes: GetNotesUseCase,
     private val upsertNote: UpsertNoteUseCase,
+    private val deleteNote: DeleteNoteUseCase,
     private val deleteNotes: DeleteNotesUseCase,
     private val getImportantInfo: GetImportantInfoUseCase,
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
@@ -78,9 +81,17 @@ class HomeScreenViewModel(
                 }
             }
 
-            HomeContract.Event.OnNotesDeleted -> {
+            is HomeContract.Event.OnNoteDeleted -> {
+                deleteNote(event.noteId)
+            }
+
+            is HomeContract.Event.OnNoteCopied -> {
+               copyNote(event.note)
+            }
+
+            is HomeContract.Event.OnNotesDeleted -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    deleteNotes()
+                    deleteNotes.invoke()
                     setState {
                         copy(notesState = HomeContract.NotesState.Idle)
                     }
@@ -89,21 +100,33 @@ class HomeScreenViewModel(
         }
     }
 
+    private fun copyNote(note: NoteDTO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            upsertNote.invoke(note.copy(id = 0, title = "${note.title} (Copy)", updatedAt = getFormattedTime()))
+        }
+    }
+
     private fun addNoteUseCase(note: NoteDTO) {
         viewModelScope.launch(Dispatchers.IO) {
-            upsertNote(note)
+            upsertNote.invoke(note)
         }
     }
 
     private fun fetchNotes() {
         viewModelScope.launch(Dispatchers.IO) {
-            getNotes().collect() {
+            getNotes.invoke().collect() {
                 if (it.isEmpty()) {
                     setState { copy(notesState = HomeContract.NotesState.Idle) }
                 } else {
                     setState { copy(notesState = HomeContract.NotesState.Success(it)) }
                 }
             }
+        }
+    }
+
+    private fun deleteNote(noteId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteNote.invoke(noteId)
         }
     }
 

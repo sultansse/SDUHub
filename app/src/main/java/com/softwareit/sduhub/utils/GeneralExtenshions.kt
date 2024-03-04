@@ -16,7 +16,11 @@ fun Context.vibratePhone() {
     vibration.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
 }
 
-fun getFormattedTime(dateTime: LocalDateTime = LocalDateTime.now()): String {
-    val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
+
+const val DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss"
+
+
+fun getFormattedTime(format: String = DATE_TIME_FORMAT, dateTime: LocalDateTime = LocalDateTime.now()): String {
+    val formatter = DateTimeFormatter.ofPattern(format)
     return dateTime.format(formatter)
 }

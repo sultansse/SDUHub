@@ -3,8 +3,10 @@ package com.softwareit.sduhub.ui.screens.home_screen.components
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -22,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
@@ -39,9 +40,6 @@ fun NotesComponent(notes: List<NoteDTO>) {
                 onNoteClick = {
                     viewModel.goToEditNote(noteId = it.id)
                 },
-                onNoteMenuClick = {
-                    // TODO open dropdown menu
-                },
             )
         }
     }
@@ -52,9 +50,9 @@ fun NotesComponent(notes: List<NoteDTO>) {
 fun NoteItem(
     note: NoteDTO,
     onNoteClick: () -> Unit,
-    onNoteMenuClick: () -> Unit,
 ) {
 
+    val viewModel: HomeScreenViewModel = viewModel()
     val context = LocalContext.current
     val backgroundImage = rememberAsyncImagePainter(R.drawable.img_bg_note)
 
@@ -77,51 +75,44 @@ fun NoteItem(
             modifier = Modifier.matchParentSize()
         )
 
-        ConstraintLayout {
-            val (content, moreIcon) = createRefs()
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .constrainAs(content) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     text = note.title,
                     fontWeight = FontWeight.Bold,
+                    maxLines = 1,
                     fontSize = 24.sp,
                 )
-                Text(text = note.description)
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End,
-                    text = note.updatedAt
+
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "More options",
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            Toast
+                                .makeText(context, "More options for note ${note.id}", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                 )
             }
 
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                contentDescription = "More options",
-                modifier = Modifier
-                    .padding(16.dp)
-                    .clip(CircleShape)
-                    .clickable {
-                        Toast
-                            .makeText(context, "More is clicked", Toast.LENGTH_SHORT)
-                            .show()
-                        onNoteMenuClick()
-                    }
-                    .constrainAs(moreIcon) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                    }
+            Text(
+                text = note.description,
+                maxLines = 3,
             )
-
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.End,
+                text = note.updatedAt,
+            )
         }
     }
 }

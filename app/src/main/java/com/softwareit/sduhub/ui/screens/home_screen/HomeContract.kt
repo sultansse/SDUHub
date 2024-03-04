@@ -13,7 +13,9 @@ class HomeContract {
         data object OnFetchNotes : Event()
         data class OnNoteClicked(val note : NoteDTO) : Event()
         data class OnNoteAdded(val note: NoteDTO) : Event()
+        data class OnNoteDeleted(val noteId: Int) : Event()
         data object OnNotesDeleted : Event()
+        data class OnNoteCopied(val note: NoteDTO): Event()
     }
 
     data class State(

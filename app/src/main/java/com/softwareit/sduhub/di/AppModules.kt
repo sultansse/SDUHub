@@ -62,6 +62,7 @@ val viewModelModule = module {
             getNotes = get(),
             upsertNote = get(),
             deleteNotes = get(),
+            deleteNote = get(),
             getImportantInfo = get(),
         )
     }
