@@ -8,6 +8,7 @@ import com.softwareit.sduhub.domain.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.GetNoteUseCase
 import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,7 +58,10 @@ class EditNoteViewModel(
             }
 
             is EditNoteContract.Event.OnDeleteNote -> {
-                deleteNote()
+//                do not use until fix fetching null object from room.
+//                when we get note id in fragment it starts to fetch it,
+//                but when we deleted and try go back, it will try to fetch deleted object
+                deleteNote(event.note.id)
             }
 
             is EditNoteContract.Event.OnSaveNote -> {
@@ -101,8 +105,13 @@ class EditNoteViewModel(
         }
     }
 
-    private fun deleteNote() {
-        // todo
+    private fun deleteNote(noteId: Int) {
+
+        if (noteId != NEW_NOTE_ID) {
+            viewModelScope.launch(Dispatchers.IO) {
+                deleteNote.invoke(noteId)
+            }
+        }
     }
 
 }

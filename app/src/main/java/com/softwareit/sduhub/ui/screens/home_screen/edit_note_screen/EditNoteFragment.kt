@@ -16,6 +16,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,6 +30,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +46,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.base.BaseFragment
 import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.utils.getFormattedTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNoteFragment(
@@ -62,7 +66,18 @@ class EditNoteFragment(
             is EditNoteContract.NoteState.Fetched -> {
                 Scaffold(
                     topBar = { EditNoteTopAppBar() },
-                    bottomBar = { EditNoteBottomBar(state.note) },
+                    bottomBar = {
+                        EditNoteBottomBar(
+                            state.note,
+                            onDeleteClick = {
+                                viewModel.setEvent(
+                                    EditNoteContract.Event.OnDeleteNote(
+                                        state.note
+                                    )
+                                )
+                            },
+                        )
+                    },
                     content = {
                         Box(modifier = Modifier.padding(it)) {
                             EditNoteScreen(state.note)
@@ -160,7 +175,10 @@ class EditNoteFragment(
     }
 
     @Composable
-    fun EditNoteBottomBar(note: NoteDTO) {
+    fun EditNoteBottomBar(
+        note: NoteDTO,
+        onDeleteClick: () -> Unit,
+    ) {
         BottomAppBar(
             modifier = Modifier.height(64.dp)
         ) {
@@ -186,21 +204,49 @@ class EditNoteFragment(
                 )
             }
             Text(
-                text = "last modified: ${note.updatedAt.ifBlank { getFormattedTime() }}",
+                text = if (note.updatedAt.isBlank()) {
+                    "Not modified yet :)"
+                } else {
+                    "last modified: ${note.updatedAt}"
+                },
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f)
             )
+            var menuExpanded by remember { mutableStateOf(false) }
             IconButton(
-                onClick = {
-//                  TODO add functionalty
-
-                },
-            ) {
+                onClick = { menuExpanded = !menuExpanded }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
-                    contentDescription = "More",
+                    contentDescription = "More options"
+                )
+                DropdownMenu(
+                    expanded = menuExpanded,
+                    onDismissRequest = {
+                        menuExpanded = false
+                    },
+                    content = {
+//                        DropdownMenuItem(
+//                            onClick = {
+//                                menuExpanded = false
+////                                onDeleteClick()
+//                            },
+//                            text = {
+//                                Text("Delete")
+//                            }
+//                        )
+                        DropdownMenuItem(
+                            onClick = {
+                                menuExpanded = false
+                            },
+                            text = {
+                                Text("coming soon!")
+//                                TODO add functionality
+                            }
+                        )
+                    }
                 )
             }
+
         }
     }
 }

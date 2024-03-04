@@ -11,7 +11,7 @@ class Constants {
         const val IMPORTANT_INFO_TABLE = "important_info_table"
 
         /**
-         * New note identifier, its equal to 0, so if any note's id is 0 -> it is new note
+         * New note identifier, NEW_NOTE_ID = 0, so if any note's id is 0 -> it is new note
          */
         const val NEW_NOTE_ID = 0
     }
