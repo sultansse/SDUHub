@@ -10,6 +10,7 @@ import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -28,13 +29,14 @@ class EditNoteViewModel(
     fun onBackPressed() = router.exit()
 
     // TODO fix and do single state
-    private val noteFlow = MutableStateFlow(NoteDTO(title = "", description = "", updatedAt = ""))
+    private val _noteFlow = MutableStateFlow(NoteDTO(title = "", description = "", updatedAt = ""))
+    val noteFlow: StateFlow<NoteDTO> = _noteFlow
 
     init {
         viewModelScope.launch {
-            noteFlow
+            _noteFlow
                 .filter { it.title.isNotBlank() || it.description.isNotBlank() }
-                .debounce(1000)
+                .debounce(800)
                 .distinctUntilChanged()
                 .collect {
                     upsertNote(it)
@@ -58,6 +60,13 @@ class EditNoteViewModel(
                 deleteNote()
             }
 
+            is EditNoteContract.Event.OnSaveNote -> {
+                viewModelScope.launch {
+                    upsertNote(noteFlow.value)
+                }
+                onBackPressed()
+            }
+
             is EditNoteContract.Event.OnTitleChanged -> {
                 updateTitle(event.updatedNote)
             }
@@ -70,12 +79,12 @@ class EditNoteViewModel(
     }
 
     private fun updateTitle(updatedNote: NoteDTO) {
-        noteFlow.update { updatedNote }
+        _noteFlow.update { updatedNote }
         setState { copy(noteState = EditNoteContract.NoteState.Fetched(updatedNote)) }
     }
 
     private fun updateDescription(updatedNote: NoteDTO) {
-        noteFlow.update { updatedNote }
+        _noteFlow.update { updatedNote }
         setState { copy(noteState = EditNoteContract.NoteState.Fetched(updatedNote)) }
     }
 

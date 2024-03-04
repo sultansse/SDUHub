@@ -2,23 +2,25 @@ package com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.sharp.Add
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -28,16 +30,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
+import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.base.BaseFragment
 import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.utils.getFormattedTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNoteFragment(
@@ -108,7 +112,7 @@ class EditNoteFragment(
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                     autoCorrect = true,
-                    imeAction = ImeAction.Done,
+                    imeAction = ImeAction.Default,
                 ),
                 modifier = Modifier.fillMaxSize()
             )
@@ -132,7 +136,7 @@ class EditNoteFragment(
             },
             title = {
                 Text(
-                    text = stringResource(R.string.app_name),
+                    text = "Note",
                     fontWeight = FontWeight.Bold
                 )
             },
@@ -140,14 +144,16 @@ class EditNoteFragment(
                 .fillMaxWidth()
                 .shadow(4.dp, RoundedCornerShape(0.dp)),
             actions = {
-                IconButton(
+                OutlinedButton(
                     onClick = {
-//                        shareNote(requireActivity(), note = viewModel.note.value) TODO fix this
-                    },
+                        viewModel.setEvent(EditNoteContract.Event.OnSaveNote)
+                        Toast.makeText(requireContext(), "Saved successfully!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Share,
-                        contentDescription = "Share this note"
+                        painter = rememberAsyncImagePainter(R.drawable.ic_save),
+                        contentDescription = "Save note"
                     )
                 }
             }
@@ -156,21 +162,44 @@ class EditNoteFragment(
 
     @Composable
     fun EditNoteBottomBar() {
-        BottomAppBar {
+        BottomAppBar(
+            modifier = Modifier.height(64.dp)
+        ) {
             IconButton(
-                onClick = { /*TODO*/ }
+                onClick = {
+//                    TODO add functionalty
+                    Toast.makeText(requireContext(), "Coming soon!", Toast.LENGTH_SHORT).show()
+                }
             ) {
                 Icon(
-                    imageVector = Icons.Sharp.Add,
-                    contentDescription = "add elements"
+                    painter = rememberAsyncImagePainter(R.drawable.ic_check_box),
+                    contentDescription = "add tasks"
                 )
             }
             IconButton(
-                onClick = { /*TODO*/ }
+                onClick = {
+                    shareNote(requireActivity(), note = viewModel.noteFlow.value)
+                }
             ) {
                 Icon(
-                    imageVector = Icons.Filled.DateRange,
+                    imageVector = Icons.Default.Share,
                     contentDescription = "select notify date"
+                )
+            }
+            Text(
+                text = "last modified: ${getFormattedTime()}",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.weight(1f)
+            )
+            IconButton(
+                onClick = {
+//                  TODO add functionalty
+
+                },
+            ) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "More",
                 )
             }
         }

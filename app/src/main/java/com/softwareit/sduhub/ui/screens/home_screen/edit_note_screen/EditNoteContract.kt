@@ -10,6 +10,7 @@ class EditNoteContract {
     sealed class Event : UiEvent {
         data class OnFetchNote(val noteId: Int) : Event()
         data class OnDeleteNote(val note: NoteDTO) : Event()
+        data object OnSaveNote : Event()
         data class OnTitleChanged(val updatedNote: NoteDTO) : Event()
         data class OnDescriptionChanged(val updatedNote: NoteDTO) : Event()
     }
