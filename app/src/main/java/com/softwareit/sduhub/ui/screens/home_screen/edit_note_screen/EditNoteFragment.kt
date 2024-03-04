@@ -52,24 +52,23 @@ class EditNoteFragment(
 
     @Composable
     override fun SetContent() {
-        Scaffold(
-            topBar = { EditNoteTopAppBar() },
-            bottomBar = { EditNoteBottomBar() },
-        ) {
-            Box(
-                modifier = Modifier.padding(it)
-            ) {
-                val uiState by viewModel.uiState.collectAsState()
+        val uiState by viewModel.uiState.collectAsState()
 
-                when (val state = uiState.noteState) {
-                    is EditNoteContract.NoteState.Idle -> {
-                        viewModel.setEvent(EditNoteContract.Event.OnFetchNote(noteId))
-                    }
+        when (val state = uiState.noteState) {
+            is EditNoteContract.NoteState.Idle -> {
+                viewModel.setEvent(EditNoteContract.Event.OnFetchNote(noteId))
+            }
 
-                    is EditNoteContract.NoteState.Fetched -> {
-                        EditNoteScreen(state.note)
+            is EditNoteContract.NoteState.Fetched -> {
+                Scaffold(
+                    topBar = { EditNoteTopAppBar() },
+                    bottomBar = { EditNoteBottomBar(state.note) },
+                    content = {
+                        Box(modifier = Modifier.padding(it)) {
+                            EditNoteScreen(state.note)
+                        }
                     }
-                }
+                )
             }
         }
     }
@@ -161,7 +160,7 @@ class EditNoteFragment(
     }
 
     @Composable
-    fun EditNoteBottomBar() {
+    fun EditNoteBottomBar(note: NoteDTO) {
         BottomAppBar(
             modifier = Modifier.height(64.dp)
         ) {
@@ -187,7 +186,7 @@ class EditNoteFragment(
                 )
             }
             Text(
-                text = "last modified: ${getFormattedTime()}",
+                text = "last modified: ${note.updatedAt.ifBlank { getFormattedTime() }}",
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f)
             )

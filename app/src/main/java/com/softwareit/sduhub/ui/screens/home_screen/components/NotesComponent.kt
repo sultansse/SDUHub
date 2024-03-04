@@ -3,6 +3,7 @@ package com.softwareit.sduhub.ui.screens.home_screen.components
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -52,9 +56,7 @@ fun NoteItem(
     onNoteClick: () -> Unit,
 ) {
 
-    val viewModel: HomeScreenViewModel = viewModel()
     val context = LocalContext.current
-    val backgroundImage = rememberAsyncImagePainter(R.drawable.img_bg_note)
 
     Box(
         modifier = Modifier
@@ -68,11 +70,20 @@ fun NoteItem(
                 onNoteClick()
             }
     ) {
+
         Image(
-            painter = backgroundImage,
+            painter = rememberAsyncImagePainter(R.drawable.img_bg_note),
             contentDescription = "background image",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.matchParentSize()
+            modifier = Modifier.matchParentSize(),
+            colorFilter = if (isSystemInDarkTheme()) {
+                ColorFilter.tint(
+                    color = Color.Black.copy(alpha = 0.5f),
+                    blendMode = BlendMode.Darken
+                )
+            } else {
+                null
+            }
         )
 
         Column(
@@ -98,7 +109,11 @@ fun NoteItem(
                         .clip(CircleShape)
                         .clickable {
                             Toast
-                                .makeText(context, "More options for note ${note.id}", Toast.LENGTH_SHORT)
+                                .makeText(
+                                    context,
+                                    "More options for note ${note.id}",
+                                    Toast.LENGTH_SHORT
+                                )
                                 .show()
                         }
                 )
