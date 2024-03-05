@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.common.ui
 
 import android.annotation.SuppressLint
+import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,6 +24,10 @@ fun WebViewWithLoading(
         AndroidView(
             factory = { context ->
                 WebView(context).apply {
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
                     settings.javaScriptEnabled = true
                     webViewClient = object : android.webkit.WebViewClient() {
                         override fun onPageFinished(view: WebView?, url: String?) {
