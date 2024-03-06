@@ -92,11 +92,6 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.github.theapache64:rebugger:1.0.0-rc02")
 
-//    mapbox
-    implementation("com.mapbox.maps:android:11.2.0")
-    implementation("com.mapbox.extension:maps-compose:11.2.0")
-
-
 //    firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-analytics")
