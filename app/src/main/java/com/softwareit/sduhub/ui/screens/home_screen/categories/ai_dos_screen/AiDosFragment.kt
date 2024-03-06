@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.home_screen.categories.ai_assistant_screen
+package com.softwareit.sduhub.ui.screens.home_screen.categories.ai_dos_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,16 +12,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.softwareit.sduhub.base.BaseFragment
 import com.softwareit.sduhub.common.ui.WebViewWithLoading
 
-class AiAssistantFragment : BaseFragment() {
+class AiDosFragment : BaseFragment() {
 
     @Composable
     override fun SetContent() {
-        AiAssistant()
+        AiDos()
     }
 }
 
 @Composable
-fun AiAssistant() {
+fun AiDos() {
     val isLoading = remember { mutableStateOf(true) }
 
     Column(
@@ -38,6 +38,6 @@ fun AiAssistant() {
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun AiAssistantPreview() {
-    AiAssistant()
+fun AiDosPreview() {
+    AiDos()
 }

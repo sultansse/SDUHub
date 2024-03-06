@@ -4,7 +4,7 @@ import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.softwareit.sduhub.ui.screens.MapFragment
 import com.softwareit.sduhub.ui.screens.NewsFragment
 import com.softwareit.sduhub.ui.screens.home_screen.HomeFragment
-import com.softwareit.sduhub.ui.screens.home_screen.categories.ai_assistant_screen.AiAssistantFragment
+import com.softwareit.sduhub.ui.screens.home_screen.categories.ai_dos_screen.AiDosFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.moodle_screen.MoodleFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.my_sdu_screen.MySduFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_screen.SduLibraryFragment
@@ -20,7 +20,7 @@ object NavigationScreens {
         fun editNote(noteId: Int) = FragmentScreen { EditNoteFragment(noteId) }
 
         object Categories {
-            fun aiAssistant() = FragmentScreen { AiAssistantFragment() }
+            fun aiAssistant() = FragmentScreen { AiDosFragment() }
             fun mysdu() = FragmentScreen { MySduFragment() }
             fun sdukz() = FragmentScreen { SduKzFragment() }
             fun studentClubs() = FragmentScreen { StudentClubsFragment() }
