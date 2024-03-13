@@ -96,6 +96,8 @@ dependencies {
     implementation("com.mapbox.maps:android:11.2.0")
     implementation("com.mapbox.extension:maps-compose:11.2.0")
 
+    implementation("com.mappedin.sdk:mappedin:5.3.0")
+
 
 //    firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))

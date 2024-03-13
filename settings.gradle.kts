@@ -17,7 +17,7 @@ dependencyResolutionManagement {
             credentials.password = providers.gradleProperty("MAPBOX_DOWNLOADS_TOKEN").get()
             authentication.create<BasicAuthentication>("basic")
         }
-
+        maven(url = "https://maven.mapsindoors.com/")
         google()
         mavenCentral()
         maven(url = "https://jitpack.io")
