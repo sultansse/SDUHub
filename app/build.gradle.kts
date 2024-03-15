@@ -10,13 +10,7 @@ android {
     compileSdk = 34
 
     signingConfigs {
-//        create("debug") {
-//            storeFile = file("debug.keystore")
-//            storePassword = "android"
-//            keyAlias = "androiddebugkey"
-//            keyPassword = "android"
-//        }
-
+//        no need sign for debug
 
         create("release") {
             storeFile = file("Keys/SDUHubKey.keystore")
@@ -28,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId = "com.softwareit.sduhub"
-        minSdk = 26
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -90,7 +84,6 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:$chuckerVersion")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
     implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("io.github.theapache64:rebugger:1.0.0-rc02")
 
 //    mapbox
     implementation("com.mapbox.maps:android:11.2.0")
