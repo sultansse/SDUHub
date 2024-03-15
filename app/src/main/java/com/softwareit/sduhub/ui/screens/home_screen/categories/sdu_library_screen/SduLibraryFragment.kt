@@ -1,16 +1,9 @@
 package com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_screen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.softwareit.sduhub.base.BaseFragment
-import com.softwareit.sduhub.common.ui.WebViewWithLoading
+import com.softwareit.sduhub.common.ui.WebViewComponent
 
 class SduLibraryFragment : BaseFragment() {
 
@@ -22,18 +15,9 @@ class SduLibraryFragment : BaseFragment() {
 
 @Composable
 fun SduLibraryScreen() {
-    val isLoading = remember { mutableStateOf(true) }
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        WebViewWithLoading(
-            url = "https://library.sdu.edu.kz/",
-            isLoading = isLoading
-        )
-    }
+    WebViewComponent(
+        url = "https://library.sdu.edu.kz/",
+    )
 }
 
 @Preview(showSystemUi = true, showBackground = true)
