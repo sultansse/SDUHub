@@ -85,12 +85,8 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:$chuckerVersion")
     implementation("com.jakewharton.timber:timber:5.0.1")
 
-//    mapbox
-    implementation("com.mapbox.maps:android:11.2.0")
-    implementation("com.mapbox.extension:maps-compose:11.2.0")
-
+//    mappedin
     implementation("com.mappedin.sdk:mappedin:5.3.0")
-
 
 //    firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))

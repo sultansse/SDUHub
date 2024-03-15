@@ -19,8 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
--keep interface com.mapsindoors.core.** { *; }
--keep class com.mapsindoors.core.errors.** { *; }
--keepclassmembers class com.mapsindoors.core.models.** { <fields>; }
--keep class com.mapsindoors.core.MPDebugLog
