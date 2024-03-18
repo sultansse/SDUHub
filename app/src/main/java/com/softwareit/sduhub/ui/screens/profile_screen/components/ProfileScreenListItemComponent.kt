@@ -5,8 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,10 +14,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 
 
 @Composable
-fun ProfileScreenListItemComponent(onClick: () -> Unit) {
+fun ProfileScreenListItemComponent(
+    icon: Int,
+    title: String,
+    onClick: () -> Unit,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -26,20 +30,20 @@ fun ProfileScreenListItemComponent(onClick: () -> Unit) {
             .clickable { onClick() }
     ) {
         Icon(
-            imageVector = Icons.Default.Favorite,
+            painter = rememberAsyncImagePainter(icon),
             contentDescription = "Logout",
             modifier = Modifier
                 .padding(vertical = 16.dp, horizontal = 32.dp)
 
         )
         Text(
-            text = "Some element in list",
+            text = title,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .weight(1f)
         )
         Icon(
-            imageVector = Icons.Default.KeyboardArrowRight,
+            imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
             contentDescription = "Open this block",
             modifier = Modifier
                 .padding(vertical = 16.dp, horizontal = 32.dp)        )
@@ -49,5 +53,9 @@ fun ProfileScreenListItemComponent(onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenListItemComponentPreview() {
-    ProfileScreenListItemComponent(onClick = {})
+    ProfileScreenListItemComponent(
+        icon = 0,
+        title = "Some element in list",
+        onClick = {}
+    )
 }

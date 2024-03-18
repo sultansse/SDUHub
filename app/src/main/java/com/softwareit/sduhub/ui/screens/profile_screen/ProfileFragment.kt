@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.ui.screens.profile_screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,11 +19,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.base.BaseFragment
-import com.softwareit.sduhub.ui.screens.profile_screen.components.LogoutComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardDialog
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileScreenListItemComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchComponent
+import okhttp3.internal.immutableListOf
 
 class ProfileFragment : BaseFragment() {
 
@@ -42,6 +43,34 @@ class ProfileFragment : BaseFragment() {
 
     @Composable
     fun ProfileScreen() {
+
+        val items = immutableListOf<ProfileScreenListItem>(
+            ProfileScreenListItem(
+                icon = R.drawable.ic_faq,
+                title = "FAQ",
+            ),
+            ProfileScreenListItem(
+                icon = R.drawable.ic_community,
+                title = "Community",
+            ),
+            ProfileScreenListItem(
+                icon = R.drawable.ic_language,
+                title = "Change language",
+            ),
+            ProfileScreenListItem(
+                icon = R.drawable.ic_favorite,
+                title = "Favourite",
+            ),
+            ProfileScreenListItem(
+                icon = R.drawable.ic_feedback,
+                title = "Feedback",
+            ),
+            ProfileScreenListItem(
+                icon = R.drawable.ic_logout,
+                title = "Logout",
+            ),
+        )
+
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
@@ -65,16 +94,18 @@ class ProfileFragment : BaseFragment() {
                 ThemeSwitchComponent()
             }
 
-            items(5) {
+            items(items.size) { index ->
                 ProfileScreenListItemComponent(
+                    title = items[index].title,
+                    icon = items[index].icon,
                     onClick = {
-                        // todo
+                        Toast.makeText(
+                            requireContext(),
+                            "Clicked on ${items[index].title}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 )
-            }
-
-            item {
-                LogoutComponent()
             }
         }
     }
@@ -85,3 +116,8 @@ class ProfileFragment : BaseFragment() {
         SetContent()
     }
 }
+
+data class ProfileScreenListItem(
+    val icon: Int,
+    val title: String,
+)
