@@ -11,8 +11,8 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.databinding.ActivityMainBinding
 import com.softwareit.sduhub.navigation.NavigationScreens
 import com.softwareit.sduhub.ui.screens.MapFragment
-import com.softwareit.sduhub.ui.screens.NewsFragment
 import com.softwareit.sduhub.ui.screens.home_screen.HomeFragment
+import com.softwareit.sduhub.ui.screens.news_screen.NewsFragment
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileFragment
 import org.koin.android.ext.android.inject
 

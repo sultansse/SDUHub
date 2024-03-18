@@ -16,6 +16,7 @@ import com.softwareit.sduhub.domain.GetNotesUseCase
 import com.softwareit.sduhub.domain.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteViewModel
+import com.softwareit.sduhub.ui.screens.news_screen.NewsScreenViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -72,6 +73,11 @@ val viewModelModule = module {
             getNote = get(),
             upsertNote = get(),
             deleteNote = get(),
+        )
+    }
+    viewModel {
+        NewsScreenViewModel(
+
         )
     }
 }

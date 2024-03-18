@@ -8,19 +8,26 @@ import com.appsamurai.storyly.StorylyInit
 import com.appsamurai.storyly.StorylyView
 import com.appsamurai.storyly.config.StorylyConfig
 import com.appsamurai.storyly.config.styling.group.StorylyStoryGroupStyling
-import com.softwareit.sduhub.utils.Constants
+import com.softwareit.sduhub.utils.Constants.Companion.STORYLY_INSTANCE_TOKEN
 
 @Composable
 fun Stories() {
     LazyRow {
         item {
-            StorylyViewComponent()
+            StorylyViewComponent(
+                STORYLY_INSTANCE_TOKEN
+            )
         }
     }
 }
 
 @Composable
-fun StorylyViewComponent() {
+fun StorylyViewComponent(
+    token: String,
+    groupIconHeight: Int = 420,
+    groupIconWidth: Int = 380,
+    groupIconCornerRadius: Int = 60,
+) {
     AndroidView(
         factory = { context ->
             StorylyView(context).apply {
@@ -28,13 +35,13 @@ fun StorylyViewComponent() {
                 val storyGroupStylyng = StorylyStoryGroupStyling.Builder()
                     .setTitleVisibility(isVisible = false)
                     .setSize(StoryGroupSize.Custom)
-                    .setIconHeight(420)
-                    .setIconWidth(380)
-                    .setIconCornerRadius(60)
+                    .setIconHeight(groupIconHeight)
+                    .setIconWidth(groupIconWidth)
+                    .setIconCornerRadius(groupIconCornerRadius)
                     .build()
 
                 storylyInit = StorylyInit(
-                    storylyId = Constants.STORYLY_INSTANCE_TOKEN,
+                    storylyId = token,
                     config = StorylyConfig.Builder()
                         .setStoryGroupStyling(storyGroupStylyng)
                         .build()

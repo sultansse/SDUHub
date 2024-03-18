@@ -36,7 +36,7 @@ class MapFragment : BaseFragment() {
     fun MapScreen() {
         Box(modifier = Modifier.fillMaxSize()) {
             WebViewComponent(
-                "https://app.mappedin.com/map/65e7640ca1cbc80d8a98ec9a/"
+                "https://app.mappedin.com/map/65ebd446a1cbc80d8a98ed4e"
             )
         }
     }

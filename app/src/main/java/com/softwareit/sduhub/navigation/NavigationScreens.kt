@@ -2,7 +2,6 @@ package com.softwareit.sduhub.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.softwareit.sduhub.ui.screens.MapFragment
-import com.softwareit.sduhub.ui.screens.NewsFragment
 import com.softwareit.sduhub.ui.screens.home_screen.HomeFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.ai_dos_screen.AiDosFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.moodle_screen.MoodleFragment
@@ -11,6 +10,7 @@ import com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_scree
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen.SduKzFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.student_clubs_screen.StudentClubsFragment
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteFragment
+import com.softwareit.sduhub.ui.screens.news_screen.NewsFragment
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileFragment
 
 object NavigationScreens {
