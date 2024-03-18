@@ -2,6 +2,7 @@ package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.appsamurai.storyly.StoryGroupSize
 import com.appsamurai.storyly.StorylyInit
@@ -27,8 +28,10 @@ fun StorylyViewComponent(
     groupIconHeight: Int = 420,
     groupIconWidth: Int = 380,
     groupIconCornerRadius: Int = 60,
+    modifier: Modifier = Modifier,
 ) {
     AndroidView(
+        modifier = modifier,
         factory = { context ->
             StorylyView(context).apply {
 
