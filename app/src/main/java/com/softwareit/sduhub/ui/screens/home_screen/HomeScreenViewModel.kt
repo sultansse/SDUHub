@@ -31,7 +31,6 @@ class HomeScreenViewModel(
     fun goToAiAssistant() = router.navigateTo(NavigationScreens.Home.Categories.aiAssistant())
     fun goToMySdu() = router.navigateTo(NavigationScreens.Home.Categories.mysdu())
     fun goToSduKz() = router.navigateTo(NavigationScreens.Home.Categories.sdukz())
-    fun goToStudentClubs() = router.navigateTo(NavigationScreens.Home.Categories.studentClubs())
     fun goToMoodle() = router.navigateTo(NavigationScreens.Home.Categories.moodle())
     fun goToSduLibrary() = router.navigateTo(NavigationScreens.Home.Categories.sduLibrary())
 

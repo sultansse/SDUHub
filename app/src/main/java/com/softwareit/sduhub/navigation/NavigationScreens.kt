@@ -7,7 +7,6 @@ import com.softwareit.sduhub.ui.screens.home_screen.categories.moodle_screen.Moo
 import com.softwareit.sduhub.ui.screens.home_screen.categories.my_sdu_screen.MySduFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_screen.SduLibraryFragment
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen.SduKzFragment
-import com.softwareit.sduhub.ui.screens.home_screen.categories.student_clubs_screen.StudentClubsFragment
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteFragment
 import com.softwareit.sduhub.ui.screens.map_screen.MapFragment
 import com.softwareit.sduhub.ui.screens.news_screen.NewsFragment
@@ -23,7 +22,6 @@ object NavigationScreens {
             fun aiAssistant() = FragmentScreen { AiDosFragment() }
             fun mysdu() = FragmentScreen { MySduFragment() }
             fun sdukz() = FragmentScreen { SduKzFragment() }
-            fun studentClubs() = FragmentScreen { StudentClubsFragment() }
             fun moodle() = FragmentScreen { MoodleFragment() }
             fun sduLibrary() = FragmentScreen { SduLibraryFragment() }
         }

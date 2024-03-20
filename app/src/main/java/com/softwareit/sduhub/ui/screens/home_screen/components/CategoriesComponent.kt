@@ -38,7 +38,7 @@ data class CategoryDto(
 fun Categories(viewModel: HomeScreenViewModel) {
     val categories = immutableListOf(
         CategoryDto(
-            icon = R.drawable.img_ai,
+            icon = R.drawable.img_aidos,
             title = "AI Dos"
         ),
         CategoryDto(
@@ -54,8 +54,8 @@ fun Categories(viewModel: HomeScreenViewModel) {
             title = "sdu.kz"
         ),
         CategoryDto(
-            icon = R.drawable.img_mysdu,
-            title = ""
+            icon = R.drawable.img_order_food,
+            title = "Order Food"
         ),
         CategoryDto(
             icon = R.drawable.img_free_offices,
@@ -127,7 +127,7 @@ fun navigateToCategory(context: Context, title: String, viewModel: HomeScreenVie
 
         "Ai assistant" -> { viewModel.goToAiAssistant() }
 
-        "Student clubs" -> { viewModel.goToStudentClubs() }
+        "Order Food" -> { openTelegramToUser("SDUOrder_bot", context) }
 
         "Free Offices" -> { openTelegramToUser("sduflexbot", context) }
 
