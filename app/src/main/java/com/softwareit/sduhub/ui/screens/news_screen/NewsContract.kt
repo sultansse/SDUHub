@@ -9,31 +9,27 @@ import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
 class NewsContract {
 
     sealed class Event : UiEvent {
-        data object OnFetchImportantInfo : Event()
-        data object OnFetchNotes : Event()
-        data class OnNoteClicked(val note : NoteDTO) : Event()
-        data class OnNoteAdded(val note: NoteDTO) : Event()
-        data class OnNoteDeleted(val noteId: Int) : Event()
-        data object OnNotesDeleted : Event()
-        data class OnNoteCopied(val note: NoteDTO): Event()
+        data object OnFetchInternships : Event()
+        data object OnFetchNews : Event()
+        data class OnSearch(val query: String) : Event()
     }
 
     data class State(
-        val importantInfoState: ImportantInfoState,
-        val notesState: NotesState,
+        val internshipsState: InternShipsState,
+        val newsState: NewsState,
     ) : UiState
 
     sealed class Effect : UiEffect {
         data class ShowError(val message : String?) : Effect()
     }
 
-    sealed class ImportantInfoState {
-        data object Idle : ImportantInfoState()
-        data class Success(val data: ImportantInfoDTO) : ImportantInfoState()
+    sealed class InternShipsState {
+        data object Idle : InternShipsState()
+        data class Success(val data: ImportantInfoDTO) : InternShipsState()
     }
 
-    sealed class NotesState {
-        data object Idle : NotesState()
-        data class Success(val data: List<NoteDTO>) : NotesState()
+    sealed class NewsState {
+        data object Idle : NewsState()
+        data class Success(val data: List<NoteDTO>) : NewsState()
     }
 }

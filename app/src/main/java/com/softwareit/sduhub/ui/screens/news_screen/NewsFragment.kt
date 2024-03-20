@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -19,10 +20,11 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,6 +34,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -57,28 +60,41 @@ class NewsFragment : BaseFragment() {
         const val NEWS_PAGE = 1
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun SetContent() {
 
-        var searchText by remember { mutableStateOf("") }
+        var query by remember { mutableStateOf("") }
 
         Scaffold(
             topBar = {
-                TextField(
-                    value = searchText,
-                    onValueChange = { searchText = it },
-                    placeholder = { Text(text = "Search") },
+                SearchBar(
+                    query = query,
+                    onQueryChange = { query = it },
+                    onSearch = {
+                        if (it.isNotEmpty()) {
+//                            onSearch(it)
+//                            keyboard?.hide()
+                        }
+                    },
+                    active = false,
+                    onActiveChange = {},
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "Search"
                         )
                     },
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                )
+                    placeholder = {
+                        Text(text = "Search here")
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+//                    TODO
+//                    content of found items
+                }
             }
         ) {
             Box(modifier = Modifier.padding(it)) {
@@ -115,7 +131,10 @@ class NewsFragment : BaseFragment() {
     @Composable
     private fun Trends() {
         Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         ) {
             Text(
                 text = "Trends",
@@ -179,7 +198,7 @@ class NewsFragment : BaseFragment() {
 
     }
 
-
+// TODO change to paging, so news/internships will load by pages
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     private fun <T> ResourcePages(pagerState: PagerState, items: List<T>) {
@@ -190,28 +209,19 @@ class NewsFragment : BaseFragment() {
         ) { currentPage ->
 
             Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
             ) {
                 when (currentPage) {
                     INTERNSHIPS_PAGE -> {
-                        Text(
-                            text = "Internships",
-                            fontSize = 24.sp,
-                            color = Color.Black
-                        )
                         items.forEach { internship ->
                             InternshipItem(internship)
                         }
                     }
 
                     NEWS_PAGE -> {
-                        Text(
-                            text = "News",
-                            fontSize = 24.sp,
-                            color = Color.Black
-                        )
                         items.forEach { new ->
                             NewsItem(new)
                         }
@@ -228,19 +238,22 @@ class NewsFragment : BaseFragment() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp)
-                .border(1.dp, Color.Black)
+                .border(1.dp, Color.Gray)
         ) {
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
             ) {
                 Image(
                     painter = rememberAsyncImagePainter(R.drawable.img_sdukz),
-                    contentDescription = "Vacancy icon"
+                    contentDescription = "Vacancy icon",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(80.dp),
                 )
-                Column {
+                Column(
+                    modifier = Modifier.padding(8.dp)
+                ) {
                     Text(
                         text = "Internship Title",
                         fontWeight = FontWeight.Bold,
@@ -262,20 +275,22 @@ class NewsFragment : BaseFragment() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(12.dp))
                 .background(SduBlue)
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(16.dp)
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.padding(8.dp)
+                ) {
                     Text(
                         text = "Internship Title",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
+                        fontSize = 18.sp,
                         color = SduOrange,
                     )
                     Text(
@@ -287,6 +302,10 @@ class NewsFragment : BaseFragment() {
                     painter = rememberAsyncImagePainter(R.drawable.img_sdukz),
                     contentDescription = "Vacancy icon",
                     contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .clipToBounds(),
                 )
             }
         }
