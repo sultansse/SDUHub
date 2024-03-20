@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.BottomAppBar
@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -143,14 +144,14 @@ class EditNoteFragment(
                     onClick = { viewModel.onBackPressed() }
                 ) {
                     Icon(
-                        imageVector = Icons.Default.KeyboardArrowLeft,
+                        imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
                         contentDescription = "Go back"
                     )
                 }
             },
             title = {
                 Text(
-                    text = "Note",
+                    text = stringResource(R.string.note),
                     fontWeight = FontWeight.Bold
                 )
             },
@@ -161,7 +162,8 @@ class EditNoteFragment(
                 OutlinedButton(
                     onClick = {
                         viewModel.setEvent(EditNoteContract.Event.OnSaveNote)
-                        Toast.makeText(requireContext(), "Saved successfully!", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(),
+                            getString(R.string.saved_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                 ) {
@@ -185,7 +187,8 @@ class EditNoteFragment(
             IconButton(
                 onClick = {
 //                    TODO add functionalty
-                    Toast.makeText(requireContext(), "Coming soon!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
                 }
             ) {
                 Icon(
@@ -205,9 +208,9 @@ class EditNoteFragment(
             }
             Text(
                 text = if (note.updatedAt.isBlank()) {
-                    "Not modified yet :)"
+                    stringResource(R.string.not_modified_yet)
                 } else {
-                    "last modified: ${note.updatedAt}"
+                    stringResource(R.string.last_modified, note.updatedAt)
                 },
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f)
@@ -225,6 +228,7 @@ class EditNoteFragment(
                         menuExpanded = false
                     },
                     content = {
+//                        TODO add functionality
 //                        DropdownMenuItem(
 //                            onClick = {
 //                                menuExpanded = false
@@ -239,7 +243,7 @@ class EditNoteFragment(
                                 menuExpanded = false
                             },
                             text = {
-                                Text("coming soon!")
+                                Text(stringResource(R.string.coming_soon))
 //                                TODO add functionality
                             }
                         )

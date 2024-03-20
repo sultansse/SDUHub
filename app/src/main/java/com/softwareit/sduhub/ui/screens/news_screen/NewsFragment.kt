@@ -45,8 +45,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.core.BaseFragment
 import com.softwareit.sduhub.ui.screens.home_screen.components.StorylyViewComponent
-import com.softwareit.sduhub.ui.theme.SduBlue
-import com.softwareit.sduhub.ui.theme.SduOrange
+import com.softwareit.sduhub.ui.theme.colorSduBlue
+import com.softwareit.sduhub.ui.theme.colorSduOrange
 import com.softwareit.sduhub.utils.Constants
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -276,7 +276,7 @@ class NewsFragment : BaseFragment() {
                 .fillMaxWidth()
                 .padding(4.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(SduBlue)
+                .background(colorSduBlue)
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -291,7 +291,7 @@ class NewsFragment : BaseFragment() {
                         text = "Internship Title",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
-                        color = SduOrange,
+                        color = colorSduOrange,
                     )
                     Text(
                         text = "Internship Description",

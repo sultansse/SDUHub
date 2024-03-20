@@ -55,23 +55,23 @@ class ProfileFragment : BaseFragment() {
             ),
             ProfileScreenListItem(
                 icon = R.drawable.ic_community,
-                title = "Community",
+                title = stringResource(R.string.community),
             ),
             ProfileScreenListItem(
                 icon = R.drawable.ic_language,
-                title = "Change language",
+                title = stringResource(R.string.change_language),
             ),
             ProfileScreenListItem(
                 icon = R.drawable.ic_favorite,
-                title = "Favourite",
+                title = stringResource(R.string.favourite),
             ),
             ProfileScreenListItem(
                 icon = R.drawable.ic_feedback,
-                title = "Feedback",
+                title = stringResource(R.string.feedback),
             ),
             ProfileScreenListItem(
                 icon = R.drawable.ic_logout,
-                title = "Logout",
+                title = stringResource(R.string.logout),
             ),
         )
 

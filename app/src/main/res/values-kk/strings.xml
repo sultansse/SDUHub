@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_back">Қош келдіңіз, құрметті қолданушы!</string>
+    <string name="delete">Delete</string>
+    <string name="copy">Көшіру</string>
+    <string name="note">Ескертпе</string>
+    <string name="saved_successfully">Сәтті сақталды!</string>
+    <string name="coming_soon">Жақында шығады!</string>
+    <string name="not_modified_yet">Әлі өзгертілмеген :)</string>
+    <string name="last_modified">соңғы рет өзгертілген: %1$s</string>
+</resources>

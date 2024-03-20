@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.SDUHubTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="Theme.SDUHubTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" >@color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+    </style>
+
 </resources>

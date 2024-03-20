@@ -100,7 +100,7 @@ class HomeFragment : BaseFragment() {
 
                     is HomeContract.ImportantInfoState.Idle -> {
                         Text(
-                            text = "Welcome back dear user!",
+                            text = stringResource(R.string.welcome_back),
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
                             modifier = Modifier.padding(20.dp)

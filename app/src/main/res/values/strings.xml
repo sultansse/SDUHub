@@ -3,9 +3,22 @@
     <string name="mapbox_access_token" translatable="false"
         tools:ignore="UnusedResources">sk.eyJ1IjoiMjAxMDcxMDYiLCJhIjoiY2xzeGxsdWY5MDNrdDJrb2VqNGd4aGd4YyJ9.SE1I7_OtKcY60BBOp_aurQ</string>
 
-    <string name="app_name">SDUHub</string>
-    <string name="resources">Resources</string>
-    <string name="home">Home</string>
-    <string name="map">Map</string>
-    <string name="profile">Profile</string>
+    <string name="app_name" translatable="false">SDUHub</string>
+    <string name="resources" translatable="false">Resources</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="map" translatable="false">Map</string>
+    <string name="profile" translatable="false">Profile</string>
+    <string name="welcome_back">Welcome back dear user!</string>
+    <string name="delete">Delete</string>
+    <string name="copy">Copy</string>
+    <string name="note">Note</string>
+    <string name="not_modified_yet">Not modified yet :)</string>
+    <string name="last_modified">last modified: %1$s</string>
+    <string name="community">Community</string>
+    <string name="change_language">Change language</string>
+    <string name="favourite">Favourite</string>
+    <string name="feedback">Feedback</string>
+    <string name="logout">Logout</string>
+    <string name="saved_successfully">Saved successfully!</string>
+    <string name="coming_soon">Coming soon!</string>
 </resources>

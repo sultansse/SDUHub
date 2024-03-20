@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.network.backend.Student
-import com.softwareit.sduhub.ui.theme.SduBlue
-import com.softwareit.sduhub.ui.theme.SduOrange
+import com.softwareit.sduhub.ui.theme.colorSduBlue
+import com.softwareit.sduhub.ui.theme.colorSduOrange
 
 
 @Composable
@@ -41,7 +41,7 @@ fun ProfileIdCardDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = SduBlue, shape = RoundedCornerShape(32.dp)
+                    color = colorSduBlue, shape = RoundedCornerShape(32.dp)
                 )
         ) {
             Column(
@@ -62,7 +62,7 @@ fun ProfileIdCardDialog(
                 )
                 Text(
                     text = "STUDENT",
-                    color = SduOrange,
+                    color = colorSduOrange,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily(Font(R.font.abhaya_libre_extra_bold)),
@@ -82,7 +82,7 @@ fun ProfileIdCardDialog(
                 )
                 Text(
                     text = student.faculty,
-                    color = SduOrange,
+                    color = colorSduOrange,
                     textAlign = TextAlign.Center,
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
