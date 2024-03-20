@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,12 +20,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.data.network.backend.Student
 
 @Composable
-fun ProfileHeaderComponent(onClick: () -> Unit) {
+fun ProfileHeaderComponent(
+    student: Student,
+    onClick: () -> Unit
+) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp)
@@ -47,12 +50,12 @@ fun ProfileHeaderComponent(onClick: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "John Doe",
+                    text = student.fullname,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = "200107081",
+                    text = student.studentId.toString(),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.fillMaxWidth()
 
@@ -62,15 +65,9 @@ fun ProfileHeaderComponent(onClick: () -> Unit) {
                 )
             }
             Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
+                imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
                 contentDescription = "Go to profile settings",
             )
         }
     }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFEEEEEE)
-@Composable
-fun ProfileHeaderComponentPreview() {
-    ProfileHeaderComponent() {}
 }

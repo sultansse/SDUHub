@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,14 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.base.BaseFragment
+import com.softwareit.sduhub.core.BaseFragment
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardDialog
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileScreenListItemComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchComponent
 import okhttp3.internal.immutableListOf
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment() {
+
+    private val viewModel: ProfileViewModel by viewModel()
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -76,8 +80,10 @@ class ProfileFragment : BaseFragment() {
         ) {
             item {
                 var dialogOpen by remember { mutableStateOf(false) }
+                val student by viewModel.student.collectAsState()
 
                 ProfileHeaderComponent(
+                    student,
                     onClick = {
                         dialogOpen = true
                     }
@@ -85,6 +91,7 @@ class ProfileFragment : BaseFragment() {
 
                 if (dialogOpen) {
                     ProfileIdCardDialog(
+                        student = student,
                         onClose = { dialogOpen = false }
                     )
                 }

@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.base.BaseFragment
+import com.softwareit.sduhub.core.BaseFragment
 import com.softwareit.sduhub.ui.screens.home_screen.components.StorylyViewComponent
 import com.softwareit.sduhub.ui.theme.SduBlue
 import com.softwareit.sduhub.ui.theme.SduOrange

@@ -5,7 +5,7 @@ import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
 import com.softwareit.sduhub.utils.Constants.Companion.IMPORTANT_INFO_TABLE
 import kotlinx.coroutines.tasks.await
 
-class ImportantInfoDao(
+class FirebaseDataSource(
     private val database: FirebaseDatabase,
 ) {
 

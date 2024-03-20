@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId = "com.softwareit.sduhub"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -97,7 +97,17 @@ dependencies {
 //    retrofit
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
+
+    val okHttp = "4.12.0"
+    implementation("com.squareup.okhttp3:okhttp:$okHttp")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okHttp")
+
+//    moshi
+    val moshiVersion = "1.15.0"
+    implementation("com.squareup.moshi:moshi:$moshiVersion")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
 
 //    room
     val roomVersion = "2.6.1"
@@ -115,6 +125,7 @@ dependencies {
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+    implementation("io.insert-koin:koin-android-compat:$koinVersion")
 
 //    coil
     implementation("io.coil-kt:coil-compose:2.6.0")

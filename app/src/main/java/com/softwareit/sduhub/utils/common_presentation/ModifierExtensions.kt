@@ -1,15 +1,13 @@
-package com.softwareit.sduhub.common.ui
+package com.softwareit.sduhub.utils.common_presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
-@OptIn(ExperimentalComposeUiApi::class)
 fun Modifier.hideKeyboardOnOutsideClick(): Modifier = composed {
     val controller = LocalSoftwareKeyboardController.current
     val focus = LocalFocusManager.current

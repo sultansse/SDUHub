@@ -9,14 +9,14 @@ import com.appsamurai.storyly.StorylyInit
 import com.appsamurai.storyly.StorylyView
 import com.appsamurai.storyly.config.StorylyConfig
 import com.appsamurai.storyly.config.styling.group.StorylyStoryGroupStyling
-import com.softwareit.sduhub.utils.Constants.Companion.STORYLY_INSTANCE_TOKEN
+import com.softwareit.sduhub.utils.Constants.Companion.STORYLY_STORIES_TOKEN
 
 @Composable
 fun Stories() {
     LazyRow {
         item {
             StorylyViewComponent(
-                STORYLY_INSTANCE_TOKEN
+                STORYLY_STORIES_TOKEN
             )
         }
     }

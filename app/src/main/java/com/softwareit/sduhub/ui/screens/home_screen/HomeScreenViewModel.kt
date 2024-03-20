@@ -2,7 +2,7 @@ package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
-import com.softwareit.sduhub.base.BaseViewModel
+import com.softwareit.sduhub.core.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.domain.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.DeleteNotesUseCase

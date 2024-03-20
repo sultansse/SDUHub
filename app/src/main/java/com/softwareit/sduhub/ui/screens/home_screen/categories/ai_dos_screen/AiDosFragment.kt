@@ -2,8 +2,9 @@ package com.softwareit.sduhub.ui.screens.home_screen.categories.ai_dos_screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.softwareit.sduhub.base.BaseFragment
-import com.softwareit.sduhub.common.ui.WebViewComponent
+import com.softwareit.sduhub.core.BaseFragment
+import com.softwareit.sduhub.utils.common_presentation.WebViewComponent
+
 
 class AiDosFragment : BaseFragment() {
 

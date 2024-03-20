@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.common.ui
+package com.softwareit.sduhub.utils.common_presentation
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup

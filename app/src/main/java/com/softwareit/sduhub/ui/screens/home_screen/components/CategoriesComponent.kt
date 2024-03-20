@@ -39,7 +39,7 @@ fun Categories(viewModel: HomeScreenViewModel) {
     val categories = immutableListOf(
         CategoryDto(
             icon = R.drawable.img_ai,
-            title = "Ai assistant"
+            title = "AI Dos"
         ),
         CategoryDto(
             icon = R.drawable.img_gmail,
@@ -51,11 +51,11 @@ fun Categories(viewModel: HomeScreenViewModel) {
         ),
         CategoryDto(
             icon = R.drawable.img_sdukz,
-            title = "Sdu.kz"
+            title = "sdu.kz"
         ),
         CategoryDto(
             icon = R.drawable.img_mysdu,
-            title = "Student clubs"
+            title = ""
         ),
         CategoryDto(
             icon = R.drawable.img_free_offices,

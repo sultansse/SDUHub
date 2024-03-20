@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens
+package com.softwareit.sduhub.ui.screens.map_screen
 
 
 import androidx.compose.foundation.layout.Box
@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.base.BaseFragment
-import com.softwareit.sduhub.common.ui.WebViewComponent
+import com.softwareit.sduhub.core.BaseFragment
+import com.softwareit.sduhub.utils.common_presentation.WebViewComponent
 
 class MapFragment : BaseFragment() {
 

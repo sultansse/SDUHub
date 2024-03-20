@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.base.BaseFragment
+import com.softwareit.sduhub.core.BaseFragment
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

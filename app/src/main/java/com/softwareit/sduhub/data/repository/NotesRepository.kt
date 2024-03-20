@@ -19,26 +19,26 @@ interface NotesRepository {
 }
 
 class NotesRepositoryImpl(
-    private val localDataSource: NoteDao,
+    private val noteDao: NoteDao,
 ) : NotesRepository {
 
     override fun getNote(id: Int): Flow<NoteDTO> {
-        return localDataSource.getNote(id)
+        return noteDao.getNote(id)
     }
 
     override fun getNotes(): Flow<List<NoteDTO>> {
-        return localDataSource.getNotes()
+        return noteDao.getNotes()
     }
 
     override suspend fun upsertNote(note: NoteDTO) {
-        localDataSource.upsertNote(note)
+        noteDao.upsertNote(note)
     }
 
     override suspend fun deleteNote(id: Int) {
-        localDataSource.deleteNote(id)
+        noteDao.deleteNote(id)
     }
 
     override suspend fun deleteNotes() {
-        localDataSource.deleteNotes()
+        noteDao.deleteNotes()
     }
 }

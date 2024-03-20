@@ -1,6 +1,6 @@
 package com.softwareit.sduhub.ui.screens.news_screen
 
-import com.softwareit.sduhub.base.BaseViewModel
+import com.softwareit.sduhub.core.BaseViewModel
 
 
 class NewsScreenViewModel(

@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.softwareit.sduhub.base.BaseFragment
+import com.softwareit.sduhub.core.BaseFragment
 
 class StudentClubsFragment : BaseFragment() {
 

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,17 +20,20 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.data.network.backend.Student
 import com.softwareit.sduhub.ui.theme.SduBlue
 import com.softwareit.sduhub.ui.theme.SduOrange
 
 
 @Composable
-fun ProfileIdCardDialog(onClose: () -> Unit) {
+fun ProfileIdCardDialog(
+    student: Student,
+    onClose: () -> Unit
+) {
     Dialog(
         onDismissRequest = { onClose() },
     ) {
@@ -67,25 +70,25 @@ fun ProfileIdCardDialog(onClose: () -> Unit) {
 
                 )
                 Text(
-                    text = "Name Surname",
+                    text = student.fullname,
                     color = Color.White,
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     modifier = Modifier.padding(vertical = 16.dp)
 
                 )
-                Divider(
+                HorizontalDivider(
                     thickness = 1.dp, color = Color.White
                 )
                 Text(
-                    text = "Компьютерлік ғылымдар\nComputer Science",
+                    text = student.faculty,
                     color = SduOrange,
                     textAlign = TextAlign.Center,
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
-                Divider(
+                HorizontalDivider(
                     thickness = 1.dp, color = Color.White
                 )
                 Text(
@@ -96,7 +99,7 @@ fun ProfileIdCardDialog(onClose: () -> Unit) {
                     modifier = Modifier.padding(top = 16.dp, bottom = 4.dp)
                 )
                 Text(
-                    text = "200107081",
+                    text = student.studentId.toString(),
                     color = Color.White,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     fontSize = 16.sp,
@@ -106,10 +109,4 @@ fun ProfileIdCardDialog(onClose: () -> Unit) {
             }
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun ProfileIdCardDialogPreview() {
-    ProfileIdCardDialog() {}
 }
