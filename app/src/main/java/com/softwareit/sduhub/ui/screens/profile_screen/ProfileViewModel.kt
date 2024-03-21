@@ -23,7 +23,7 @@ class ProfileViewModel(
 
     init {
         viewModelScope.launch {
-            _student.value = repository.getStudent()
+//            _student.value = repository.getStudent()
         }
     }
 }

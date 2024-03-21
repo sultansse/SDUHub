@@ -125,7 +125,7 @@ fun navigateToCategory(context: Context, title: String, viewModel: HomeScreenVie
 
         "Sdu.kz" -> { viewModel.goToSduKz() }
 
-        "Ai assistant" -> { viewModel.goToAiAssistant() }
+        "AI Dos" -> { viewModel.goToAiAssistant() }
 
         "Order Food" -> { openTelegramToUser("SDUOrder_bot", context) }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_back">С возвращением, уважаемый пользователь!</string>
-    <string name="delete">Delete</string>
+    <string name="delete">Удалить ету</string>
     <string name="copy">Копировать</string>
     <string name="note">Заметка</string>
     <string name="saved_successfully">Успешно сохранено!</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_back">Қош келдіңіз, құрметті қолданушы!</string>
-    <string name="delete">Delete</string>
+    <string name="delete">Өшіру</string>
     <string name="copy">Көшіру</string>
     <string name="note">Ескертпе</string>
     <string name="saved_successfully">Сәтті сақталды!</string>
