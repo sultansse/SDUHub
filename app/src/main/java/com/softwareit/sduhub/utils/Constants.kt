@@ -9,7 +9,7 @@ class Constants {
         const val STORYLY_TRENDS_TOKEN =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjExNjU1LCJhcHBfaWQiOjE3NTg1LCJpbnNfaWQiOjE5NjIyfQ.vwDSxne4cbHiT1qGBz95qQ7EbXtHn8iA3XBwZ29Iv5M"
 
-        const val BASE_URL = "https://https://sduhub-ktor.onrender.com/"
+        const val BASE_URL = "https://sduhub-ktor.onrender.com/"
 
         //        Room tables
         const val NOTE_TABLE = "notes_table"

@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.data.repository
 
+import android.util.Log
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
 import com.softwareit.sduhub.data.network.backend.Student
 import com.softwareit.sduhub.data.network.firebase.FirebaseDataSource
@@ -23,7 +24,9 @@ class NetworkRepositoryImpl(
     }
 
     override suspend fun getStudent(): Student {
-        return backendDataSource.getStudent()
+        val data = backendDataSource.getStudent()
+        Log.e("TAG", ">>>> NetworkRepository.kt -> getStudent (27): $data");
+        return data
     }
 
 }

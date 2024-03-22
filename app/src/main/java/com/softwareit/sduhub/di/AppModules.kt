@@ -4,7 +4,6 @@ import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.Router
 import com.google.firebase.database.FirebaseDatabase
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
-import com.softwareit.sduhub.data.network.backend.BackendService
 import com.softwareit.sduhub.data.network.firebase.FirebaseDataSource
 import com.softwareit.sduhub.data.repository.NetworkRepository
 import com.softwareit.sduhub.data.repository.NetworkRepositoryImpl
@@ -44,8 +43,10 @@ val networkModule = module {
 // TODO make better - not so tight relationship
     single { FirebaseDatabase.getInstance() }
     single { FirebaseDataSource(database = get()) }
-    single<BackendService> { provideBackendService() }
 
+    single { provideHttpClient() }
+    single { provideRetrofit(get()) }
+    single { provideService(get()) }
 }
 
 

@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import com.softwareit.sduhub.data.local.notes.NotesDatabase
 import com.softwareit.sduhub.data.network.backend.BackendService
-import com.softwareit.sduhub.utils.Constants
+import com.softwareit.sduhub.utils.Constants.Companion.BASE_URL
 import com.softwareit.sduhub.utils.Constants.Companion.NOTE_TABLE
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 //db
 fun provideNoteDao(appDatabase: NotesDatabase) = appDatabase.noteDao()
@@ -20,16 +22,23 @@ fun provideAppDatabase(context: Context): NotesDatabase {
 }
 
 //network
-fun provideBackendService(): BackendService {
-
+fun provideRetrofit(
+    okHttpClient: OkHttpClient,
+): Retrofit {
     return Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL)
+        .baseUrl(BASE_URL)
+        .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create())
-//        .client(client)
         .build()
-        .create(BackendService::class.java)
 }
 
-//fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-//    .addInterceptor(ChuckerInterceptor.Builder(androidContext()).build())
-//    .build()
+fun provideService(retrofit: Retrofit): BackendService =
+    retrofit.create(BackendService::class.java)
+
+fun provideHttpClient(): OkHttpClient {
+    return OkHttpClient
+        .Builder()
+        .readTimeout(60, TimeUnit.SECONDS)
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .build()
+}

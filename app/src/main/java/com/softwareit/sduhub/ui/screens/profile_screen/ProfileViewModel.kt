@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.ui.screens.profile_screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.data.network.backend.Student
@@ -23,7 +24,9 @@ class ProfileViewModel(
 
     init {
         viewModelScope.launch {
-//            _student.value = repository.getStudent()
+            val data = repository.getStudent()
+            Log.e("TAG", ">>>> ProfileViewModel.kt ->  (27): $data ");
+            _student.value = data
         }
     }
 }
