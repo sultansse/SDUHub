@@ -1,10 +1,9 @@
 package com.softwareit.sduhub.ui.screens.news_screen
 
+import com.google.common.collect.ImmutableList
 import com.softwareit.sduhub.core.UiEffect
 import com.softwareit.sduhub.core.UiEvent
 import com.softwareit.sduhub.core.UiState
-import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
 
 class NewsContract {
 
@@ -25,11 +24,11 @@ class NewsContract {
 
     sealed class InternShipsState {
         data object Idle : InternShipsState()
-        data class Success(val data: ImportantInfoDTO) : InternShipsState()
+        data class Success(val data: ImmutableList<InternshipItemDTO>) : InternShipsState()
     }
 
     sealed class NewsState {
         data object Idle : NewsState()
-        data class Success(val data: List<NoteDTO>) : NewsState()
+        data class Success(val data: ImmutableList<NewsItemDTO>) : NewsState()
     }
 }

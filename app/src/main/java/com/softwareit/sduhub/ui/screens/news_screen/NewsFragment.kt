@@ -32,6 +32,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
@@ -49,7 +50,9 @@ import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange
 import com.softwareit.sduhub.utils.Constants
 import kotlinx.coroutines.launch
+import okhttp3.internal.immutableListOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class NewsFragment : BaseFragment() {
 
@@ -60,48 +63,54 @@ class NewsFragment : BaseFragment() {
         const val NEWS_PAGE = 1
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun SetContent() {
 
-        var query by remember { mutableStateOf("") }
-
         Scaffold(
-            topBar = {
-                SearchBar(
-                    query = query,
-                    onQueryChange = { query = it },
-                    onSearch = {
-                        if (it.isNotEmpty()) {
-//                            onSearch(it)
-//                            keyboard?.hide()
-                        }
-                    },
-                    active = false,
-                    onActiveChange = {},
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search"
-                        )
-                    },
-                    placeholder = {
-                        Text(text = "Search here")
-                    },
-                    shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-//                    TODO
-//                    content of found items
-                }
-            }
+            topBar = { SearchTopBar() }
         ) {
             Box(modifier = Modifier.padding(it)) {
                 NewsScreen()
             }
         }
     }
+
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun SearchTopBar() {
+        var query by remember { mutableStateOf("") }
+
+        SearchBar(
+            query = query,
+            onQueryChange = { query = it },
+            onSearch = {
+                if (it.isNotEmpty()) {
+//                            onSearch(it)
+//                            keyboard?.hide()
+                }
+            },
+            active = false,
+            onActiveChange = {},
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search"
+                )
+            },
+            placeholder = {
+                Text(text = "Search here")
+            },
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+//                    TODO
+//                    content of found items
+        }
+    }
+
 
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
@@ -122,7 +131,7 @@ class NewsFragment : BaseFragment() {
             }
 
             item {
-                ResourcePages(pagerState, listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) //1, 2, 3, 4, 5, 6, 7, 8, 9, 10 are just placeholders for the actual data
+                ResourcePages(pagerState)
             }
         }
     }
@@ -198,10 +207,10 @@ class NewsFragment : BaseFragment() {
 
     }
 
-// TODO change to paging, so news/internships will load by pages
+    // TODO change to paging, so news/internships will load by pages
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
-    private fun <T> ResourcePages(pagerState: PagerState, items: List<T>) {
+    private fun ResourcePages(pagerState: PagerState) {
 
         HorizontalPager(
             state = pagerState,
@@ -216,15 +225,11 @@ class NewsFragment : BaseFragment() {
             ) {
                 when (currentPage) {
                     INTERNSHIPS_PAGE -> {
-                        items.forEach { internship ->
-                            InternshipItem(internship)
-                        }
+                        Internships()
                     }
 
                     NEWS_PAGE -> {
-                        items.forEach { new ->
-                            NewsItem(new)
-                        }
+                        News()
                     }
                 }
             }
@@ -232,7 +237,77 @@ class NewsFragment : BaseFragment() {
     }
 
     @Composable
-    private fun InternshipItem(internship: Any?) {
+    private fun Internships() {
+        val internships = immutableListOf(
+            InternshipItemDTO("Internship 1", "Description 1"),
+            InternshipItemDTO("Internship 2", "Description 2"),
+            InternshipItemDTO("Internship 3", "Description 3"),
+            InternshipItemDTO("Internship 4", "Description 4"),
+            InternshipItemDTO("Internship 5", "Description 5"),
+            InternshipItemDTO("Internship 1", "Description 1"),
+            InternshipItemDTO("Internship 2", "Description 2"),
+            InternshipItemDTO("Internship 3", "Description 3"),
+            InternshipItemDTO("Internship 4", "Description 4"),
+            InternshipItemDTO("Internship 5", "Description 5"),
+            InternshipItemDTO("Internship 1", "Description 1"),
+            InternshipItemDTO("Internship 2", "Description 2"),
+            InternshipItemDTO("Internship 3", "Description 3"),
+            InternshipItemDTO("Internship 4", "Description 4"),
+            InternshipItemDTO("Internship 5", "Description 5"),
+            InternshipItemDTO("Internship 1", "Description 1"),
+            InternshipItemDTO("Internship 2", "Description 2"),
+            InternshipItemDTO("Internship 3", "Description 3"),
+            InternshipItemDTO("Internship 4", "Description 4"),
+            InternshipItemDTO("Internship 5", "Description 5"),
+        )
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            internships.forEach {
+                InternshipItem(it)
+            }
+        }
+    }
+
+    @Composable
+    private fun News() {
+        val news = immutableListOf(
+            NewsItemDTO("News 1", "Description 1", ""),
+            NewsItemDTO("News 2", "Description 2", ""),
+            NewsItemDTO("News 3", "Description 3", ""),
+            NewsItemDTO("News 4", "Description 4", ""),
+            NewsItemDTO("News 5", "Description 5", ""),
+            NewsItemDTO("News 1", "Description 1", ""),
+            NewsItemDTO("News 2", "Description 2", ""),
+            NewsItemDTO("News 3", "Description 3", ""),
+            NewsItemDTO("News 4", "Description 4", ""),
+            NewsItemDTO("News 5", "Description 5", ""),
+            NewsItemDTO("News 1", "Description 1", ""),
+            NewsItemDTO("News 2", "Description 2", ""),
+            NewsItemDTO("News 3", "Description 3", ""),
+            NewsItemDTO("News 4", "Description 4", ""),
+            NewsItemDTO("News 5", "Description 5", ""),
+            NewsItemDTO("News 1", "Description 1", ""),
+            NewsItemDTO("News 2", "Description 2", ""),
+            NewsItemDTO("News 3", "Description 3", ""),
+            NewsItemDTO("News 4", "Description 4", ""),
+            NewsItemDTO("News 5", "Description 5", ""),
+        )
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            news.forEach {
+                NewsItem(it)
+            }
+        }
+    }
+
+    @Composable
+    private fun InternshipItem(internship: InternshipItemDTO) {
 
         Box(
             modifier = Modifier
@@ -241,26 +316,35 @@ class NewsFragment : BaseFragment() {
                 .border(1.dp, Color.Gray)
         ) {
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
             ) {
+                val iconList = immutableListOf(
+                    R.drawable.img_abstract_rocket,
+                    R.drawable.img_abstract_bank,
+                    R.drawable.img_abstract_flower,
+                    R.drawable.img_abstract_ice,
+                    R.drawable.img_abstract_light,
+                )
+
                 Image(
-                    painter = rememberAsyncImagePainter(R.drawable.img_sdukz),
-                    contentDescription = "Vacancy icon",
+                    painter = rememberAsyncImagePainter(iconList.random()),
+                    contentDescription = internship.title,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(80.dp),
+                    modifier = Modifier.size(56.dp),
                 )
                 Column(
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(12.dp)
                 ) {
                     Text(
-                        text = "Internship Title",
+                        text = internship.title,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
                     )
                     Text(
-                        text = "Company name",
+                        text = internship.description,
                         color = Color.Gray
                     )
                 }
@@ -270,7 +354,7 @@ class NewsFragment : BaseFragment() {
     }
 
     @Composable
-    private fun NewsItem(news: Any?) {
+    private fun NewsItem(news: NewsItemDTO) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -288,19 +372,19 @@ class NewsFragment : BaseFragment() {
                     modifier = Modifier.padding(8.dp)
                 ) {
                     Text(
-                        text = "Internship Title",
+                        text = news.title,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = colorSduOrange,
                     )
                     Text(
-                        text = "Internship Description",
+                        text = news.description,
                         color = Color.White,
                     )
                 }
                 Image(
                     painter = rememberAsyncImagePainter(R.drawable.img_sdukz),
-                    contentDescription = "Vacancy icon",
+                    contentDescription = news.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(120.dp)
@@ -319,14 +403,15 @@ class NewsFragment : BaseFragment() {
     }
 }
 
+interface ResourceDTO
+
 data class NewsItemDTO(
     val title: String,
     val description: String,
     val imageUrl: String
-) : Any()
+) : ResourceDTO
 
 data class InternshipItemDTO(
     val title: String,
     val description: String,
-    val icon: Int,
-) : Any()
+) : ResourceDTO
