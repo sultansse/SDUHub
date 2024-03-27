@@ -1,11 +1,10 @@
-package com.softwareit.sduhub.ui.screens.news_screen
+package com.softwareit.sduhub.ui.screens.resources_screen
 
-import com.google.common.collect.ImmutableList
 import com.softwareit.sduhub.core.UiEffect
 import com.softwareit.sduhub.core.UiEvent
 import com.softwareit.sduhub.core.UiState
 
-class NewsContract {
+class ResourceContract {
 
     sealed class Event : UiEvent {
         data object OnFetchInternships : Event()
@@ -24,11 +23,11 @@ class NewsContract {
 
     sealed class InternShipsState {
         data object Idle : InternShipsState()
-        data class Success(val data: ImmutableList<InternshipItemDTO>) : InternShipsState()
+        data class Success(val data: List<InternshipItemDTO>) : InternShipsState()
     }
 
     sealed class NewsState {
         data object Idle : NewsState()
-        data class Success(val data: ImmutableList<NewsItemDTO>) : NewsState()
+        data class Success(val data: List<NewsItemDTO>) : NewsState()
     }
 }

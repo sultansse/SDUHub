@@ -12,8 +12,8 @@ import com.softwareit.sduhub.databinding.ActivityMainBinding
 import com.softwareit.sduhub.navigation.NavigationScreens
 import com.softwareit.sduhub.ui.screens.home_screen.HomeFragment
 import com.softwareit.sduhub.ui.screens.map_screen.MapFragment
-import com.softwareit.sduhub.ui.screens.news_screen.NewsFragment
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileFragment
+import com.softwareit.sduhub.ui.screens.resources_screen.ResourcesFragment
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavViewVisibility() {
         supportFragmentManager.addOnBackStackChangedListener {
             when (supportFragmentManager.findFragmentById(R.id.main_container)) {
-                is HomeFragment, is NewsFragment, is MapFragment, is ProfileFragment -> {
+                is HomeFragment, is ResourcesFragment, is MapFragment, is ProfileFragment -> {
                     binding.bottomNavigationView.isVisible = true
                 }
 

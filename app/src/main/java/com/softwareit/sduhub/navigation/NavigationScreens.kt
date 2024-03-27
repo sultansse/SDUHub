@@ -9,8 +9,8 @@ import com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_scree
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen.SduKzFragment
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteFragment
 import com.softwareit.sduhub.ui.screens.map_screen.MapFragment
-import com.softwareit.sduhub.ui.screens.news_screen.NewsFragment
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileFragment
+import com.softwareit.sduhub.ui.screens.resources_screen.ResourcesFragment
 
 object NavigationScreens {
 
@@ -28,6 +28,6 @@ object NavigationScreens {
     }
 
     fun profile() = FragmentScreen { ProfileFragment() }
-    fun news() = FragmentScreen { NewsFragment() }
+    fun news() = FragmentScreen { ResourcesFragment() }
     fun map() = FragmentScreen { MapFragment() }
 }

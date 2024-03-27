@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.news_screen
+package com.softwareit.sduhub.ui.screens.resources_screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -20,12 +20,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.core.BaseFragment
@@ -54,9 +57,9 @@ import okhttp3.internal.immutableListOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class NewsFragment : BaseFragment() {
+class ResourcesFragment : BaseFragment() {
 
-    private val viewModel: NewsScreenViewModel by viewModel()
+    private val viewModel: ResourceScreenViewModel by viewModel()
 
     private companion object {
         const val INTERNSHIPS_PAGE = 0
@@ -207,6 +210,7 @@ class NewsFragment : BaseFragment() {
 
     }
 
+
     // TODO change to paging, so news/internships will load by pages
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
@@ -238,70 +242,65 @@ class NewsFragment : BaseFragment() {
 
     @Composable
     private fun Internships() {
-        val internships = immutableListOf(
-            InternshipItemDTO("Internship 1", "Description 1"),
-            InternshipItemDTO("Internship 2", "Description 2"),
-            InternshipItemDTO("Internship 3", "Description 3"),
-            InternshipItemDTO("Internship 4", "Description 4"),
-            InternshipItemDTO("Internship 5", "Description 5"),
-            InternshipItemDTO("Internship 1", "Description 1"),
-            InternshipItemDTO("Internship 2", "Description 2"),
-            InternshipItemDTO("Internship 3", "Description 3"),
-            InternshipItemDTO("Internship 4", "Description 4"),
-            InternshipItemDTO("Internship 5", "Description 5"),
-            InternshipItemDTO("Internship 1", "Description 1"),
-            InternshipItemDTO("Internship 2", "Description 2"),
-            InternshipItemDTO("Internship 3", "Description 3"),
-            InternshipItemDTO("Internship 4", "Description 4"),
-            InternshipItemDTO("Internship 5", "Description 5"),
-            InternshipItemDTO("Internship 1", "Description 1"),
-            InternshipItemDTO("Internship 2", "Description 2"),
-            InternshipItemDTO("Internship 3", "Description 3"),
-            InternshipItemDTO("Internship 4", "Description 4"),
-            InternshipItemDTO("Internship 5", "Description 5"),
-        )
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            internships.forEach {
-                InternshipItem(it)
+        LaunchedEffect(key1 = true) {
+            viewModel.setEvent(ResourceContract.Event.OnFetchInternships)
+        }
+
+        val uiState by viewModel.uiState.collectAsState()
+
+        when (val internshipsState = uiState.internshipsState) {
+            is ResourceContract.InternShipsState.Idle -> {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is ResourceContract.InternShipsState.Success -> {
+                val internships = internshipsState.data
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    internships.forEach {
+                        InternshipItem(it)
+                    }
+                }
             }
         }
     }
 
     @Composable
     private fun News() {
-        val news = immutableListOf(
-            NewsItemDTO("News 1", "Description 1", ""),
-            NewsItemDTO("News 2", "Description 2", ""),
-            NewsItemDTO("News 3", "Description 3", ""),
-            NewsItemDTO("News 4", "Description 4", ""),
-            NewsItemDTO("News 5", "Description 5", ""),
-            NewsItemDTO("News 1", "Description 1", ""),
-            NewsItemDTO("News 2", "Description 2", ""),
-            NewsItemDTO("News 3", "Description 3", ""),
-            NewsItemDTO("News 4", "Description 4", ""),
-            NewsItemDTO("News 5", "Description 5", ""),
-            NewsItemDTO("News 1", "Description 1", ""),
-            NewsItemDTO("News 2", "Description 2", ""),
-            NewsItemDTO("News 3", "Description 3", ""),
-            NewsItemDTO("News 4", "Description 4", ""),
-            NewsItemDTO("News 5", "Description 5", ""),
-            NewsItemDTO("News 1", "Description 1", ""),
-            NewsItemDTO("News 2", "Description 2", ""),
-            NewsItemDTO("News 3", "Description 3", ""),
-            NewsItemDTO("News 4", "Description 4", ""),
-            NewsItemDTO("News 5", "Description 5", ""),
-        )
+        LaunchedEffect(key1 = true) {
+            viewModel.setEvent(ResourceContract.Event.OnFetchNews)
+        }
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            news.forEach {
-                NewsItem(it)
+        val uiState by viewModel.uiState.collectAsState()
+
+        when (val newsState = uiState.newsState) {
+            is ResourceContract.NewsState.Idle -> {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is ResourceContract.NewsState.Success -> {
+                val news = newsState.data
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    news.forEach {
+                        NewsItem(it)
+                    }
+                }
             }
         }
     }
@@ -382,8 +381,8 @@ class NewsFragment : BaseFragment() {
                         color = Color.White,
                     )
                 }
-                Image(
-                    painter = rememberAsyncImagePainter(R.drawable.img_sdukz),
+                AsyncImage(
+                    model = news.imageUrl,
                     contentDescription = news.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
