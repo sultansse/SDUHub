@@ -13,7 +13,11 @@ class Constants {
 
         //        Room tables
         const val NOTE_TABLE = "notes_table"
+
+        //      Firebase Realtime Tables
         const val IMPORTANT_INFO_TABLE = "important_info_table"
+        const val NEWS_TABLE = "news_table"
+        const val INTERNSHIPS_TABLE = "internships_table"
 
         /**
          * New note identifier, NEW_NOTE_ID = 0, so if any note's id is 0 -> it is new note

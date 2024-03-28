@@ -1,20 +1,17 @@
-package com.softwareit.sduhub.ui.screens.resources_screen
+package com.softwareit.sduhub.ui.screens.resources_screen.news_screen
 
 import com.softwareit.sduhub.core.UiEffect
 import com.softwareit.sduhub.core.UiEvent
 import com.softwareit.sduhub.core.UiState
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
 
-class ResourceContract {
+class NewsContract {
 
     sealed class Event : UiEvent {
-        data object OnFetchInternships : Event()
         data object OnFetchNews : Event()
-        data class OnSearch(val query: String) : Event()
     }
 
     data class State(
-        val internshipsState: InternShipsState,
         val newsState: NewsState,
     ) : UiState
 
@@ -22,13 +19,8 @@ class ResourceContract {
         data class ShowError(val message : String?) : Effect()
     }
 
-    sealed class InternShipsState {
-        data object Idle : InternShipsState()
-        data class Success(val data: List<InternshipItemDTO>) : InternShipsState()
-    }
-
     sealed class NewsState {
         data object Idle : NewsState()
-        data class Success(val data: List<NewsItemDTO>) : NewsState()
+        data class Success(val data: NewsItemDTO?) : NewsState()
     }
 }

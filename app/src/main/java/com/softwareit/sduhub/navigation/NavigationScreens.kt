@@ -11,6 +11,8 @@ import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteFra
 import com.softwareit.sduhub.ui.screens.map_screen.MapFragment
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileFragment
 import com.softwareit.sduhub.ui.screens.resources_screen.ResourcesFragment
+import com.softwareit.sduhub.ui.screens.resources_screen.internship_screen.InternshipFragment
+import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsFragment
 
 object NavigationScreens {
 
@@ -28,6 +30,12 @@ object NavigationScreens {
     }
 
     fun profile() = FragmentScreen { ProfileFragment() }
-    fun news() = FragmentScreen { ResourcesFragment() }
+
+    object Resources {
+        fun resources() = FragmentScreen { ResourcesFragment() }
+        fun internshipResource(internshipId: Int) = FragmentScreen { InternshipFragment(internshipId) }
+        fun newResource(newsId: String, link: String) = FragmentScreen { NewsFragment(newsId, link) }
+    }
+
     fun map() = FragmentScreen { MapFragment() }
 }

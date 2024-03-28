@@ -9,16 +9,19 @@ import com.softwareit.sduhub.data.repository.NetworkRepository
 import com.softwareit.sduhub.data.repository.NetworkRepositoryImpl
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.data.repository.NotesRepositoryImpl
-import com.softwareit.sduhub.domain.DeleteNoteUseCase
-import com.softwareit.sduhub.domain.DeleteNotesUseCase
-import com.softwareit.sduhub.domain.GetImportantInfoUseCase
-import com.softwareit.sduhub.domain.GetNoteUseCase
-import com.softwareit.sduhub.domain.GetNotesUseCase
-import com.softwareit.sduhub.domain.UpsertNoteUseCase
+import com.softwareit.sduhub.domain.importtant_info_usecase.GetImportantInfoUseCase
+import com.softwareit.sduhub.domain.internship_usecase.GetInternshipsUseCase
+import com.softwareit.sduhub.domain.news_usecase.GetNewsUseCase
+import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
+import com.softwareit.sduhub.domain.notes_usecase.DeleteNotesUseCase
+import com.softwareit.sduhub.domain.notes_usecase.GetNoteUseCase
+import com.softwareit.sduhub.domain.notes_usecase.GetNotesUseCase
+import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteViewModel
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.ResourceScreenViewModel
+import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsScreenViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -73,6 +76,10 @@ val repositoryModule = module {
 val useCaseModule = module {
 //    ImportantInfo
     factory { GetImportantInfoUseCase(repository = get()) }
+//    News
+    factory { GetNewsUseCase(repository = get()) }
+//    Internships
+    factory { GetInternshipsUseCase(repository = get()) }
 
 //    Notes
     factory { GetNotesUseCase(repository = get()) }
@@ -104,7 +111,14 @@ val viewModelModule = module {
     }
     viewModel {
         ResourceScreenViewModel(
-
+            router = get(),
+            getNewsUseCase = get(),
+            getInternshipsUseCase = get(),
+        )
+    }
+    viewModel {
+        NewsScreenViewModel(
+            router = get(),
         )
     }
     viewModel {

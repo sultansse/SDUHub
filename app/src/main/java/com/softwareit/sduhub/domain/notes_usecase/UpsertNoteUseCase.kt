@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.domain
+package com.softwareit.sduhub.domain.notes_usecase
 
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.data.repository.NotesRepository

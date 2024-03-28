@@ -3,6 +3,7 @@ package com.softwareit.sduhub.utils.common_presentation
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ fun WebViewComponent(
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
                     settings.javaScriptEnabled = true
+                    webViewClient = WebViewClient()
                     loadUrl(url)
                 }
             },

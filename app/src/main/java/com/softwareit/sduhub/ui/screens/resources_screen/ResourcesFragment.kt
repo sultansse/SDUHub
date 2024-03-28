@@ -37,17 +37,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.core.BaseFragment
+import com.softwareit.sduhub.data.network.backend.NewsItemDTO
 import com.softwareit.sduhub.ui.screens.home_screen.components.StorylyViewComponent
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange
@@ -266,7 +266,9 @@ class ResourcesFragment : BaseFragment() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     internships.forEach {
-                        InternshipItem(it)
+                        InternshipItem(it) {
+                            viewModel.onInternshipClick(it.id)
+                        }
                     }
                 }
             }
@@ -282,6 +284,21 @@ class ResourcesFragment : BaseFragment() {
         val uiState by viewModel.uiState.collectAsState()
 
         when (val newsState = uiState.newsState) {
+            is ResourceContract.NewsState.Success -> {
+                val news = newsState.data
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    news.forEach {
+                        NewsItem(it) {
+                            // TODO navigate to news screen
+                            viewModel.onNewsClick(it.id, it.link)
+                        }
+                    }
+                }
+            }
+
             is ResourceContract.NewsState.Idle -> {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -290,29 +307,18 @@ class ResourcesFragment : BaseFragment() {
                     CircularProgressIndicator()
                 }
             }
-
-            is ResourceContract.NewsState.Success -> {
-                val news = newsState.data
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    news.forEach {
-                        NewsItem(it)
-                    }
-                }
-            }
         }
     }
 
     @Composable
-    private fun InternshipItem(internship: InternshipItemDTO) {
+    private fun InternshipItem(internship: InternshipItemDTO, onClick: () -> Unit) {
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp)
                 .border(1.dp, Color.Gray)
+                .clickable { onClick() }
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -353,19 +359,20 @@ class ResourcesFragment : BaseFragment() {
     }
 
     @Composable
-    private fun NewsItem(news: NewsItemDTO) {
+    private fun NewsItem(news: NewsItemDTO, onClick: () -> Unit) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(colorSduBlue)
+                .clickable { onClick() }
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(12.dp)
             ) {
                 Column(
                     modifier = Modifier.padding(8.dp)
@@ -373,23 +380,36 @@ class ResourcesFragment : BaseFragment() {
                     Text(
                         text = news.title,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         color = colorSduOrange,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     Text(
-                        text = news.description,
+                        text = news.announce,
                         color = Color.White,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
-                AsyncImage(
-                    model = news.imageUrl,
-                    contentDescription = news.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .clipToBounds(),
-                )
+//                Image(
+//                    painter = rememberAsyncImagePainter(R.drawable.img_abstract_flower),
+//                    contentDescription = "",
+//                    contentScale = ContentScale.Crop,
+//                    modifier = Modifier
+//                        .size(80.dp)
+//                        .clip(RoundedCornerShape(12.dp))
+//                        .clipToBounds(),
+//                )
+//                AsyncImage(
+//                    model = news.imageUrl,
+//                    contentDescription = news.title,
+//                    contentScale = ContentScale.Crop,
+//                    modifier = Modifier
+//                        .size(120.dp)
+//                        .clip(RoundedCornerShape(12.dp))
+//                        .clipToBounds(),
+//                )
             }
         }
     }
@@ -404,13 +424,9 @@ class ResourcesFragment : BaseFragment() {
 
 interface ResourceDTO
 
-data class NewsItemDTO(
-    val title: String,
-    val description: String,
-    val imageUrl: String
-) : ResourceDTO
 
 data class InternshipItemDTO(
+    val id: Int,
     val title: String,
     val description: String,
 ) : ResourceDTO

@@ -4,9 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.core.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.domain.DeleteNoteUseCase
-import com.softwareit.sduhub.domain.GetNoteUseCase
-import com.softwareit.sduhub.domain.UpsertNoteUseCase
+import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
+import com.softwareit.sduhub.domain.notes_usecase.GetNoteUseCase
+import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview

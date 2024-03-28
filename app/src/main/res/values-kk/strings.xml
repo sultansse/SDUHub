@@ -8,4 +8,5 @@
     <string name="coming_soon">Жақында шығады!</string>
     <string name="not_modified_yet">Әлі өзгертілмеген :)</string>
     <string name="last_modified">соңғы рет өзгертілген: %1$s</string>
+    <string name="news">Жаңалықтар</string>
 </resources>

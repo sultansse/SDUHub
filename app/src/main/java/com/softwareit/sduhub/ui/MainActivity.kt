@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.resources_screen -> {
-                    router.navigateTo(NavigationScreens.news())
+                    router.navigateTo(NavigationScreens.Resources.resources())
                     true
                 }
 
