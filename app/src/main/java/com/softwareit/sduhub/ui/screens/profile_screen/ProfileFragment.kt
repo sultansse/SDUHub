@@ -58,18 +58,6 @@ class ProfileFragment : BaseFragment() {
                 title = stringResource(R.string.community),
             ),
             ProfileScreenListItem(
-                icon = R.drawable.ic_language,
-                title = stringResource(R.string.change_language),
-            ),
-            ProfileScreenListItem(
-                icon = R.drawable.ic_favorite,
-                title = stringResource(R.string.favourite),
-            ),
-            ProfileScreenListItem(
-                icon = R.drawable.ic_feedback,
-                title = stringResource(R.string.feedback),
-            ),
-            ProfileScreenListItem(
                 icon = R.drawable.ic_logout,
                 title = stringResource(R.string.logout),
             ),
@@ -106,11 +94,22 @@ class ProfileFragment : BaseFragment() {
                     title = items[index].title,
                     icon = items[index].icon,
                     onClick = {
-                        Toast.makeText(
-                            requireContext(),
-                            "Clicked on ${items[index].title}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        when (index) {
+                            0 -> {
+                                Toast.makeText(requireContext(), "FAQ", Toast.LENGTH_SHORT).show()
+                            }
+
+                            1 -> {
+                                Toast.makeText(requireContext(), "Community", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            2 -> {
+                                Toast.makeText(requireContext(), "Logout", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                        }
                     }
                 )
             }

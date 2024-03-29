@@ -23,5 +23,11 @@ class Constants {
          * New note identifier, NEW_NOTE_ID = 0, so if any note's id is 0 -> it is new note
          */
         const val NEW_NOTE_ID = 0
+
+        /**
+         *  Theme values for datastore, so even system uses light color scheme, user can use dark theme in app
+         * */
+        const val LIGHT_THEME = "light"
+        const val DARK_THEME = "dark"
     }
 }

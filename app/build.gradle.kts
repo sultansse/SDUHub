@@ -100,6 +100,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
 
+//    okhttp
     val okHttp = "4.12.0"
     implementation("com.squareup.okhttp3:okhttp:$okHttp")
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttp")
@@ -115,6 +116,9 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
+
+//    datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 //    coroutines
     val coroutinesVersion = "1.8.0"

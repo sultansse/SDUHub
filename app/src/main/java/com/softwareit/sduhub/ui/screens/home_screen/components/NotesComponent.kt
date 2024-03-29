@@ -2,7 +2,6 @@ package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,9 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +37,7 @@ import com.softwareit.sduhub.ui.screens.home_screen.HomeContract
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 
 @Composable
-fun NotesComponent(notes: List<NoteDTO>) {
+fun NotesComponent(notes: List<NoteDTO>) { // todo change List<NoteDTO> to ImmutableList<NoteUI>
     val viewModel: HomeScreenViewModel = viewModel()
 
     Column {
@@ -86,14 +82,6 @@ fun NoteItem(
             contentDescription = "background image",
             contentScale = ContentScale.Crop,
             modifier = Modifier.matchParentSize(),
-            colorFilter = if (isSystemInDarkTheme()) {
-                ColorFilter.tint(
-                    color = Color.Black.copy(alpha = 0.5f),
-                    blendMode = BlendMode.Darken
-                )
-            } else {
-                null
-            }
         )
 
         Column(

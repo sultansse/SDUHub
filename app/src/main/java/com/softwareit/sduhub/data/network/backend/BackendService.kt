@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface BackendService {
 
-    @GET("v1/student")
+    @GET("student") // TODO change to real endpoint
     suspend fun getStudent(): Student
 
     @GET("v1/news")
