@@ -2,6 +2,7 @@ package com.softwareit.sduhub.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.github.terrakok.cicerone.NavigatorHolder
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     private val navHolder: NavigatorHolder by inject()
     private val navigator = AppNavigator(this, R.id.main_container)
 
-
     override fun onResumeFragments() {
         super.onResumeFragments()
         navHolder.setNavigator(navigator)
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContentView(binding.root)
 
         router.navigateTo(NavigationScreens.Home.home())

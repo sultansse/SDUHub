@@ -79,6 +79,7 @@ dependencies {
     implementation("com.appsamurai.storyly:storyly:2.13.0")
     implementation("io.woong.compose.grid:grid:1.2.1")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
 //    debug
     val chuckerVersion = "4.0.0"

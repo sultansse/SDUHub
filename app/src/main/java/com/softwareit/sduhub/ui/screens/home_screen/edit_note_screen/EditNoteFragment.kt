@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,7 +62,9 @@ class EditNoteFragment(
 
         when (val state = uiState.noteState) {
             is EditNoteContract.NoteState.Idle -> {
-                viewModel.setEvent(EditNoteContract.Event.OnFetchNote(noteId))
+                LaunchedEffect(key1 = true) {
+                    viewModel.setEvent(EditNoteContract.Event.OnFetchNote(noteId))
+                }
             }
 
             is EditNoteContract.NoteState.Fetched -> {
