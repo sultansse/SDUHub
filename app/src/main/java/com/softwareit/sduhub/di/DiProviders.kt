@@ -2,6 +2,7 @@ package com.softwareit.sduhub.di
 
 import android.content.Context
 import androidx.room.Room
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.softwareit.sduhub.data.local.notes.NotesDatabase
 import com.softwareit.sduhub.data.network.backend.BackendService
 import com.softwareit.sduhub.utils.Constants.Companion.BASE_URL
@@ -35,9 +36,10 @@ fun provideRetrofit(
 fun provideService(retrofit: Retrofit): BackendService =
     retrofit.create(BackendService::class.java)
 
-fun provideHttpClient(): OkHttpClient {
+fun provideHttpClient(context: Context): OkHttpClient {
     return OkHttpClient
         .Builder()
+        .addInterceptor(ChuckerInterceptor(context))
         .readTimeout(60, TimeUnit.SECONDS)
         .connectTimeout(60, TimeUnit.SECONDS)
         .build()

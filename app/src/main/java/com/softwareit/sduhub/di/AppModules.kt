@@ -49,7 +49,7 @@ val networkModule = module {
     single { FirebaseDatabase.getInstance() }
     single { FirebaseDataSource(database = get()) }
 
-    single { provideHttpClient() }
+    single { provideHttpClient(context = androidContext()) }
     single { provideRetrofit(get()) }
     single { provideService(get()) }
 }

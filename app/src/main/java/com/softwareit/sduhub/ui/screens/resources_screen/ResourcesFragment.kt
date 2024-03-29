@@ -37,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +45,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.core.BaseFragment
@@ -369,48 +371,39 @@ class ResourcesFragment : BaseFragment() {
                 .background(colorSduBlue)
                 .clickable { onClick() }
         ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(8.dp)
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
+                    AsyncImage(
+                        model = news.imageUrl,
+                        contentDescription = news.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(120.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clipToBounds(),
+                    )
                     Text(
                         text = news.title,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         color = colorSduOrange,
-                        maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                    )
-                    Text(
-                        text = news.announce,
-                        color = Color.White,
-                        maxLines = 4,
-                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(horizontal = 8.dp)
                     )
                 }
-//                Image(
-//                    painter = rememberAsyncImagePainter(R.drawable.img_abstract_flower),
-//                    contentDescription = "",
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .size(80.dp)
-//                        .clip(RoundedCornerShape(12.dp))
-//                        .clipToBounds(),
-//                )
-//                AsyncImage(
-//                    model = news.imageUrl,
-//                    contentDescription = news.title,
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .size(120.dp)
-//                        .clip(RoundedCornerShape(12.dp))
-//                        .clipToBounds(),
-//                )
+                Text(
+                    text = news.announce,
+                    color = Color.White,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                )
             }
         }
     }
