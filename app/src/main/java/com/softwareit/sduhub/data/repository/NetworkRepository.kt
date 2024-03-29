@@ -15,6 +15,8 @@ interface NetworkRepository {
 
     suspend fun getInternships(): List<InternshipItemDTO>
 
+    suspend fun getSpecificInternship(id: Int): InternshipItemDTO
+
     suspend fun getNews(): List<NewsItemDTO>
 
     suspend fun getNewsById(id: Int): NewsItemDTO
@@ -35,19 +37,11 @@ class NetworkRepositoryImpl(
     }
 
     override suspend fun getInternships(): List<InternshipItemDTO> {
-//        return firebaseDataSource.getInternship()
-        return listOf(
-            InternshipItemDTO(0, "Internship 0", description = "Description 0"),
-            InternshipItemDTO(1, "Internship 1", description = "Description 1"),
-            InternshipItemDTO(2, "Internship 2", description = "Description 2"),
-            InternshipItemDTO(3, "Internship 3", description = "Description 3"),
-            InternshipItemDTO(4, "Internship 4", description = "Description 4"),
-            InternshipItemDTO(5, "Internship 5", description = "Description 5"),
-            InternshipItemDTO(6, "Internship 6", description = "Description 6"),
-            InternshipItemDTO(7, "Internship 7", description = "Description 7"),
-            InternshipItemDTO(8, "Internship 8", description = "Description 8"),
-            InternshipItemDTO(9, "Internship 9", description = "Description 9"),
-        )
+        return backendDataSource.getInternships()
+    }
+
+    override suspend fun getSpecificInternship(id: Int): InternshipItemDTO {
+        return backendDataSource.getInternshipById(id)
     }
 
     override suspend fun getNews(): List<NewsItemDTO> {

@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.data.network.backend
 
 import android.util.Log
+import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 
 class BackendDataSource(
     private val backendApi: BackendService
@@ -21,5 +22,13 @@ class BackendDataSource(
     suspend fun getNewsById(id: Int): NewsItemDTO {
 //        use safeApiCall
         return backendApi.getNewsById(id)
+    }
+
+    suspend fun getInternships(): List<InternshipItemDTO> {
+        return backendApi.getInternships()
+    }
+
+    suspend fun getInternshipById(id: Int): InternshipItemDTO {
+        return backendApi.getInternshipById(id)
     }
 }

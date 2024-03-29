@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.data.network.backend
 
+import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 import com.softwareit.sduhub.ui.screens.resources_screen.ResourceDTO
 import com.squareup.moshi.JsonClass
 import retrofit2.http.GET
@@ -15,6 +16,11 @@ interface BackendService {
     @GET("v1/news/{id}")
     suspend fun getNewsById(id: Int): NewsItemDTO
 
+    @GET("v1/internships")
+    suspend fun getInternships(): List<InternshipItemDTO>
+
+    @GET("v1/internships/{id}")
+    suspend fun getInternshipById(id: Int): InternshipItemDTO
 }
 
 // TODO use different data classes for different layers: ui-compose, domain, local, network

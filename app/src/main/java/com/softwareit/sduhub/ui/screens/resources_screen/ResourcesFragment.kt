@@ -52,6 +52,7 @@ import com.softwareit.sduhub.ui.screens.home_screen.components.StorylyViewCompon
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange
 import com.softwareit.sduhub.utils.Constants
+import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.launch
 import okhttp3.internal.immutableListOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -169,45 +170,45 @@ class ResourcesFragment : BaseFragment() {
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     private fun PagerToggle(pagerState: PagerState) {
-        val selectedColor by remember { mutableStateOf(Color.Blue) }
+        val tabs = listOf("Internships" to INTERNSHIPS_PAGE, "News" to NEWS_PAGE)
+
         Row(
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth(),
         ) {
             val coroutineScope = rememberCoroutineScope()
 
-            Text(
-                text = "Internships",
-                color = if (pagerState.currentPage == INTERNSHIPS_PAGE) Color.White else Color.Black,
-                modifier = Modifier
-                    .padding(vertical = 20.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .clickable {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(INTERNSHIPS_PAGE)
-                        }
-                    }
-                    .background(if (pagerState.currentPage == INTERNSHIPS_PAGE) selectedColor else Color.Transparent)
-                    .padding(vertical = 4.dp, horizontal = 16.dp)
-            )
+            tabs.forEach { (title, page) ->
+                val isSelected = pagerState.currentPage == page
 
-            Text(
-                text = "News",
-                color = if (pagerState.currentPage == NEWS_PAGE) Color.White else Color.Black,
-                modifier = Modifier
-                    .padding(vertical = 20.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .clickable {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(NEWS_PAGE)
-                        }
-                    }
-                    .background(if (pagerState.currentPage == NEWS_PAGE) selectedColor else Color.Transparent)
-                    .padding(vertical = 4.dp, horizontal = 16.dp)
-            )
-
+                Tab(
+                    text = title,
+                    isSelected = isSelected,
+                    onClick = { coroutineScope.launch { pagerState.animateScrollToPage(page) } }
+                )
+            }
         }
+    }
 
+    @Composable
+    private fun Tab(
+        text: String,
+        isSelected: Boolean,
+        onClick: () -> Unit
+    ) {
+        val backgroundColor = if (isSelected) Color.Blue else Color.Transparent
+        val contentColor = if (isSelected) Color.White else Color.Gray
+
+        Text(
+            text = text,
+            color = contentColor,
+            modifier = Modifier
+                .padding(vertical = 20.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .clickable { onClick() }
+                .background(backgroundColor)
+                .padding(vertical = 4.dp, horizontal = 16.dp)
+        )
     }
 
 
@@ -349,7 +350,7 @@ class ResourcesFragment : BaseFragment() {
                         fontSize = 20.sp,
                     )
                     Text(
-                        text = internship.description,
+                        text = internship.companyName,
                         color = Color.Gray
                     )
                 }
@@ -424,9 +425,10 @@ class ResourcesFragment : BaseFragment() {
 
 interface ResourceDTO
 
-
+@JsonClass(generateAdapter = true)
 data class InternshipItemDTO(
     val id: Int,
     val title: String,
     val description: String,
+    val companyName: String,
 ) : ResourceDTO
