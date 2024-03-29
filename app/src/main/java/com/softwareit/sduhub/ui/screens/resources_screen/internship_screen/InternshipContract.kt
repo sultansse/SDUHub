@@ -8,7 +8,7 @@ import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 class InternshipContract {
 
     sealed class Event : UiEvent {
-        data object OnFetchInternship : Event()
+        data class OnFetchInternship(val id: Int) : Event()
     }
 
     data class State(

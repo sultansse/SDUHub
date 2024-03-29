@@ -350,7 +350,7 @@ class ResourcesFragment : BaseFragment() {
                         fontSize = 20.sp,
                     )
                     Text(
-                        text = internship.companyName,
+                        text = internship.company,
                         color = Color.Gray
                     )
                 }
@@ -429,6 +429,12 @@ interface ResourceDTO
 data class InternshipItemDTO(
     val id: Int,
     val title: String,
+    val salary: String,
+    val format: String,
+    val duration: String,
+    val company: String,
+    val location: String,
+    val applyDeadline: String,
     val description: String,
-    val companyName: String,
+    val contacts: String,
 ) : ResourceDTO

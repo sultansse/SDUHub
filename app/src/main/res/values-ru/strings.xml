@@ -9,4 +9,5 @@
     <string name="not_modified_yet">Еще не изменено :)</string>
     <string name="last_modified">последнее изменение: %1$s</string>
     <string name="news">Новости</string>
+    <string name="internship_vacancy">Стажировка/Вакансия</string>
 </resources>
