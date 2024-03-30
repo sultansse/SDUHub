@@ -1,7 +1,5 @@
 package com.softwareit.sduhub.di
 
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
 import com.google.firebase.database.FirebaseDatabase
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
 import com.softwareit.sduhub.data.network.firebase.FirebaseDataSource
@@ -27,16 +25,6 @@ import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsScreenV
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-
-val navigationModule = module {
-
-    single<Cicerone<Router>> { Cicerone.create() }
-
-    single { get<Cicerone<Router>>().router }
-
-    single { get<Cicerone<Router>>().getNavigatorHolder() }
-}
-
 
 val databaseModule = module {
     single { provideAppDatabase(context = androidContext()) }
@@ -112,19 +100,15 @@ val viewModelModule = module {
     }
     viewModel {
         ResourceScreenViewModel(
-            router = get(),
             getNewsUseCase = get(),
             getInternshipsUseCase = get(),
         )
     }
     viewModel {
-        NewsScreenViewModel(
-            router = get(),
-        )
+        NewsScreenViewModel()
     }
     viewModel {
         InternshipScreenViewModel(
-            router = get(),
             getSpecificInternship = get(),
         )
     }
@@ -137,7 +121,6 @@ val viewModelModule = module {
 }
 
 val appModule = listOf(
-    navigationModule,
     databaseModule,
     networkModule,
     repositoryModule,

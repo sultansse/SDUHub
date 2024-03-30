@@ -1,7 +1,6 @@
 package com.softwareit.sduhub.ui.screens.resources_screen
 
 import androidx.lifecycle.viewModelScope
-import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.core.BaseViewModel
 import com.softwareit.sduhub.domain.internship_usecase.GetInternshipsUseCase
 import com.softwareit.sduhub.domain.news_usecase.GetNewsUseCase
@@ -10,7 +9,6 @@ import kotlinx.coroutines.launch
 
 
 class ResourceScreenViewModel(
-    private val router: Router,
     private val getNewsUseCase: GetNewsUseCase,
     private val getInternshipsUseCase: GetInternshipsUseCase,
 ) : BaseViewModel<ResourceContract.Event, ResourceContract.State, ResourceContract.Effect>() {
