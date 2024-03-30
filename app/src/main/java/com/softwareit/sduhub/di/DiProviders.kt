@@ -10,6 +10,7 @@ import com.softwareit.sduhub.utils.Constants.Companion.NOTE_TABLE
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 //db
 fun provideNoteDao(appDatabase: NotesDatabase) = appDatabase.noteDao()
@@ -38,6 +39,10 @@ fun provideService(retrofit: Retrofit): BackendService =
 fun provideHttpClient(context: Context): OkHttpClient {
     return OkHttpClient
         .Builder()
+        .connectTimeout(2, TimeUnit.MINUTES)
+        .writeTimeout(2, TimeUnit.MINUTES)
+        .readTimeout(2, TimeUnit.MINUTES)
+        .pingInterval(3, TimeUnit.SECONDS)
         .addInterceptor(ChuckerInterceptor(context))
         .build()
 }
