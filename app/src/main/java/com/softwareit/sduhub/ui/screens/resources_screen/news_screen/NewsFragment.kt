@@ -17,26 +17,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.github.terrakok.modo.LocalContainerScreen
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.Screen
+import com.github.terrakok.modo.ScreenKey
+import com.github.terrakok.modo.generateScreenKey
+import com.github.terrakok.modo.stack.StackScreen
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.core.BaseFragment
 import com.softwareit.sduhub.utils.common_presentation.WebViewComponent
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.parcelize.Parcelize
 
-class NewsFragment(
-    private val newsId: String,
+
+@Parcelize
+class NewsDetailsScreenClass(
     private val link: String,
-) : BaseFragment() {
-
-    private val viewModel: NewsScreenViewModel by viewModel()
+    override val screenKey: ScreenKey = generateScreenKey(),
+) : Screen {
 
     @Composable
-    override fun SetContent() {
+    override fun Content() {
+
+        val parent = LocalContainerScreen.current
 
         Scaffold(
             topBar = {
-                NewsTopBar(
-                    newsId = newsId,
-                )
+                NewsTopBar(parent as StackScreen)
             }
         ) {
             Box(
@@ -49,9 +56,7 @@ class NewsFragment(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun NewsTopBar(
-        newsId: String,
-    ) {
+    private fun NewsTopBar(navigator: NavigationContainer<StackState>) {
         // Top bar
         TopAppBar(
             title = {
@@ -59,7 +64,7 @@ class NewsFragment(
             },
             navigationIcon = {
                 IconButton(
-                    onClick = { viewModel.onBackPressed() }
+                    onClick = { navigator.back() }
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,

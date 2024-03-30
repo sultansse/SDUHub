@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -40,43 +43,74 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import com.github.terrakok.modo.LocalContainerScreen
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.Screen
+import com.github.terrakok.modo.ScreenKey
+import com.github.terrakok.modo.generateScreenKey
+import com.github.terrakok.modo.stack.StackNavModel
+import com.github.terrakok.modo.stack.StackScreen
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.core.BaseFragment
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
+import com.softwareit.sduhub.ui.SlideTransition
 import com.softwareit.sduhub.ui.screens.home_screen.components.StorylyViewComponent
+import com.softwareit.sduhub.ui.screens.resources_screen.internship_screen.InternshipDetailsScreenClass
+import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsScreenClass
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange
 import com.softwareit.sduhub.utils.Constants
 import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 import okhttp3.internal.immutableListOf
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.compose.koinViewModel
 
+@Parcelize
+class ResourcesStackScreen(
+    private val stackNavModel: StackNavModel
+) : StackScreen(stackNavModel) {
 
-class ResourcesFragment : BaseFragment() {
+    constructor(rootScreen: Screen) : this(StackNavModel(rootScreen))
 
-    private val viewModel: ResourceScreenViewModel by viewModel()
+    @Composable
+    override fun Content() {
+        Box(Modifier.windowInsetsPadding(WindowInsets.systemBars)) {
+            TopScreenContent {
+                SlideTransition()
+            }
+        }
+    }
+}
 
-    private companion object {
+@Parcelize
+class ResourcesScreenClass(
+    override val screenKey: ScreenKey = generateScreenKey(),
+) : Screen {
+
+    companion object {
         const val INTERNSHIPS_PAGE = 0
         const val NEWS_PAGE = 1
     }
 
     @Composable
-    override fun SetContent() {
+    override fun Content() {
+        val parent = LocalContainerScreen.current
 
         Scaffold(
             topBar = { SearchTopBar() }
         ) {
             Box(modifier = Modifier.padding(it)) {
-                NewsScreen()
+                NewsScreen(parent as StackScreen)
             }
         }
     }
@@ -120,7 +154,9 @@ class ResourcesFragment : BaseFragment() {
 
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
-    fun NewsScreen() {
+    fun NewsScreen(navigator: NavigationContainer<StackState>) {
+
+        val viewModel: ResourceScreenViewModel = koinViewModel()
 
         val uiState by viewModel.uiState.collectAsState()
 
@@ -219,6 +255,7 @@ class ResourcesFragment : BaseFragment() {
     @Composable
     private fun ResourcePages(pagerState: PagerState) {
 
+        val parent = LocalContainerScreen.current
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize(),
@@ -232,11 +269,11 @@ class ResourcesFragment : BaseFragment() {
             ) {
                 when (currentPage) {
                     INTERNSHIPS_PAGE -> {
-                        Internships()
+                        Internships(parent as StackScreen)
                     }
 
                     NEWS_PAGE -> {
-                        News()
+                        News(parent as StackScreen)
                     }
                 }
             }
@@ -244,7 +281,9 @@ class ResourcesFragment : BaseFragment() {
     }
 
     @Composable
-    private fun Internships() {
+    private fun Internships(navigator: NavigationContainer<StackState>) {
+
+        val viewModel: ResourceScreenViewModel = koinViewModel()
 
         LaunchedEffect(key1 = true) {
             viewModel.setEvent(ResourceContract.Event.OnFetchInternships)
@@ -270,7 +309,7 @@ class ResourcesFragment : BaseFragment() {
                 ) {
                     internships.forEach {
                         InternshipItem(it) {
-                            viewModel.onInternshipClick(it.id)
+                            navigator.forward(InternshipDetailsScreenClass(it.id))
                         }
                     }
                 }
@@ -279,7 +318,10 @@ class ResourcesFragment : BaseFragment() {
     }
 
     @Composable
-    private fun News() {
+    private fun News(navigator: NavigationContainer<StackState>) {
+
+        val viewModel: ResourceScreenViewModel = koinViewModel()
+
         LaunchedEffect(key1 = true) {
             viewModel.setEvent(ResourceContract.Event.OnFetchNews)
         }
@@ -295,8 +337,7 @@ class ResourcesFragment : BaseFragment() {
                 ) {
                     news.forEach {
                         NewsItem(it) {
-                            // TODO navigate to news screen
-                            viewModel.onNewsClick(it.id, it.link)
+                            navigator.forward(NewsDetailsScreenClass(it.link))
                         }
                     }
                 }
@@ -377,11 +418,15 @@ class ResourcesFragment : BaseFragment() {
                     .padding(12.dp)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     AsyncImage(
-                        model = news.imageUrl,
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(news.imageUrl)
+                            .setHeader("User-Agent", "Mozilla/5.0")
+                            .build(),
+                        placeholder = rememberAsyncImagePainter(R.drawable.img_sduhub),
                         contentDescription = news.title,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -403,16 +448,10 @@ class ResourcesFragment : BaseFragment() {
                     color = Color.White,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
+                    modifier = Modifier.padding(top = 8.dp)
                 )
             }
         }
-    }
-
-
-    @Preview(showSystemUi = true)
-    @Composable
-    fun NewsScreenPreview() {
-        SetContent()
     }
 }
 

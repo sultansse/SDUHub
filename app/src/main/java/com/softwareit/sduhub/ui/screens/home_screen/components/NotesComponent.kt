@@ -29,23 +29,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.ui.screens.home_screen.HomeContract
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
+import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteScreenClass
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NotesComponent(notes: List<NoteDTO>) { // todo change List<NoteDTO> to ImmutableList<NoteUI>
-    val viewModel: HomeScreenViewModel = viewModel()
+fun NotesComponent(
+    notes: List<NoteDTO>,
+    navigator: NavigationContainer<StackState>,
+) { // todo change List<NoteDTO> to ImmutableList<NoteUI>
+
+    val viewModel: HomeScreenViewModel = koinViewModel()
 
     Column {
         notes.forEach {
             NoteItem(
                 note = it,
                 onNoteClick = {
-                    viewModel.goToEditNote(noteId = it.id)
+                    navigator.forward(EditNoteScreenClass(it.id))
                 },
                 onDeleteClick = {
                     viewModel.setEvent(HomeContract.Event.OnNoteDeleted(noteId = it.id))

@@ -1,6 +1,6 @@
 package com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -45,19 +46,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import coil.compose.rememberAsyncImagePainter
+import com.github.terrakok.modo.LocalContainerScreen
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.Screen
+import com.github.terrakok.modo.ScreenKey
+import com.github.terrakok.modo.generateScreenKey
+import com.github.terrakok.modo.stack.StackScreen
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.core.BaseFragment
 import com.softwareit.sduhub.data.local.notes.NoteDTO
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.koinViewModel
 
-class EditNoteFragment(
+@Parcelize
+class EditNoteScreenClass(
     private val noteId: Int,
-) : BaseFragment() {
-
-    private val viewModel: EditNoteViewModel by viewModel()
+    override val screenKey: ScreenKey = generateScreenKey(),
+) : Screen {
 
     @Composable
-    override fun SetContent() {
+    override fun Content() {
+
+        val viewModel: EditNoteViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
         when (val state = uiState.noteState) {
@@ -68,23 +79,21 @@ class EditNoteFragment(
             }
 
             is EditNoteContract.NoteState.Fetched -> {
+                val parent = LocalContainerScreen.current
                 Scaffold(
-                    topBar = { EditNoteTopAppBar() },
+                    topBar = { EditNoteTopAppBar(parent as StackScreen, viewModel) },
                     bottomBar = {
                         EditNoteBottomBar(
                             state.note,
+                            viewModel,
                             onDeleteClick = {
-                                viewModel.setEvent(
-                                    EditNoteContract.Event.OnDeleteNote(
-                                        state.note
-                                    )
-                                )
+                                viewModel.setEvent(EditNoteContract.Event.OnDeleteNote(state.note))
                             },
                         )
                     },
                     content = {
                         Box(modifier = Modifier.padding(it)) {
-                            EditNoteScreen(state.note)
+                            EditNoteScreen(state.note, viewModel)
                         }
                     }
                 )
@@ -93,7 +102,7 @@ class EditNoteFragment(
     }
 
     @Composable
-    fun EditNoteScreen(note: NoteDTO) {
+    fun EditNoteScreen(note: NoteDTO, viewModel: EditNoteViewModel) {
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -140,11 +149,15 @@ class EditNoteFragment(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun EditNoteTopAppBar() {
+    fun EditNoteTopAppBar(
+        navigator: NavigationContainer<StackState>,
+        viewModel: EditNoteViewModel
+    ) {
+        val context = LocalContext.current
         TopAppBar(
             navigationIcon = {
                 IconButton(
-                    onClick = { viewModel.onBackPressed() }
+                    onClick = { navigator.back() }
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
@@ -165,9 +178,8 @@ class EditNoteFragment(
                 OutlinedButton(
                     onClick = {
                         viewModel.setEvent(EditNoteContract.Event.OnSaveNote)
-                        Toast.makeText(requireContext(),
-                            getString(R.string.saved_successfully), Toast.LENGTH_SHORT)
-                            .show()
+                        navigator.back()
+                        Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
                     }
                 ) {
                     Icon(
@@ -182,16 +194,20 @@ class EditNoteFragment(
     @Composable
     fun EditNoteBottomBar(
         note: NoteDTO,
+        viewModel: EditNoteViewModel,
         onDeleteClick: () -> Unit,
     ) {
+        val context = LocalContext.current
         BottomAppBar(
             modifier = Modifier.height(64.dp)
         ) {
             IconButton(
                 onClick = {
 //                    TODO add functionalty
-                    Toast.makeText(requireContext(),
-                        getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "add tasks", Toast.LENGTH_SHORT
+                    ).show()
                 }
             ) {
                 Icon(
@@ -201,7 +217,7 @@ class EditNoteFragment(
             }
             IconButton(
                 onClick = {
-                    shareNote(requireActivity(), note = viewModel.noteFlow.value)
+                    shareNote(context, note = viewModel.noteFlow.value)
                 }
             ) {
                 Icon(
@@ -258,13 +274,13 @@ class EditNoteFragment(
     }
 }
 
-fun shareNote(activity: Activity, note: NoteDTO) {
+fun shareNote(context: Context, note: NoteDTO) {
     val shareMsg =
         "Hey, I want to share this note with you:\n\nTitle: ${note.title}\n\nNote: ${note.description}"
 
-    val intent = ShareCompat.IntentBuilder(activity)
+    val intent = ShareCompat.IntentBuilder(context)
         .setType("text/plain")
         .setText(shareMsg)
         .intent
-    activity.startActivity(Intent.createChooser(intent, null))
+    context.startActivity(Intent.createChooser(intent, null))
 }

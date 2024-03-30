@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -130,14 +131,12 @@ dependencies {
     implementation("io.insert-koin:koin-android:$koinVersion")
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
-    implementation("io.insert-koin:koin-android-compat:$koinVersion")
 
 //    coil
     implementation("io.coil-kt:coil-compose:2.6.0")
-    implementation("com.github.skydoves:landscapist-coil:2.2.3")
 
-//   cicerone
-    implementation("com.github.terrakok:cicerone:7.1")
+//   modo
+    implementation("com.github.terrakok:modo-compose:0.8.0")
 
 //    lifecycle
     val lifecycleVersion = "2.7.0"
@@ -163,7 +162,6 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.material:material")
     implementation("androidx.compose.runtime:runtime-livedata")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling")

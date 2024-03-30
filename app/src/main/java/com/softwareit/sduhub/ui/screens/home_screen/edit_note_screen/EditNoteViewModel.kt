@@ -1,7 +1,6 @@
 package com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen
 
 import androidx.lifecycle.viewModelScope
-import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.core.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
@@ -20,14 +19,12 @@ import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 class EditNoteViewModel(
-    private val router: Router,
 
     private val getNote: GetNoteUseCase,
     private val upsertNote: UpsertNoteUseCase,
     private val deleteNote: DeleteNoteUseCase,
 ) : BaseViewModel<EditNoteContract.Event, EditNoteContract.State, EditNoteContract.Effect>() {
 
-    fun onBackPressed() = router.exit()
 
     // TODO fix and do single state
     private val _noteFlow = MutableStateFlow(NoteDTO(title = "", description = "", updatedAt = ""))
@@ -68,7 +65,6 @@ class EditNoteViewModel(
                 viewModelScope.launch {
                     upsertNote(noteFlow.value)
                 }
-                onBackPressed()
             }
 
             is EditNoteContract.Event.OnTitleChanged -> {

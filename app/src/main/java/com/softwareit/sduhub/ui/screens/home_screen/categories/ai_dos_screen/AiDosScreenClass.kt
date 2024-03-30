@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_screen
+package com.softwareit.sduhub.ui.screens.home_screen.categories.ai_dos_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -22,7 +22,7 @@ import com.softwareit.sduhub.utils.common_presentation.WebViewComponent
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class SduLibraryScreenClass(
+class AiDosScreenClass(
     override val screenKey: ScreenKey = generateScreenKey(),
 ) : Screen {
 
@@ -34,7 +34,7 @@ class SduLibraryScreenClass(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("SDU Library") },
+                    title = { Text("Ai Dos") },
                     navigationIcon = {
                         IconButton(onClick = { parentScreen.back() }) {
                             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -44,14 +44,15 @@ class SduLibraryScreenClass(
             }
         ) {
             Box(modifier = Modifier.padding(it)) {
-                SduLibraryScreen()
+                AiDosScreen()
             }
         }
     }
+
     @Composable
-    fun SduLibraryScreen() {
+    fun AiDosScreen() {
         WebViewComponent(
-            url = "https://library.sdu.edu.kz/",
+            url = "https://sduhub.ru/",
         )
     }
 }

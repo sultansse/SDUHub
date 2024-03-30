@@ -96,7 +96,6 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel {
         HomeScreenViewModel(
-            router = get(),
             getNotes = get(),
             upsertNote = get(),
             deleteNotes = get(),
@@ -106,7 +105,6 @@ val viewModelModule = module {
     }
     viewModel {
         EditNoteViewModel(
-            router = get(),
             getNote = get(),
             upsertNote = get(),
             deleteNote = get(),

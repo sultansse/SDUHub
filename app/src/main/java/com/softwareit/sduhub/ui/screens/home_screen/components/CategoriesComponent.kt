@@ -22,8 +22,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
+import com.github.terrakok.modo.LocalContainerScreen
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.stack.StackScreen
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
+import com.softwareit.sduhub.ui.screens.home_screen.categories.ai_dos_screen.AiDosScreenClass
+import com.softwareit.sduhub.ui.screens.home_screen.categories.moodle_screen.MoodleScreenClass
+import com.softwareit.sduhub.ui.screens.home_screen.categories.my_sdu_screen.MySduScreenClass
+import com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_screen.SduLibraryScreenClass
+import com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen.SduKzScreenClass
 import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
 import okhttp3.internal.immutableListOf
@@ -35,7 +44,7 @@ data class CategoryDto(
 )
 // TODO do not pass viewmodel to composable
 @Composable
-fun Categories(viewModel: HomeScreenViewModel) {
+fun Categories() {
     val categories = immutableListOf(
         CategoryDto(
             icon = R.drawable.img_aidos,
@@ -51,7 +60,7 @@ fun Categories(viewModel: HomeScreenViewModel) {
         ),
         CategoryDto(
             icon = R.drawable.img_sdukz,
-            title = "sdu.kz"
+            title = "Sdu.kz"
         ),
         CategoryDto(
             icon = R.drawable.img_order_food,
@@ -71,6 +80,8 @@ fun Categories(viewModel: HomeScreenViewModel) {
         ),
     )
 
+    val parent = LocalContainerScreen.current
+
     VerticalGrid(
         columns = SimpleGridCells.Fixed(4),
         modifier = Modifier.padding(8.dp)
@@ -80,7 +91,7 @@ fun Categories(viewModel: HomeScreenViewModel) {
             Category(
                 category.icon,
                 category.title,
-                onCategoryClick = { navigateToCategory(context, category.title, viewModel) },
+                onCategoryClick = { navigateToCategory(context, category.title, parent as StackScreen) },
             )
         }
     }
@@ -117,23 +128,23 @@ fun Category(
     }
 }
 
-fun navigateToCategory(context: Context, title: String, viewModel: HomeScreenViewModel) {
+fun navigateToCategory(context: Context, title: String, navigator: NavigationContainer<StackState>) {
     when (title) {
         "Gmail" -> { openGmail(context) }
 
-        "MySDU" -> { viewModel.goToMySdu() }
+        "MySDU" -> { navigator.forward(MySduScreenClass()) }
 
-        "Sdu.kz" -> { viewModel.goToSduKz() }
+        "Sdu.kz" -> { navigator.forward(SduKzScreenClass()) }
 
-        "AI Dos" -> { viewModel.goToAiAssistant() }
+        "AI Dos" -> { navigator.forward(AiDosScreenClass()) }
 
         "Order Food" -> { openTelegramToUser("SDUOrder_bot", context) }
 
         "Free Offices" -> { openTelegramToUser("sduflexbot", context) }
 
-        "Moodle" -> { viewModel.goToMoodle() }
+        "Moodle" -> { navigator.forward(MoodleScreenClass()) }
 
-        "Library" -> { viewModel.goToSduLibrary() }
+        "Library" -> { navigator.forward(SduLibraryScreenClass()) }
     }
 }
 

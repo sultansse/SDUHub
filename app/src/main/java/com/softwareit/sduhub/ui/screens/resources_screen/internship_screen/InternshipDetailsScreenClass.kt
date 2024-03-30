@@ -34,18 +34,31 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.github.terrakok.modo.LocalContainerScreen
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.Screen
+import com.github.terrakok.modo.ScreenKey
+import com.github.terrakok.modo.generateScreenKey
+import com.github.terrakok.modo.stack.StackScreen
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.core.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.koinViewModel
 
-class InternshipFragment(private val internshipId: Int) : BaseFragment() {
-
-    private val viewModel: InternshipScreenViewModel by viewModel()
+@Parcelize
+class InternshipDetailsScreenClass(
+    private val internshipId: Int,
+    override val screenKey: ScreenKey = generateScreenKey(),
+) : Screen {
 
     @Composable
-    override fun SetContent() {
+    override fun Content() {
+
+        val parent = LocalContainerScreen.current
+
         Scaffold(
-            topBar = { InternshipTopBar() }
+            topBar = { InternshipTopBar(parent as StackScreen) }
         ) {
             Box(
                 modifier = Modifier.padding(it)
@@ -57,6 +70,8 @@ class InternshipFragment(private val internshipId: Int) : BaseFragment() {
 
     @Composable
     private fun CurrentInternshipScreen() {
+
+        val viewModel: InternshipScreenViewModel = koinViewModel()
 
         LaunchedEffect(key1 = true) {
             viewModel.setEvent(InternshipContract.Event.OnFetchInternship(internshipId))
@@ -160,7 +175,7 @@ class InternshipFragment(private val internshipId: Int) : BaseFragment() {
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(modifier = Modifier.padding(16.dp))
                 }
             }
         }
@@ -168,7 +183,8 @@ class InternshipFragment(private val internshipId: Int) : BaseFragment() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun InternshipTopBar() {
+    private fun InternshipTopBar(navigator: NavigationContainer<StackState>) {
+
         // Top bar
         TopAppBar(
             title = {
@@ -176,7 +192,7 @@ class InternshipFragment(private val internshipId: Int) : BaseFragment() {
             },
             navigationIcon = {
                 IconButton(
-                    onClick = { viewModel.onBackPressed() }
+                    onClick = { navigator.back() }
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,

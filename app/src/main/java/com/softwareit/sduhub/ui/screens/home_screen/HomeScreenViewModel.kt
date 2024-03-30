@@ -1,7 +1,6 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.lifecycle.viewModelScope
-import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.core.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDTO
 import com.softwareit.sduhub.domain.importtant_info_usecase.GetImportantInfoUseCase
@@ -9,15 +8,12 @@ import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.GetNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
-import com.softwareit.sduhub.navigation.NavigationScreens
-import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import com.softwareit.sduhub.utils.getFormattedTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class HomeScreenViewModel(
-    private val router: Router,
     private val getNotes: GetNotesUseCase,
     private val upsertNote: UpsertNoteUseCase,
     private val deleteNote: DeleteNoteUseCase,
@@ -26,20 +22,16 @@ class HomeScreenViewModel(
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
 
     /* Navigation functions */
-    fun onBackPressed() = router.exit()
-    fun goToEditNote(noteId: Int = NEW_NOTE_ID) = router.navigateTo(NavigationScreens.Home.editNote(noteId))
-    fun goToAiAssistant() = router.navigateTo(NavigationScreens.Home.Categories.aiAssistant())
-    fun goToMySdu() = router.navigateTo(NavigationScreens.Home.Categories.mysdu())
-    fun goToSduKz() = router.navigateTo(NavigationScreens.Home.Categories.sdukz())
-    fun goToMoodle() = router.navigateTo(NavigationScreens.Home.Categories.moodle())
-    fun goToSduLibrary() = router.navigateTo(NavigationScreens.Home.Categories.sduLibrary())
+//    fun onBackPressed() = savedState.exit()
+//    fun goToEditNote(noteId: Int = NEW_NOTE_ID) = savedState.navigateTo(NavigationScreens.Home.editNote(noteId))
+//    fun goToAiAssistant() = savedState.navigateTo(NavigationScreens.Home.Categories.aiAssistant())
+//    fun goToMySdu() = savedState.navigateTo(NavigationScreens.Home.Categories.mysdu())
+//    fun goToSduKz() = savedState.navigateTo(NavigationScreens.Home.Categories.sdukz())
+//    fun goToMoodle() = savedState.navigateTo(NavigationScreens.Home.Categories.moodle())
+//    fun goToSduLibrary() = savedState.navigateTo(NavigationScreens.Home.Categories.sduLibrary())
 
+    fun onNoteClick(noteId: Int) {
 
-    init {
-        // todo make better, to move logic to idle,
-        //  so when its started it will automatically call request
-        fetchImportantInfo()
-        fetchNotes()
     }
 
     private fun fetchImportantInfo() {

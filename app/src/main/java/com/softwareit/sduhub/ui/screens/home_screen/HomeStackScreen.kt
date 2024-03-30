@@ -2,7 +2,10 @@ package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -14,42 +17,73 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.github.terrakok.modo.LocalContainerScreen
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.Screen
+import com.github.terrakok.modo.ScreenKey
+import com.github.terrakok.modo.generateScreenKey
+import com.github.terrakok.modo.stack.StackNavModel
+import com.github.terrakok.modo.stack.StackScreen
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.core.BaseFragment
+import com.softwareit.sduhub.ui.SlideTransition
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NotesComponent
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
+import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteScreenClass
+import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import com.softwareit.sduhub.utils.isNotNull
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.koinViewModel
 
+@Parcelize
+class HomeStackScreen(
+    private val stackNavModel: StackNavModel
+) : StackScreen(stackNavModel) {
 
-class HomeFragment : BaseFragment() {
-
-    private val viewModel: HomeScreenViewModel by viewModel()
+    constructor(rootScreen: Screen) : this(StackNavModel(rootScreen))
 
     @Composable
-    override fun SetContent() {
+    override fun Content() {
+        Box(Modifier.windowInsetsPadding(WindowInsets.systemBars)) {
+            TopScreenContent {
+                SlideTransition()
+            }
+        }
+    }
+}
+
+@Parcelize
+class HomeScreenClass(
+    override val screenKey: ScreenKey = generateScreenKey(),
+) : Screen {
+
+    @Composable
+    override fun Content() {
+        val parent = LocalContainerScreen.current
+
         Scaffold(
             topBar = { HomeTopAppBar() },
-            floatingActionButton = { HomeAddNoteFAB() },
+            floatingActionButton = { HomeAddNoteFAB(parent as StackScreen) },
         ) {
             Box(
                 modifier = Modifier.padding(it)
             ) {
-                HomeScreen()
+                HomeScreen(parent as StackScreen)
             }
         }
     }
@@ -68,11 +102,11 @@ class HomeFragment : BaseFragment() {
     }
 
     @Composable
-    fun HomeAddNoteFAB() {
+    fun HomeAddNoteFAB(navigator: NavigationContainer<StackState>) {
         FloatingActionButton(
             shape = CircleShape,
             onClick = {
-                viewModel.goToEditNote()
+                navigator.forward(EditNoteScreenClass(NEW_NOTE_ID))
             }
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Add")
@@ -80,7 +114,9 @@ class HomeFragment : BaseFragment() {
     }
 
     @Composable
-    fun HomeScreen() {
+    fun HomeScreen(navigator: NavigationContainer<StackState>) {
+
+        val viewModel: HomeScreenViewModel = koinViewModel()
 
         val uiState by viewModel.uiState.collectAsState()
 
@@ -88,9 +124,13 @@ class HomeFragment : BaseFragment() {
 
             item { Stories() }
 
-            item { Categories(viewModel) }
+            item { Categories() }
 
             item {
+                LaunchedEffect(key1 = true) {
+                    viewModel.setEvent(HomeContract.Event.OnFetchImportantInfo)
+                }
+
                 when (val state = uiState.importantInfoState) {
                     is HomeContract.ImportantInfoState.Success -> {
                         AnimatedVisibility(visible = (state.data.isNotNull())) {
@@ -110,9 +150,13 @@ class HomeFragment : BaseFragment() {
             }
 
             item {
+                LaunchedEffect(key1 = true) {
+                    viewModel.setEvent(HomeContract.Event.OnFetchNotes)
+                }
+
                 when (val state = uiState.notesState) {
                     is HomeContract.NotesState.Success -> {
-                        NotesComponent(notes = state.data)
+                        NotesComponent(notes = state.data, navigator)
                     }
 
                     is HomeContract.NotesState.Idle -> {
@@ -128,11 +172,5 @@ class HomeFragment : BaseFragment() {
             }
 
         }
-    }
-
-    @Preview(showSystemUi = true)
-    @Composable
-    fun HomeScreenPreview() {
-        SetContent()
     }
 }

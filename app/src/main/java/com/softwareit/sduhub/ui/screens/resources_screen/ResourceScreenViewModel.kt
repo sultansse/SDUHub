@@ -5,7 +5,6 @@ import com.github.terrakok.cicerone.Router
 import com.softwareit.sduhub.core.BaseViewModel
 import com.softwareit.sduhub.domain.internship_usecase.GetInternshipsUseCase
 import com.softwareit.sduhub.domain.news_usecase.GetNewsUseCase
-import com.softwareit.sduhub.navigation.NavigationScreens
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -15,13 +14,6 @@ class ResourceScreenViewModel(
     private val getNewsUseCase: GetNewsUseCase,
     private val getInternshipsUseCase: GetInternshipsUseCase,
 ) : BaseViewModel<ResourceContract.Event, ResourceContract.State, ResourceContract.Effect>() {
-
-    fun onNewsClick(id: String, link: String) {
-        router.navigateTo(NavigationScreens.Resources.newResource(id, link))
-    }
-    fun onInternshipClick(id: Int) {
-        router.navigateTo(NavigationScreens.Resources.internshipResource(id))
-    }
 
     override fun setInitialState(): ResourceContract.State {
         return ResourceContract.State(
