@@ -23,15 +23,10 @@ class ResourceScreenViewModel(
     override fun handleEvent(event: ResourceContract.Event) {
         when(event) {
             is ResourceContract.Event.OnFetchInternships -> {
-                // fetch internships
                 fetchInternships()
             }
             is ResourceContract.Event.OnFetchNews -> {
-                // fetch news
                 fetchNews()
-            }
-            is ResourceContract.Event.OnSearch -> {
-                // search
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -134,18 +135,22 @@ class HomeScreenClass(
             item { Categories() }
 
             item {
-                when (val state = uiState.importantInfoState) {
-                    is HomeContract.ImportantInfoState.Success -> {
-                        ImportantInfo(data = state.data)
-                    }
+                AnimatedVisibility(visible = true) {
 
-                    is HomeContract.ImportantInfoState.Idle -> {
-                        Text(
-                            text = stringResource(R.string.welcome_back),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp,
-                            modifier = Modifier.padding(20.dp)
-                        )
+                    when (val state = uiState.importantInfoState) {
+                        is HomeContract.ImportantInfoState.Success -> {
+                            ImportantInfo(data = state.data)
+
+                        }
+
+                        is HomeContract.ImportantInfoState.Idle -> {
+                            Text(
+                                text = stringResource(R.string.welcome_back),
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 24.sp,
+                                modifier = Modifier.padding(20.dp)
+                            )
+                        }
                     }
                 }
             }

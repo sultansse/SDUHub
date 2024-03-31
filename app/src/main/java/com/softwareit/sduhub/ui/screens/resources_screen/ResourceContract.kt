@@ -10,7 +10,6 @@ class ResourceContract {
     sealed class Event : UiEvent {
         data object OnFetchInternships : Event()
         data object OnFetchNews : Event()
-        data class OnSearch(val query: String) : Event()
     }
 
     data class State(
