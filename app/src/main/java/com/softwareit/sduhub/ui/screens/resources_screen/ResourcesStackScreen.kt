@@ -109,21 +109,21 @@ class ResourcesScreenClass(
                     title = {
                         Text(
                             text = stringResource(R.string.resources),
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                     }
                 )
             }
         ) {
             Box(modifier = Modifier.padding(it)) {
-                NewsScreen(parentScreen)
+                ResourcesScreen(parentScreen)
             }
         }
     }
 
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
-    fun NewsScreen(navigator: NavigationContainer<StackState>) {
+    fun ResourcesScreen(navigator: NavigationContainer<StackState>) {
 
         val viewModel: ResourceScreenViewModel = koinViewModel()
 
