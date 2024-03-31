@@ -1,5 +1,7 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -43,7 +45,7 @@ import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
-import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteScreenClass
+import com.softwareit.sduhub.ui.screens.home_screen.note_details_screen.NoteDetailsScreenClass
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
@@ -105,13 +107,14 @@ class HomeScreenClass(
         FloatingActionButton(
             shape = CircleShape,
             onClick = {
-                navigator.forward(EditNoteScreenClass(NEW_NOTE_ID))
+                navigator.forward(NoteDetailsScreenClass(NEW_NOTE_ID))
             }
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Add Note")
         }
     }
 
+    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     fun HomeScreen(navigator: NavigationContainer<StackState>) {
 
@@ -149,19 +152,21 @@ class HomeScreenClass(
 
             when (val state = uiState.notesState) {
                 is HomeContract.NotesState.Success -> {
-                    items(state.notes.size) {
+                    items(state.notes.size, key = { state.notes[it].id }) {
                         val note = state.notes[it]
                         NoteItem(
                             note = note,
                             onNoteClick = {
-                                navigator.forward(EditNoteScreenClass(note.id))
+                                navigator.forward(NoteDetailsScreenClass(note.id))
                             },
                             onDeleteClick = {
                                 viewModel.setEvent(HomeContract.Event.OnNoteDeleted(noteId = note.id))
                             },
                             onCopyClick = {
                                 viewModel.setEvent(HomeContract.Event.OnNoteCopied(note = note))
-                            }
+                            },
+                            modifier = Modifier
+                                .animateItemPlacement(tween(500))
                         )
                     }
                 }

@@ -11,8 +11,6 @@
     <string name="community">Қоғамдастық</string>
     <string name="saved_successfully">Сәтті сақталды!</string>
     <string name="coming_soon">Жақында шығады!</string>
-    <string name="not_modified_yet">Әлі өзгертілмеген :)</string>
-    <string name="last_modified">соңғы рет өзгертілген: %1$s</string>
     <string name="news">Жаңалықтар</string>
     <string name="internship_vacancy">Стажировка/Вакансия</string>
     <string name="logout">Шығу</string>

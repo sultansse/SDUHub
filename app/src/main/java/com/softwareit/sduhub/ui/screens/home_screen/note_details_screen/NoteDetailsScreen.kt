@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen
+package com.softwareit.sduhub.ui.screens.home_screen.note_details_screen
 
 import android.content.Context
 import android.content.Intent
@@ -21,7 +21,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
@@ -41,11 +41,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import coil.compose.rememberAsyncImagePainter
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.Screen
@@ -60,40 +62,42 @@ import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
 @Parcelize
-class EditNoteScreenClass(
+class NoteDetailsScreenClass(
     private val noteId: Int,
     override val screenKey: ScreenKey = generateScreenKey(),
 ) : Screen {
 
     @Composable
     override fun Content() {
+        val parent = LocalContainerScreen.current
+        val parentScreen = parent as StackScreen
 
-        val viewModel: EditNoteViewModel = koinViewModel()
+        val viewModel: NoteDetailsViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
+        LaunchedEffect(key1 = true) {
+            viewModel.setEvent(NoteDetailsContract.Event.OnFetchNote(noteId))
+        }
+
         when (val state = uiState.noteState) {
-            is EditNoteContract.NoteState.Idle -> {
-                LaunchedEffect(key1 = true) {
-                    viewModel.setEvent(EditNoteContract.Event.OnFetchNote(noteId))
-                }
+            is NoteDetailsContract.NoteState.NoteFound -> {
+                val composition = rememberLottieComposition(
+                    LottieCompositionSpec.RawRes(R.raw.anim_not_found)
+                )
+                LottieAnimation(
+                    composition = composition.value,
+                    iterations = Int.MAX_VALUE,
+                    alignment = Alignment.Center
+                )
             }
 
-            is EditNoteContract.NoteState.Fetched -> {
-                val parent = LocalContainerScreen.current
+            is NoteDetailsContract.NoteState.Fetched -> {
                 Scaffold(
-                    topBar = { EditNoteTopAppBar(parent as StackScreen, viewModel) },
-                    bottomBar = {
-                        EditNoteBottomBar(
-                            state.note,
-                            viewModel,
-                            onDeleteClick = {
-                                viewModel.setEvent(EditNoteContract.Event.OnDeleteNote(state.note))
-                            },
-                        )
-                    },
+                    topBar = { EditNoteTopAppBar(parentScreen) },
+                    bottomBar = { EditNoteBottomBar(state.note, parentScreen) },
                     content = {
                         Box(modifier = Modifier.padding(it)) {
-                            EditNoteScreen(state.note, viewModel)
+                            EditNoteScreen(state.note)
                         }
                     }
                 )
@@ -102,43 +106,39 @@ class EditNoteScreenClass(
     }
 
     @Composable
-    fun EditNoteScreen(note: NoteDTO, viewModel: EditNoteViewModel) {
+    fun EditNoteScreen(note: NoteDTO) {
+
+        val viewModel: NoteDetailsViewModel = koinViewModel()
+
+        var title by remember { mutableStateOf(note.title) }
+        var description by remember { mutableStateOf(note.description) }
 
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-
             TextField(
-                value = note.title,
-                textStyle = MaterialTheme.typography.labelLarge,
+                value = title,
                 onValueChange = {
-                    viewModel.setEvent(
-                        EditNoteContract.Event.OnTitleChanged(note.copy(title = it))
-                    )
+                    title = it
+                    viewModel.setEvent(NoteDetailsContract.Event.OnTitleChanged(it))
                 },
                 placeholder = { Text(text = "Title") },
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
 
             TextField(
-                value = note.description,
-                textStyle = MaterialTheme.typography.labelLarge,
-                maxLines = 3,
+                value = description,
                 onValueChange = {
-                    viewModel.setEvent(
-                        EditNoteContract.Event.OnDescriptionChanged(note.copy(description = it))
-                    )
+                    description = it
+                    viewModel.setEvent(NoteDetailsContract.Event.OnDescriptionChanged(it))
                 },
                 placeholder = { Text(text = "Description") },
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
-                    autoCorrect = true,
                     imeAction = ImeAction.Default,
                 ),
                 modifier = Modifier.fillMaxSize()
@@ -151,9 +151,10 @@ class EditNoteScreenClass(
     @Composable
     fun EditNoteTopAppBar(
         navigator: NavigationContainer<StackState>,
-        viewModel: EditNoteViewModel
     ) {
         val context = LocalContext.current
+        val viewModel: NoteDetailsViewModel = koinViewModel()
+
         TopAppBar(
             navigationIcon = {
                 IconButton(
@@ -177,7 +178,7 @@ class EditNoteScreenClass(
             actions = {
                 OutlinedButton(
                     onClick = {
-                        viewModel.setEvent(EditNoteContract.Event.OnSaveNote)
+                        viewModel.setEvent(NoteDetailsContract.Event.OnSaveNote)
                         navigator.back()
                         Toast.makeText(context, "Saved successfully", Toast.LENGTH_SHORT).show()
                     }
@@ -194,30 +195,28 @@ class EditNoteScreenClass(
     @Composable
     fun EditNoteBottomBar(
         note: NoteDTO,
-        viewModel: EditNoteViewModel,
-        onDeleteClick: () -> Unit,
+        navigator: NavigationContainer<StackState>,
     ) {
         val context = LocalContext.current
+        val viewModel: NoteDetailsViewModel = koinViewModel()
+
         BottomAppBar(
             modifier = Modifier.height(64.dp)
         ) {
+//            IconButton(
+//                onClick = {
+////                    TODO add functionalty
+//                    Toast.makeText(context, "add tasks", Toast.LENGTH_SHORT).show()
+//                }
+//            ) {
+//                Icon(
+//                    painter = rememberAsyncImagePainter(R.drawable.ic_check_box),
+//                    contentDescription = "add tasks"
+//                )
+//            }
             IconButton(
                 onClick = {
-//                    TODO add functionalty
-                    Toast.makeText(
-                        context,
-                        "add tasks", Toast.LENGTH_SHORT
-                    ).show()
-                }
-            ) {
-                Icon(
-                    painter = rememberAsyncImagePainter(R.drawable.ic_check_box),
-                    contentDescription = "add tasks"
-                )
-            }
-            IconButton(
-                onClick = {
-                    shareNote(context, note = viewModel.noteFlow.value)
+                    shareNote(context, note)
                 }
             ) {
                 Icon(
@@ -226,44 +225,31 @@ class EditNoteScreenClass(
                 )
             }
             Text(
-                text = if (note.updatedAt.isBlank()) {
-                    stringResource(R.string.not_modified_yet)
-                } else {
-                    stringResource(R.string.last_modified, note.updatedAt)
-                },
+                text = note.updatedAt,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f)
             )
-            var menuExpanded by remember { mutableStateOf(false) }
+            var isMenuExpanded by remember { mutableStateOf(false) }
             IconButton(
-                onClick = { menuExpanded = !menuExpanded }) {
+                onClick = { isMenuExpanded = isMenuExpanded.not() }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "More options"
                 )
                 DropdownMenu(
-                    expanded = menuExpanded,
+                    expanded = isMenuExpanded,
                     onDismissRequest = {
-                        menuExpanded = false
+                        isMenuExpanded = isMenuExpanded.not()
                     },
                     content = {
-//                        TODO add functionality
-//                        DropdownMenuItem(
-//                            onClick = {
-//                                menuExpanded = false
-////                                onDeleteClick()
-//                            },
-//                            text = {
-//                                Text("Delete")
-//                            }
-//                        )
                         DropdownMenuItem(
                             onClick = {
-                                menuExpanded = false
+                                isMenuExpanded = isMenuExpanded.not()
+                                navigator.back()
+                                viewModel.setEvent(NoteDetailsContract.Event.OnDeleteNote(note))
                             },
                             text = {
-                                Text(stringResource(R.string.coming_soon))
-//                                TODO add functionality
+                                Text("Delete")
                             }
                         )
                     }

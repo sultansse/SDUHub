@@ -59,7 +59,7 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
 import com.softwareit.sduhub.ui.SlideTransition
 import com.softwareit.sduhub.ui.screens.home_screen.components.StorylyViewComponent
-import com.softwareit.sduhub.ui.screens.resources_screen.internship_screen.InternshipDetailsScreenClass
+import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsScreenClass
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsScreenClass
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange

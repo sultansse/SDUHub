@@ -1,9 +1,6 @@
 package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +17,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
@@ -33,88 +29,91 @@ import com.softwareit.sduhub.ui.screens.home_screen.categories.moodle_screen.Moo
 import com.softwareit.sduhub.ui.screens.home_screen.categories.my_sdu_screen.MySduScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_screen.SduLibraryScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen.SduKzScreenClass
+import com.softwareit.sduhub.utils.common.openGmail
+import com.softwareit.sduhub.utils.common.openTelegramToUser
 import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
 import okhttp3.internal.immutableListOf
 
 
-data class CategoryDto(
+data class CategoryDIO(
     val icon: Int,
     val title: String
 )
-// TODO do not pass viewmodel to composable
+
+val categories = immutableListOf(
+    CategoryDIO(
+        icon = R.drawable.img_aidos,
+        title = "AI Dos"
+    ),
+    CategoryDIO(
+        icon = R.drawable.img_gmail,
+        title = "Gmail"
+    ),
+    CategoryDIO(
+        icon = R.drawable.img_mysdu,
+        title = "MySDU"
+    ),
+    CategoryDIO(
+        icon = R.drawable.img_sdukz,
+        title = "Sdu.kz"
+    ),
+    CategoryDIO(
+        icon = R.drawable.img_order_food,
+        title = "Order Food"
+    ),
+    CategoryDIO(
+        icon = R.drawable.img_free_offices,
+        title = "Free Offices"
+    ),
+    CategoryDIO(
+        icon = R.drawable.img_moodle,
+        title = "Moodle"
+    ),
+    CategoryDIO(
+        icon = R.drawable.img_library,
+        title = "Library"
+    ),
+)
+
 @Composable
 fun Categories() {
-    val categories = immutableListOf(
-        CategoryDto(
-            icon = R.drawable.img_aidos,
-            title = "AI Dos"
-        ),
-        CategoryDto(
-            icon = R.drawable.img_gmail,
-            title = "Gmail"
-        ),
-        CategoryDto(
-            icon = R.drawable.img_mysdu,
-            title = "MySDU"
-        ),
-        CategoryDto(
-            icon = R.drawable.img_sdukz,
-            title = "Sdu.kz"
-        ),
-        CategoryDto(
-            icon = R.drawable.img_order_food,
-            title = "Order Food"
-        ),
-        CategoryDto(
-            icon = R.drawable.img_free_offices,
-            title = "Free Offices"
-        ),
-        CategoryDto(
-            icon = R.drawable.img_moodle,
-            title = "Moodle"
-        ),
-        CategoryDto(
-            icon = R.drawable.img_library,
-            title = "Library"
-        ),
-    )
-
+    val context = LocalContext.current
     val parent = LocalContainerScreen.current
+    val parentScreen = parent as StackScreen
+
 
     VerticalGrid(
         columns = SimpleGridCells.Fixed(4),
         modifier = Modifier.padding(8.dp)
     ) {
-        categories.forEach { category ->
-            val context = LocalContext.current
-            Category(
-                category.icon,
-                category.title,
-                onCategoryClick = { navigateToCategory(context, category.title, parent as StackScreen) },
+        repeat(categories.size) {
+            CategoryItem(
+                icon = categories[it].icon,
+                title = categories[it].title,
+                onClick = {
+                    navigateToCategory(categories[it].title, context, parentScreen)
+                }
             )
         }
     }
 }
 
 @Composable
-fun Category(
+fun CategoryItem(
     icon: Int,
     title: String,
-    onCategoryClick: () -> Unit,
+    onClick: () -> Unit,
 ) {
-
-    val categoryIcon = rememberAsyncImagePainter(icon)
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(horizontal = 2.dp, vertical = 8.dp)
-            .clickable { onCategoryClick() }
+            .clickable { onClick() }
     ) {
         Image(
-            painter = categoryIcon,
+            painter = rememberAsyncImagePainter(icon),
             contentDescription = title,
             modifier = Modifier
                 .size(56.dp)
@@ -128,61 +127,21 @@ fun Category(
     }
 }
 
-fun navigateToCategory(context: Context, title: String, navigator: NavigationContainer<StackState>) {
-    when (title) {
-        "Gmail" -> { openGmail(context) }
+fun navigateToCategory(
+    title: String,
+    context: Context,
+    navigator: NavigationContainer<StackState>
+) {
+    val categoryActions = mapOf(
+        categories[0].title to { navigator.forward(AiDosScreenClass()) },
+        categories[1].title to { openGmail(context) },
+        categories[2].title to { navigator.forward(MySduScreenClass()) },
+        categories[3].title to { navigator.forward(SduKzScreenClass()) },
+        categories[4].title to { openTelegramToUser(context, "SDUOrder_bot") },
+        categories[5].title to { openTelegramToUser(context, "sduflexbot") },
+        categories[6].title to { navigator.forward(MoodleScreenClass()) },
+        categories[7].title to { navigator.forward(SduLibraryScreenClass()) }
+    )
 
-        "MySDU" -> { navigator.forward(MySduScreenClass()) }
-
-        "Sdu.kz" -> { navigator.forward(SduKzScreenClass()) }
-
-        "AI Dos" -> { navigator.forward(AiDosScreenClass()) }
-
-        "Order Food" -> { openTelegramToUser(context, "SDUOrder_bot") }
-
-        "Free Offices" -> { openTelegramToUser(context, "sduflexbot") }
-
-        "Moodle" -> { navigator.forward(MoodleScreenClass()) }
-
-        "Library" -> { navigator.forward(SduLibraryScreenClass()) }
-    }
-}
-
-
-private fun openGmail(context: Context) {
-
-    val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:")
-        putExtra(Intent.EXTRA_EMAIL, arrayOf("recipient@stu.sdu.edu.kz"))
-        putExtra(Intent.EXTRA_SUBJECT, "Subject")
-        putExtra(Intent.EXTRA_TEXT, "Hello Teacher, I ......")
-    }
-
-    try {
-        startActivity(context, intent, null)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        Toast.makeText(
-            context,
-            "not found any email client to open the email",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-}
-
-
-fun openTelegramToUser(context: Context, username: String) {
-    val telegramUri = Uri.parse("https://t.me/$username")
-    val telegramIntent = Intent(Intent.ACTION_VIEW, telegramUri)
-
-    // Check if the Telegram app is installed
-    val packageManager = context.packageManager
-    if (telegramIntent.resolveActivity(packageManager) != null) {
-        // Telegram app is installed, open it
-        context.startActivity(telegramIntent)
-    } else {
-        // Telegram app is not installed, open in web browser
-        telegramIntent.data = telegramUri
-        context.startActivity(telegramIntent)
-    }
+    categoryActions[title]?.invoke()
 }

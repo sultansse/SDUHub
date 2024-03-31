@@ -33,12 +33,12 @@ import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.ui.SlideTransition
-import com.softwareit.sduhub.ui.screens.home_screen.components.openTelegramToUser
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardDialog
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileScreenListItemComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqScreenClass
+import com.softwareit.sduhub.utils.common.openTelegramToUser
 import kotlinx.parcelize.Parcelize
 import okhttp3.internal.immutableListOf
 import org.koin.androidx.compose.koinViewModel

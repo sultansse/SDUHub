@@ -17,7 +17,7 @@ fun Context.vibratePhone() {
 }
 
 
-const val DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss"
+const val DATE_TIME_FORMAT = "HH:mm:ss dd/MM/yyyy"
 
 
 fun getFormattedTime(format: String = DATE_TIME_FORMAT, dateTime: LocalDateTime = LocalDateTime.now()): String {

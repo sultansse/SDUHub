@@ -1,11 +1,11 @@
-package com.softwareit.sduhub.ui.screens.resources_screen.internship_screen
+package com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen
 
 import com.softwareit.sduhub.core.UiEffect
 import com.softwareit.sduhub.core.UiEvent
 import com.softwareit.sduhub.core.UiState
 import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 
-class InternshipContract {
+class InternshipDetailsContract {
 
     sealed class Event : UiEvent {
         data class OnFetchInternship(val id: Int) : Event()
@@ -21,7 +21,7 @@ class InternshipContract {
 
     sealed class InternShipState {
         data object Idle : InternShipState()
-        data class Success(val data: InternshipItemDTO) : InternShipState()
+        data class Success(val internship: InternshipItemDTO) : InternShipState()
     }
 
 }

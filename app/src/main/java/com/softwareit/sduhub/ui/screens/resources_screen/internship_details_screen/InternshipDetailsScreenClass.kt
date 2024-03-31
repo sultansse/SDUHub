@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.resources_screen.internship_screen
+package com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -71,18 +71,17 @@ class InternshipDetailsScreenClass(
     @Composable
     private fun CurrentInternshipScreen() {
 
-        val viewModel: InternshipScreenViewModel = koinViewModel()
+        val viewModel: InternshipDetailsViewModel = koinViewModel()
 
         LaunchedEffect(key1 = true) {
-            viewModel.setEvent(InternshipContract.Event.OnFetchInternship(internshipId))
+            viewModel.setEvent(InternshipDetailsContract.Event.OnFetchInternship(internshipId))
         }
 
         val state by viewModel.uiState.collectAsState()
 
         when (val internshipState = state.internshipState) {
-            is InternshipContract.InternShipState.Success -> {
-                val internship = internshipState.data
-                // Internship details
+            is InternshipDetailsContract.InternShipState.Success -> {
+                val internship = internshipState.internship
                 Column(
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     modifier = Modifier
@@ -169,7 +168,7 @@ class InternshipDetailsScreenClass(
                 }
             }
 
-            is InternshipContract.InternShipState.Idle -> {
+            is InternshipDetailsContract.InternShipState.Idle -> {
                 // Loading
                 Box(
                     contentAlignment = Alignment.Center,

@@ -30,10 +30,6 @@ class HomeScreenViewModel(
 //    fun goToMoodle() = savedState.navigateTo(NavigationScreens.Home.Categories.moodle())
 //    fun goToSduLibrary() = savedState.navigateTo(NavigationScreens.Home.Categories.sduLibrary())
 
-    fun onNoteClick(noteId: Int) {
-
-    }
-
     private fun fetchImportantInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             getImportantInfo()?.let {

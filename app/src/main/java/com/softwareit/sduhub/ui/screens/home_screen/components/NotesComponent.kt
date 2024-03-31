@@ -45,10 +45,11 @@ fun NoteItem(
     onNoteClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onCopyClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clip(RoundedCornerShape(16.dp))

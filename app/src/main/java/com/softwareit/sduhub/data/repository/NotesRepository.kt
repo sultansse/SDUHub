@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface NotesRepository {
 
-    fun getNote(id: Int): Flow<NoteDTO>
+    fun getNoteById(id: Int): NoteDTO
 
     fun getNotes(): Flow<List<NoteDTO>>
 
@@ -22,7 +22,7 @@ class NotesRepositoryImpl(
     private val noteDao: NoteDao,
 ) : NotesRepository {
 
-    override fun getNote(id: Int): Flow<NoteDTO> {
+    override fun getNoteById(id: Int): NoteDTO {
         return noteDao.getNote(id)
     }
 

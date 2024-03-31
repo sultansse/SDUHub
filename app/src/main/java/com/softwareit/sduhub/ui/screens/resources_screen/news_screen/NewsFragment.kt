@@ -26,7 +26,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.utils.common_presentation.WebViewComponent
+import com.softwareit.sduhub.utils.common.presentation.WebViewComponent
 import kotlinx.parcelize.Parcelize
 
 

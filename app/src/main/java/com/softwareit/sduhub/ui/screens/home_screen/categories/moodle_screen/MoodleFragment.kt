@@ -18,7 +18,7 @@ import com.github.terrakok.modo.ScreenKey
 import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.back
-import com.softwareit.sduhub.utils.common_presentation.WebViewComponent
+import com.softwareit.sduhub.utils.common.presentation.WebViewComponent
 import kotlinx.parcelize.Parcelize
 
 

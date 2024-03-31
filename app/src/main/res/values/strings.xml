@@ -8,8 +8,6 @@
     <string name="delete">Delete</string>
     <string name="copy">Copy</string>
     <string name="note">Note</string>
-    <string name="not_modified_yet">Not modified yet :)</string>
-    <string name="last_modified">last modified: %1$s</string>
     <string name="community">Community</string>
     <string name="logout">Logout</string>
     <string name="saved_successfully">Saved successfully!</string>
