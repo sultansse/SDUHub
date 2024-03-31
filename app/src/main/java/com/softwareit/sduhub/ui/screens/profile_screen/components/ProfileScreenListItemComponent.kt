@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,21 +31,17 @@ fun ProfileScreenListItemComponent(
         Icon(
             painter = rememberAsyncImagePainter(icon),
             contentDescription = "Logout",
-            modifier = Modifier
-                .padding(vertical = 16.dp, horizontal = 32.dp)
+            modifier = Modifier.padding(vertical = 16.dp, horizontal = 32.dp)
 
         )
         Text(
             text = title,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier
-                .weight(1f)
+            modifier = Modifier.weight(1f)
         )
         Icon(
             imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
             contentDescription = "Open this block",
-            modifier = Modifier
-                .padding(vertical = 16.dp, horizontal = 32.dp)        )
+            modifier = Modifier.padding(vertical = 16.dp, horizontal = 32.dp)        )
     }
 }
 

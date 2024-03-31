@@ -14,4 +14,6 @@
     <string name="news">Жаңалықтар</string>
     <string name="internship_vacancy">Стажировка/Вакансия</string>
     <string name="logout">Шығу</string>
+    <string name="dark_mode">Қараңғы режим</string>
+    <string name="faq">Сұрақ-жауап</string>
 </resources>

@@ -14,4 +14,6 @@
     <string name="news">Новости</string>
     <string name="internship_vacancy">Стажировка/Вакансия</string>
     <string name="logout">Выйти</string>
+    <string name="dark_mode">Ночная тема</string>
+    <string name="faq">ЧАВО</string>
 </resources>

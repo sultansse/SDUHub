@@ -15,4 +15,6 @@
     <string name="news">News</string>
     <string name="internship_vacancy">Internship/Vacancy</string>
     <string name="lost_and_found" translatable="false">Lost and Found</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="faq">FAQ</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import coil.compose.rememberAsyncImagePainter
 import com.github.terrakok.modo.multiscreen.MultiScreen
 import com.github.terrakok.modo.multiscreen.MultiScreenNavModel
@@ -78,10 +79,10 @@ class MainMultiScreen(
     @Composable
     private fun MainBottomBar() {
         val tabs = immutableListOf(
-            TabData(R.drawable.ic_home, "Home"),
-            TabData(R.drawable.ic_resources, "Resources"),
-            TabData(R.drawable.ic_map, "Map"),
-            TabData(R.drawable.ic_profile, "Profile")
+            TabData(R.drawable.ic_home, stringResource(R.string.home)),
+            TabData(R.drawable.ic_resources, stringResource(R.string.resources)),
+            TabData(R.drawable.ic_map, stringResource(R.string.map)),
+            TabData(R.drawable.ic_profile, stringResource(R.string.profile)),
         )
 
         NavigationBar {
