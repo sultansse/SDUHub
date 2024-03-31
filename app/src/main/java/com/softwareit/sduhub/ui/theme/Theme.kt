@@ -5,6 +5,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import com.softwareit.sduhub.utils.datastore.DataStoreUtil
+import org.koin.compose.koinInject
 
 
 private val LightColors = lightColorScheme(
@@ -74,18 +77,22 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun SDUHubTheme(
-  useDarkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable() () -> Unit
+    content: @Composable() () -> Unit
 ) {
-  val colors = if (!useDarkTheme) {
-    LightColors
-  } else {
-    DarkColors
-  }
+    val dataStoreUtil: DataStoreUtil = koinInject()
 
-  MaterialTheme(
-    colorScheme = colors,
-    typography = Typography,
-    content = content
-  )
+    val systemTheme = isSystemInDarkTheme()
+    val theme = dataStoreUtil.getTheme(systemTheme).collectAsState(initial = systemTheme)
+
+    val colors = if (theme.value) {
+        DarkColors
+    } else {
+        LightColors
+    }
+
+    MaterialTheme(
+        colorScheme = colors,
+        typography = Typography,
+        content = content
+    )
 }
