@@ -138,9 +138,9 @@ fun navigateToCategory(context: Context, title: String, navigator: NavigationCon
 
         "AI Dos" -> { navigator.forward(AiDosScreenClass()) }
 
-        "Order Food" -> { openTelegramToUser("SDUOrder_bot", context) }
+        "Order Food" -> { openTelegramToUser(context, "SDUOrder_bot") }
 
-        "Free Offices" -> { openTelegramToUser("sduflexbot", context) }
+        "Free Offices" -> { openTelegramToUser(context, "sduflexbot") }
 
         "Moodle" -> { navigator.forward(MoodleScreenClass()) }
 
@@ -171,7 +171,7 @@ private fun openGmail(context: Context) {
 }
 
 
-fun openTelegramToUser(username: String, context: Context) {
+fun openTelegramToUser(context: Context, username: String) {
     val telegramUri = Uri.parse("https://t.me/$username")
     val telegramIntent = Intent(Intent.ACTION_VIEW, telegramUri)
 

@@ -19,6 +19,7 @@ import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteViewModel
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileViewModel
+import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqScreenViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.ResourceScreenViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_screen.InternshipScreenViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsScreenViewModel
@@ -117,6 +118,9 @@ val viewModelModule = module {
 //            TODO actually its better to have usecases instead of directly repository
             repository = get()
         )
+    }
+    viewModel {
+        FaqScreenViewModel()
     }
 }
 

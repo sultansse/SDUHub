@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="resources">Ресурсы</string>
+    <string name="home">Главная</string>
+    <string name="map">Карта</string>
+    <string name="profile">Профиль</string>
     <string name="welcome_back">С возвращением, уважаемый пользователь!</string>
-    <string name="delete">Удалить ету</string>
+    <string name="delete">Удалить</string>
     <string name="copy">Копировать</string>
     <string name="note">Заметка</string>
+    <string name="community">Сообщество</string>
     <string name="saved_successfully">Успешно сохранено!</string>
     <string name="coming_soon">Скоро!</string>
     <string name="not_modified_yet">Еще не изменено :)</string>
     <string name="last_modified">последнее изменение: %1$s</string>
     <string name="news">Новости</string>
     <string name="internship_vacancy">Стажировка/Вакансия</string>
+    <string name="logout">Выйти</string>
 </resources>
