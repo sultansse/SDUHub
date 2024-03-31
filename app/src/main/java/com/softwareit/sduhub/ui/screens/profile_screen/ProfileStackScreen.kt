@@ -95,22 +95,18 @@ class ProfileScreenClass(
 
         val items = immutableListOf(
             ProfileScreenListItem(
-                id = 0,
                 icon = R.drawable.ic_faq,
                 title = stringResource(R.string.faq),
             ),
             ProfileScreenListItem(
-                id = 1,
                 icon = R.drawable.ic_community,
                 title = stringResource(R.string.community),
             ),
             ProfileScreenListItem(
-                id = 2,
                 icon = R.drawable.ic_lost_found,
                 title = stringResource(R.string.lost_and_found),
             ),
             ProfileScreenListItem(
-                id = 3,
                 icon = R.drawable.ic_logout,
                 title = stringResource(R.string.logout),
             ),
@@ -148,10 +144,10 @@ class ProfileScreenClass(
                     icon = items[index].icon,
                     onClick = {
                         when (index) {
-                            items[index].id -> { navigator.forward(FaqScreenClass()) }
-                            items[index].id -> { openTelegramToUser(context, "sduhub") }
-                            items[index].id -> { openTelegramToUser(context, "SDU_Lost_AND_Found") }
-                            items[index].id -> { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() }
+                            0 -> { navigator.forward(FaqScreenClass()) }
+                            1 -> { openTelegramToUser(context, "sduhub") }
+                            2 -> { openTelegramToUser(context, "SDU_Lost_AND_Found") }
+                            3 -> { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() }
                         }
                     }
                 )
@@ -161,7 +157,6 @@ class ProfileScreenClass(
 }
 
 data class ProfileScreenListItem(
-    val id : Int,
     val icon: Int,
     val title: String,
 )
