@@ -203,17 +203,6 @@ class NoteDetailsScreenClass(
         BottomAppBar(
             modifier = Modifier.height(64.dp)
         ) {
-//            IconButton(
-//                onClick = {
-////                    TODO add functionalty
-//                    Toast.makeText(context, "add tasks", Toast.LENGTH_SHORT).show()
-//                }
-//            ) {
-//                Icon(
-//                    painter = rememberAsyncImagePainter(R.drawable.ic_check_box),
-//                    contentDescription = "add tasks"
-//                )
-//            }
             IconButton(
                 onClick = {
                     shareNote(context, note)
