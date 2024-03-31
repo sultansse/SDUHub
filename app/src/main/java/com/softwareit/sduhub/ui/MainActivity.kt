@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.github.terrakok.modo.ComposeRendererScope
 import com.github.terrakok.modo.DialogScreen
@@ -26,10 +28,12 @@ import com.github.terrakok.modo.stack.StackState
 import com.softwareit.sduhub.navigation.MainMultiScreen
 import com.softwareit.sduhub.navigation.MainStackScreen
 import com.softwareit.sduhub.ui.theme.SDUHubTheme
+import com.softwareit.sduhub.utils.datastore.DataStoreUtil
 
 class MainActivity : AppCompatActivity() {
 
     private var rootScreen: RootScreen<StackScreen>? = null
+    private lateinit var dataStoreUtil: DataStoreUtil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +41,21 @@ class MainActivity : AppCompatActivity() {
         rootScreen = Modo.init(savedInstanceState, rootScreen) {
             MainStackScreen(MainMultiScreen())
         }
+
+        dataStoreUtil = DataStoreUtil(applicationContext)
+        val systemTheme = when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> { true }
+            Configuration.UI_MODE_NIGHT_NO -> { false }
+            else -> { false }
+        }
+
+
         setContent {
-            SDUHubTheme {
+            val theme = dataStoreUtil.getTheme(systemTheme).collectAsState(initial = systemTheme)
+
+            SDUHubTheme(
+                useDarkTheme = theme.value
+            ) {
                 Surface {
                     rootScreen?.Content()
                 }

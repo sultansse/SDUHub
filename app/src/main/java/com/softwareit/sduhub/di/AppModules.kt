@@ -22,6 +22,8 @@ import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqScreenViewM
 import com.softwareit.sduhub.ui.screens.resources_screen.ResourceScreenViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsScreenViewModel
+import com.softwareit.sduhub.utils.datastore.DataStoreUtil
+import com.softwareit.sduhub.utils.datastore.ThemeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -29,6 +31,8 @@ import org.koin.dsl.module
 val databaseModule = module {
     single { provideAppDatabase(context = androidContext()) }
     single { provideNoteDao(appDatabase = get()) }
+
+    single { DataStoreUtil(context = androidContext()) }
 }
 
 
@@ -81,6 +85,9 @@ val useCaseModule = module {
 
 
 val viewModelModule = module {
+    viewModel {
+        ThemeViewModel()
+    }
     viewModel {
         HomeScreenViewModel(
             getNotes = get(),
