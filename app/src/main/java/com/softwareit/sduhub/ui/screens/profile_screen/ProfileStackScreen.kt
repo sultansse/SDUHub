@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.Screen
@@ -70,7 +71,14 @@ class ProfileScreenClass(
     override fun Content() {
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text(text = stringResource(R.string.app_name)) })
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(R.string.profile),
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                )
             }
         ) {
             Box(modifier = Modifier.padding(it)) {

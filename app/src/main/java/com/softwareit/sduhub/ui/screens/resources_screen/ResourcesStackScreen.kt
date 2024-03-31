@@ -21,22 +21,16 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +38,7 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -102,55 +97,29 @@ class ResourcesScreenClass(
         const val NEWS_PAGE = 1
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val parent = LocalContainerScreen.current
+        val parentScreen = parent as StackScreen
 
         Scaffold(
-            topBar = { SearchTopBar() }
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(R.string.resources),
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                )
+            }
         ) {
             Box(modifier = Modifier.padding(it)) {
-                NewsScreen(parent as StackScreen)
+                NewsScreen(parentScreen)
             }
         }
     }
-
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    private fun SearchTopBar() {
-        var query by remember { mutableStateOf("") }
-
-        SearchBar(
-            query = query,
-            onQueryChange = { query = it },
-            onSearch = {
-                if (it.isNotEmpty()) {
-//                            onSearch(it)
-//                            keyboard?.hide()
-                }
-            },
-            active = false,
-            onActiveChange = {},
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
-                )
-            },
-            placeholder = {
-                Text(text = "Search here")
-            },
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-//                    TODO
-//                    content of found items
-        }
-    }
-
 
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
