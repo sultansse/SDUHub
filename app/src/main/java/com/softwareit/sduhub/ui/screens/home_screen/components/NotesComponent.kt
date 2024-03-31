@@ -2,6 +2,7 @@ package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,48 +24,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.github.terrakok.modo.NavigationContainer
-import com.github.terrakok.modo.stack.StackState
-import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.ui.screens.home_screen.HomeContract
-import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
-import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteScreenClass
-import org.koin.androidx.compose.koinViewModel
-
-@Composable
-fun NotesComponent(
-    notes: List<NoteDTO>,
-    navigator: NavigationContainer<StackState>,
-) { // todo change List<NoteDTO> to ImmutableList<NoteUI>
-
-    val viewModel: HomeScreenViewModel = koinViewModel()
-
-    Column {
-        notes.forEach {
-            NoteItem(
-                note = it,
-                onNoteClick = {
-                    navigator.forward(EditNoteScreenClass(it.id))
-                },
-                onDeleteClick = {
-                    viewModel.setEvent(HomeContract.Event.OnNoteDeleted(noteId = it.id))
-                },
-                onCopyClick = {
-                    viewModel.setEvent(HomeContract.Event.OnNoteCopied(note = it))
-                }
-            )
-        }
-    }
-}
 
 
 @Composable
@@ -90,6 +62,15 @@ fun NoteItem(
             contentDescription = "background image",
             contentScale = ContentScale.Crop,
             modifier = Modifier.matchParentSize(),
+//            TODO add dark mode support
+            colorFilter = if (isSystemInDarkTheme()) {
+                ColorFilter.tint(
+                    color = Color.Black.copy(alpha = 0.5f),
+                    blendMode = BlendMode.Darken
+                )
+            } else {
+                null
+            }
         )
 
         Column(
@@ -105,25 +86,27 @@ fun NoteItem(
                     text = note.title,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = 24.sp,
+                    modifier = Modifier.weight(1f)
                 )
 
-                var menuExpanded by remember { mutableStateOf(false) }
+                var isMenuExpanded by remember { mutableStateOf(false) }
                 IconButton(
-                    onClick = { menuExpanded = !menuExpanded }) {
+                    onClick = { isMenuExpanded = isMenuExpanded.not() }) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = "More options"
                     )
                     DropdownMenu(
-                        expanded = menuExpanded,
+                        expanded = isMenuExpanded,
                         onDismissRequest = {
-                            menuExpanded = false
+                            isMenuExpanded = false
                         },
                         content = {
                             DropdownMenuItem(
                                 onClick = {
-                                    menuExpanded = false
+                                    isMenuExpanded = false
                                     onDeleteClick()
                                 },
                                 text = {
@@ -132,7 +115,7 @@ fun NoteItem(
                             )
                             DropdownMenuItem(
                                 onClick = {
-                                    menuExpanded = false
+                                    isMenuExpanded = false
                                     onCopyClick()
                                 },
                                 text = {

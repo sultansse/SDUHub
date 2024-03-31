@@ -34,6 +34,6 @@ class HomeContract {
 
     sealed class NotesState {
         data object Idle : NotesState()
-        data class Success(val data: List<NoteDTO>) : NotesState()
+        data class Success(val notes: List<NoteDTO>) : NotesState()
     }
 }

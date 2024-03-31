@@ -1,6 +1,5 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -42,11 +41,10 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.ui.SlideTransition
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
-import com.softwareit.sduhub.ui.screens.home_screen.components.NotesComponent
+import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
 import com.softwareit.sduhub.ui.screens.home_screen.edit_note_screen.EditNoteScreenClass
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
-import com.softwareit.sduhub.utils.isNotNull
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -75,15 +73,16 @@ class HomeScreenClass(
     @Composable
     override fun Content() {
         val parent = LocalContainerScreen.current
+        val parentScreen = parent as StackScreen
 
         Scaffold(
             topBar = { HomeTopAppBar() },
-            floatingActionButton = { HomeAddNoteFAB(parent as StackScreen) },
+            floatingActionButton = { HomeAddNoteFAB(parentScreen) },
         ) {
             Box(
                 modifier = Modifier.padding(it)
             ) {
-                HomeScreen(parent as StackScreen)
+                HomeScreen(parentScreen)
             }
         }
     }
@@ -95,7 +94,7 @@ class HomeScreenClass(
             title = {
                 Text(
                     text = stringResource(R.string.app_name),
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
             }
         )
@@ -109,7 +108,7 @@ class HomeScreenClass(
                 navigator.forward(EditNoteScreenClass(NEW_NOTE_ID))
             }
         ) {
-            Icon(Icons.Filled.Add, contentDescription = "Add")
+            Icon(Icons.Filled.Add, contentDescription = "Add Note")
         }
     }
 
@@ -120,6 +119,11 @@ class HomeScreenClass(
 
         val uiState by viewModel.uiState.collectAsState()
 
+        LaunchedEffect(key1 = true) {
+            viewModel.setEvent(HomeContract.Event.OnFetchImportantInfo)
+            viewModel.setEvent(HomeContract.Event.OnFetchNotes)
+        }
+
         LazyColumn {
 
             item { Stories() }
@@ -127,15 +131,9 @@ class HomeScreenClass(
             item { Categories() }
 
             item {
-                LaunchedEffect(key1 = true) {
-                    viewModel.setEvent(HomeContract.Event.OnFetchImportantInfo)
-                }
-
                 when (val state = uiState.importantInfoState) {
                     is HomeContract.ImportantInfoState.Success -> {
-                        AnimatedVisibility(visible = (state.data.isNotNull())) {
-                            ImportantInfo(data = state.data)
-                        }
+                        ImportantInfo(data = state.data)
                     }
 
                     is HomeContract.ImportantInfoState.Idle -> {
@@ -149,19 +147,30 @@ class HomeScreenClass(
                 }
             }
 
-            item {
-                LaunchedEffect(key1 = true) {
-                    viewModel.setEvent(HomeContract.Event.OnFetchNotes)
+            when (val state = uiState.notesState) {
+                is HomeContract.NotesState.Success -> {
+                    items(state.notes.size) {
+                        val note = state.notes[it]
+                        NoteItem(
+                            note = note,
+                            onNoteClick = {
+                                navigator.forward(EditNoteScreenClass(note.id))
+                            },
+                            onDeleteClick = {
+                                viewModel.setEvent(HomeContract.Event.OnNoteDeleted(noteId = note.id))
+                            },
+                            onCopyClick = {
+                                viewModel.setEvent(HomeContract.Event.OnNoteCopied(note = note))
+                            }
+                        )
+                    }
                 }
 
-                when (val state = uiState.notesState) {
-                    is HomeContract.NotesState.Success -> {
-                        NotesComponent(notes = state.data, navigator)
-                    }
-
-                    is HomeContract.NotesState.Idle -> {
-                        val composition =
-                            rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_not_found))
+                is HomeContract.NotesState.Idle -> {
+                    item {
+                        val composition = rememberLottieComposition(
+                            LottieCompositionSpec.RawRes(R.raw.anim_not_found)
+                        )
                         LottieAnimation(
                             composition = composition.value,
                             iterations = Int.MAX_VALUE,
