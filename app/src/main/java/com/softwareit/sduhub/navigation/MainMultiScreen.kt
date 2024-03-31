@@ -52,14 +52,10 @@ class MainMultiScreen(
     override fun Content() {
         Scaffold(
             bottomBar = {
-                if (
-                    navModel.navigationState.containers.any { stackScreen ->
-                        stackScreen.navigationState.getChildScreens().last() is HomeScreenClass ||
-                        stackScreen.navigationState.getChildScreens().last() is ResourcesScreenClass ||
-                        stackScreen.navigationState.getChildScreens().last() is MapScreenClass ||
-                        stackScreen.navigationState.getChildScreens().last() is ProfileScreenClass
-                    }
-                ) {
+                val currentContainer = navigationState.containers[navigationState.selected]
+                val rootScreenOfCurrentContainer = currentContainer.navigationState.getChildScreens().first()
+                val currentScreenOfCurrentContainer = currentContainer.navigationState.getChildScreens().last()
+                if (rootScreenOfCurrentContainer == currentScreenOfCurrentContainer) {
                     MainBottomBar()
                 }
             },
