@@ -8,18 +8,12 @@ import com.softwareit.sduhub.utils.empty
 
 @Entity(tableName = NOTE_TABLE)
 @Stable
-data class NoteDTO(
+data class NoteDBO(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val title: String,
     val description: String,
     val updatedAt: String,
     val notifyTime: String? = String.empty,
-) {
-    constructor() : this(
-        title = String.empty,
-        description = String.empty,
-        updatedAt = String.empty,
-        notifyTime = String.empty,
-    )
-}
+)
+// TODO add Mappable interface

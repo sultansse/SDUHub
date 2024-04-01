@@ -12,7 +12,9 @@ class Constants {
         const val BASE_URL = "https://sduhub-ktor.onrender.com/"
 
         //        Room tables
+        const val APPLICATION_DATABASE = "application_database"
         const val NOTE_TABLE = "notes_table"
+        const val FAQ_TABLE = "faq_table"
 
         //      Firebase Realtime Tables
         const val IMPORTANT_INFO_TABLE = "important_info_table"

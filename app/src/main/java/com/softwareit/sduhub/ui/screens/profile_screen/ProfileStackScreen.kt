@@ -94,7 +94,7 @@ class ProfileScreenClass(
         val viewModel: ProfileViewModel = koinViewModel()
         val context = LocalContext.current
 
-        val items = immutableListOf(
+        val profileItems = immutableListOf(
             ProfileScreenListItem(
                 icon = R.drawable.ic_faq,
                 title = stringResource(R.string.faq),
@@ -102,10 +102,6 @@ class ProfileScreenClass(
             ProfileScreenListItem(
                 icon = R.drawable.ic_community,
                 title = stringResource(R.string.community),
-            ),
-            ProfileScreenListItem(
-                icon = R.drawable.ic_lost_found,
-                title = stringResource(R.string.lost_and_found),
             ),
             ProfileScreenListItem(
                 icon = R.drawable.ic_logout,
@@ -139,15 +135,14 @@ class ProfileScreenClass(
                 ThemeSwitchComponent()
             }
 
-            items(items.size) { index ->
+            items(profileItems.size, key = { profileItems[it].title }) { index ->
                 ProfileScreenListItemComponent(
-                    title = items[index].title,
-                    icon = items[index].icon,
+                    title = profileItems[index].title,
+                    icon = profileItems[index].icon,
                     onClick = {
                         when (index) {
                             0 -> { navigator.forward(FaqScreenClass()) }
                             1 -> { openTelegramToUser(context, "sduhub") }
-                            2 -> { openTelegramToUser(context, "SDU_Lost_AND_Found") }
                             3 -> { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() }
                         }
                     }

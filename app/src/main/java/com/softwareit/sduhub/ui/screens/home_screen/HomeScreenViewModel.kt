@@ -2,8 +2,8 @@ package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.BaseViewModel
-import com.softwareit.sduhub.data.local.notes.NoteDTO
-import com.softwareit.sduhub.domain.importtant_info_usecase.GetImportantInfoUseCase
+import com.softwareit.sduhub.data.local.notes.NoteDBO
+import com.softwareit.sduhub.domain.important_info_usecase.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.GetNotesUseCase
@@ -20,15 +20,6 @@ class HomeScreenViewModel(
     private val deleteNotes: DeleteNotesUseCase,
     private val getImportantInfo: GetImportantInfoUseCase,
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
-
-    /* Navigation functions */
-//    fun onBackPressed() = savedState.exit()
-//    fun goToEditNote(noteId: Int = NEW_NOTE_ID) = savedState.navigateTo(NavigationScreens.Home.editNote(noteId))
-//    fun goToAiAssistant() = savedState.navigateTo(NavigationScreens.Home.Categories.aiAssistant())
-//    fun goToMySdu() = savedState.navigateTo(NavigationScreens.Home.Categories.mysdu())
-//    fun goToSduKz() = savedState.navigateTo(NavigationScreens.Home.Categories.sdukz())
-//    fun goToMoodle() = savedState.navigateTo(NavigationScreens.Home.Categories.moodle())
-//    fun goToSduLibrary() = savedState.navigateTo(NavigationScreens.Home.Categories.sduLibrary())
 
     private fun fetchImportantInfo() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -87,13 +78,13 @@ class HomeScreenViewModel(
         }
     }
 
-    private fun copyNote(note: NoteDTO) {
+    private fun copyNote(note: NoteDBO) {
         viewModelScope.launch(Dispatchers.IO) {
             upsertNote.invoke(note.copy(id = 0, title = "${note.title} (Copy)", updatedAt = getFormattedTime()))
         }
     }
 
-    private fun addNoteUseCase(note: NoteDTO) {
+    private fun addNoteUseCase(note: NoteDBO) {
         viewModelScope.launch(Dispatchers.IO) {
             upsertNote.invoke(note)
         }

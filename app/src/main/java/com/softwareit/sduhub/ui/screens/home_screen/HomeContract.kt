@@ -3,7 +3,7 @@ package com.softwareit.sduhub.ui.screens.home_screen
 import com.softwareit.sduhub.core.UiEffect
 import com.softwareit.sduhub.core.UiEvent
 import com.softwareit.sduhub.core.UiState
-import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.data.local.notes.NoteDBO
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
 
 class HomeContract {
@@ -11,11 +11,11 @@ class HomeContract {
     sealed class Event : UiEvent {
         data object OnFetchImportantInfo : Event()
         data object OnFetchNotes : Event()
-        data class OnNoteClicked(val note : NoteDTO) : Event()
-        data class OnNoteAdded(val note: NoteDTO) : Event()
+        data class OnNoteClicked(val note : NoteDBO) : Event()
+        data class OnNoteAdded(val note: NoteDBO) : Event()
         data class OnNoteDeleted(val noteId: Int) : Event()
         data object OnNotesDeleted : Event()
-        data class OnNoteCopied(val note: NoteDTO): Event()
+        data class OnNoteCopied(val note: NoteDBO): Event()
     }
 
     data class State(
@@ -34,6 +34,6 @@ class HomeContract {
 
     sealed class NotesState {
         data object Idle : NotesState()
-        data class Success(val notes: List<NoteDTO>) : NotesState()
+        data class Success(val notes: List<NoteDBO>) : NotesState()
     }
 }

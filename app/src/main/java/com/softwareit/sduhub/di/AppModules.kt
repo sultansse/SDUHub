@@ -3,11 +3,14 @@ package com.softwareit.sduhub.di
 import com.google.firebase.database.FirebaseDatabase
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
 import com.softwareit.sduhub.data.network.firebase.FirebaseDataSource
+import com.softwareit.sduhub.data.repository.FaqRepository
+import com.softwareit.sduhub.data.repository.FaqRepositoryImpl
 import com.softwareit.sduhub.data.repository.NetworkRepository
 import com.softwareit.sduhub.data.repository.NetworkRepositoryImpl
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.data.repository.NotesRepositoryImpl
-import com.softwareit.sduhub.domain.importtant_info_usecase.GetImportantInfoUseCase
+import com.softwareit.sduhub.domain.faq_usecase.GetFaqItemsUseCase
+import com.softwareit.sduhub.domain.important_info_usecase.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.internship_usecase.GetInternshipsUseCase
 import com.softwareit.sduhub.domain.internship_usecase.GetSpecificInternshipUseCase
 import com.softwareit.sduhub.domain.news_usecase.GetNewsUseCase
@@ -30,6 +33,7 @@ import org.koin.dsl.module
 
 val databaseModule = module {
     single { provideAppDatabase(context = androidContext()) }
+    single { provideFaqDao(appDatabase = get())}
     single { provideNoteDao(appDatabase = get()) }
 
     single { DataStoreUtil(context = androidContext()) }
@@ -43,19 +47,27 @@ val networkModule = module {
 
     single { provideHttpClient(context = androidContext()) }
     single { provideRetrofit(get()) }
-    single { provideService(get()) }
+    single { provideBackendService(get()) }
 }
 
 
 val repositoryModule = module {
     single<NotesRepository> {
-        NotesRepositoryImpl(noteDao = get())
+        NotesRepositoryImpl(
+            noteDao = get(),
+        )
     }
 
     single<NetworkRepository> {
         NetworkRepositoryImpl(
             firebaseDataSource = get(),
             backendDataSource = get(),
+        )
+    }
+
+    single<FaqRepository> {
+        FaqRepositoryImpl(
+            faqDao = get(),
         )
     }
 
@@ -75,6 +87,8 @@ val useCaseModule = module {
 //    Internships
     factory { GetInternshipsUseCase(repository = get()) }
     factory { GetSpecificInternshipUseCase(repository = get()) }
+//    FAQ
+    factory { GetFaqItemsUseCase(repository = get()) }
 
 //    Notes
     factory { GetNotesUseCase(repository = get()) }
@@ -122,7 +136,9 @@ val viewModelModule = module {
         )
     }
     viewModel {
-        FaqScreenViewModel()
+        FaqScreenViewModel(
+            getFaqItems = get(),
+        )
     }
 }
 

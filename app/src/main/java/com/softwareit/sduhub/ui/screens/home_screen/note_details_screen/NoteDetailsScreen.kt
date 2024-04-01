@@ -58,7 +58,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.data.local.notes.NoteDBO
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -107,7 +107,7 @@ class NoteDetailsScreenClass(
     }
 
     @Composable
-    fun EditNoteScreen(note: NoteDTO) {
+    fun EditNoteScreen(note: NoteDBO) {
 
         val viewModel: NoteDetailsViewModel = koinViewModel()
 
@@ -205,7 +205,7 @@ class NoteDetailsScreenClass(
 
     @Composable
     fun EditNoteBottomBar(
-        note: NoteDTO,
+        note: NoteDBO,
         navigator: NavigationContainer<StackState>,
     ) {
         val context = LocalContext.current
@@ -261,7 +261,7 @@ class NoteDetailsScreenClass(
     }
 }
 
-fun shareNote(context: Context, note: NoteDTO) {
+fun shareNote(context: Context, note: NoteDBO) {
     val shareMsg =
         "Hey, I want to share this note with you:\n\nTitle: ${note.title}\n\nNote: ${note.description}"
 

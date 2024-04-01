@@ -38,12 +38,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.data.local.notes.NoteDBO
 
 
 @Composable
 fun NoteItem(
-    note: NoteDTO,
+    note: NoteDBO,
     onNoteClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onCopyClick: () -> Unit,

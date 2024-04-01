@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 interface NoteDao {
 
     @Query("SELECT * FROM NOTES_TABLE WHERE id = :id")
-    fun getNote(id: Int): NoteDTO
+    fun getNote(id: Int): NoteDBO
 
     @Query("SELECT * FROM NOTES_TABLE ORDER BY updatedAt DESC")
-    fun getNotes(): Flow<List<NoteDTO>>
+    fun getNotes(): Flow<List<NoteDBO>>
 
     @Upsert
-    suspend fun upsertNote(note: NoteDTO)
+    suspend fun upsertNote(note: NoteDBO)
 
     @Query("DELETE FROM NOTES_TABLE WHERE id = :id")
     suspend fun deleteNote(id: Int)

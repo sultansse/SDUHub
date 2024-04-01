@@ -1,17 +1,17 @@
 package com.softwareit.sduhub.data.repository
 
-import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.data.local.notes.NoteDBO
 import com.softwareit.sduhub.data.local.notes.NoteDao
 import kotlinx.coroutines.flow.Flow
 
 
 interface NotesRepository {
 
-    fun getNoteById(id: Int): NoteDTO
+    fun getNoteById(id: Int): NoteDBO
 
-    fun getNotes(): Flow<List<NoteDTO>>
+    fun getNotes(): Flow<List<NoteDBO>>
 
-    suspend fun upsertNote(note: NoteDTO)
+    suspend fun upsertNote(note: NoteDBO)
 
     suspend fun deleteNote(id: Int)
 
@@ -22,15 +22,15 @@ class NotesRepositoryImpl(
     private val noteDao: NoteDao,
 ) : NotesRepository {
 
-    override fun getNoteById(id: Int): NoteDTO {
+    override fun getNoteById(id: Int): NoteDBO {
         return noteDao.getNote(id)
     }
 
-    override fun getNotes(): Flow<List<NoteDTO>> {
+    override fun getNotes(): Flow<List<NoteDBO>> {
         return noteDao.getNotes()
     }
 
-    override suspend fun upsertNote(note: NoteDTO) {
+    override suspend fun upsertNote(note: NoteDBO) {
         noteDao.upsertNote(note)
     }
 

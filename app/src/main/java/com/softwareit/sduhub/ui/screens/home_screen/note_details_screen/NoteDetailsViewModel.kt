@@ -2,7 +2,7 @@ package com.softwareit.sduhub.ui.screens.home_screen.note_details_screen
 
 import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.BaseViewModel
-import com.softwareit.sduhub.data.local.notes.NoteDTO
+import com.softwareit.sduhub.data.local.notes.NoteDBO
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import com.softwareit.sduhub.utils.getFormattedTime
@@ -13,7 +13,7 @@ class NoteDetailsViewModel(
     private val notesRepository: NotesRepository,
 ) : BaseViewModel<NoteDetailsContract.Event, NoteDetailsContract.State, NoteDetailsContract.Effect>() {
 
-    private var note = NoteDTO(title = "", description = "", updatedAt = getFormattedTime())
+    private var note = NoteDBO(title = "", description = "", updatedAt = getFormattedTime())
 
     override fun setInitialState(): NoteDetailsContract.State {
         return NoteDetailsContract.State(
