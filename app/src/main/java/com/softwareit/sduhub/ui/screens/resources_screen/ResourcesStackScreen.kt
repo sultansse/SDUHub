@@ -158,7 +158,7 @@ class ResourcesScreenClass(
                 .padding(top = 16.dp)
         ) {
             Text(
-                text = "Trends",
+                text = stringResource(R.string.trends),
                 fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                 fontSize = 28.sp,
                 modifier = Modifier.padding(horizontal = 16.dp)
@@ -204,7 +204,7 @@ class ResourcesScreenClass(
         isSelected: Boolean,
         onClick: () -> Unit
     ) {
-        val backgroundColor = if (isSelected) Color.Blue else Color.Transparent
+        val backgroundColor = if (isSelected) colorSduBlue else Color.Transparent
         val contentColor = if (isSelected) Color.White else Color.Gray
 
         Text(
