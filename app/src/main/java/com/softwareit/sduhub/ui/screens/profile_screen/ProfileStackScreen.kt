@@ -21,7 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.Screen
@@ -75,7 +76,7 @@ class ProfileScreenClass(
                     title = {
                         Text(
                             text = stringResource(R.string.profile),
-                            fontWeight = FontWeight.Bold
+                            fontFamily = FontFamily(Font(R.font.amiko_bold)),
                         )
                     }
                 )
@@ -116,20 +117,20 @@ class ProfileScreenClass(
             modifier = Modifier.fillMaxSize(),
         ) {
             item {
-                var dialogOpen by remember { mutableStateOf(false) }
+                var isDialogOpen by remember { mutableStateOf(false) }
                 val student by viewModel.student.collectAsState()
 
                 ProfileHeaderComponent(
                     student,
                     onClick = {
-                        dialogOpen = true
+                        isDialogOpen = true
                     }
                 )
 
-                if (dialogOpen) {
+                if (isDialogOpen) {
                     ProfileIdCardDialog(
                         student = student,
-                        onClose = { dialogOpen = false }
+                        onClose = { isDialogOpen = false }
                     )
                 }
             }

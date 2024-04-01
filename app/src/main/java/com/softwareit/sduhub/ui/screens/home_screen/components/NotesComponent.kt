@@ -29,7 +29,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -85,7 +86,7 @@ fun NoteItem(
             ) {
                 Text(
                     text = note.title,
-                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontSize = 24.sp,
@@ -130,11 +131,13 @@ fun NoteItem(
 
             Text(
                 text = note.description,
+                fontFamily = FontFamily(Font(R.font.amiko_regular)),
                 maxLines = 3,
             )
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
+                fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                 text = note.updatedAt,
             )
         }

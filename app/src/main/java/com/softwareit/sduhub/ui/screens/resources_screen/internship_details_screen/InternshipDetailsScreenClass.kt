@@ -30,7 +30,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,13 +98,13 @@ class InternshipDetailsScreenClass(
                         Text(
                             text = internship.title,
                             fontSize = 24.sp,
-                            fontWeight = Bold,
+                            fontFamily = FontFamily(Font(R.font.amiko_bold)),
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
                             text = "Pay: ${internship.salary} KZT",
                             fontSize = 20.sp,
-                            fontWeight = Bold,
+                            fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
@@ -111,11 +112,13 @@ class InternshipDetailsScreenClass(
                     Text(
                         text = "Format: ${internship.format}",
                         fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
                         text = "Duration: ${internship.duration}",
                         fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier.fillMaxWidth()
                     )
 
@@ -129,19 +132,19 @@ class InternshipDetailsScreenClass(
                             Text(
                                 text = "Company: ${internship.company}",
                                 fontSize = 20.sp,
-                                fontWeight = Bold,
+                                fontFamily = FontFamily(Font(R.font.amiko_bold)),
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Text(
                                 text = "Location: ${internship.location}",
                                 fontSize = 16.sp,
-                                fontWeight = Bold,
+                                fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Text(
                                 text = "Apply Deadline: ${internship.applyDeadline}",
                                 fontSize = 16.sp,
-                                fontWeight = Bold,
+                                fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
@@ -149,6 +152,7 @@ class InternshipDetailsScreenClass(
 
                     Text(
                         text = internship.description,
+                        fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier.fillMaxWidth()
                             .padding(vertical = 16.dp)
                     )
@@ -162,6 +166,7 @@ class InternshipDetailsScreenClass(
                     }
                     Text(
                         text = contactsText,
+                        fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                         modifier = Modifier.fillMaxWidth()
                     )
 

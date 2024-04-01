@@ -25,7 +25,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -97,7 +98,7 @@ class HomeScreenClass(
             title = {
                 Text(
                     text = stringResource(R.string.app_name),
-                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily(Font(R.font.amiko_bold)),
                 )
             }
         )
@@ -146,8 +147,8 @@ class HomeScreenClass(
                         is HomeContract.ImportantInfoState.Idle -> {
                             Text(
                                 text = stringResource(R.string.welcome_back),
-                                fontWeight = FontWeight.Bold,
                                 fontSize = 24.sp,
+                                fontFamily = FontFamily(Font(R.font.amiko_bold)),
                                 modifier = Modifier.padding(20.dp)
                             )
                         }

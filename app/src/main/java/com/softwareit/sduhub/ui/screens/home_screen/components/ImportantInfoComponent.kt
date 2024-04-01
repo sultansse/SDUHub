@@ -13,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.softwareit.sduhub.R
 import com.softwareit.sduhub.utils.empty
 
 
@@ -39,11 +41,12 @@ fun ImportantInfo(data: ImportantInfoDTO) {
         ) {
             Text(
                 text = data.title,
+                fontFamily = FontFamily(Font(R.font.amiko_bold)),
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
             )
             Text(
                 text = data.description,
+                fontFamily = FontFamily(Font(R.font.amiko_regular)),
                 modifier = Modifier.padding(top = 16.dp)
             )
             if (data.tags.isNotEmpty()) {
@@ -53,6 +56,7 @@ fun ImportantInfo(data: ImportantInfoDTO) {
                     data.tags.forEach {
                         Text(
                             text = it,
+                            fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                             modifier = Modifier
                                 .padding(end = 8.dp)
                                 .border(BorderStroke(1.dp, Color.Red), RoundedCornerShape(20))

@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +20,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,7 +33,7 @@ import com.softwareit.sduhub.ui.theme.colorSduOrange
 @Composable
 fun ProfileIdCardDialog(
     student: Student,
-    onClose: () -> Unit
+    onClose: () -> Unit,
 ) {
     Dialog(
         onDismissRequest = { onClose() },
@@ -45,7 +46,8 @@ fun ProfileIdCardDialog(
                 )
         ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.verticalScroll(rememberScrollState()),
             ) {
                 Text(
                     text = "SDU UNIVERSITY",
@@ -64,10 +66,8 @@ fun ProfileIdCardDialog(
                     text = "STUDENT",
                     color = colorSduOrange,
                     fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily(Font(R.font.abhaya_libre_extra_bold)),
                     modifier = Modifier.padding(top = 16.dp)
-
                 )
                 Text(
                     text = student.fullname,

@@ -20,6 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.network.backend.Student
@@ -51,17 +53,19 @@ fun ProfileHeaderComponent(
             ) {
                 Text(
                     text = student.fullname,
-                    style = MaterialTheme.typography.titleLarge,
+                    fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
                     text = student.studentId.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
+                    fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                     modifier = Modifier.fillMaxWidth()
 
                 )
                 Text(
-                    text = "Student", modifier = Modifier.fillMaxWidth()
+                    text = "Student",
+                    fontFamily = FontFamily(Font(R.font.amiko_regular)),
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
             Icon(

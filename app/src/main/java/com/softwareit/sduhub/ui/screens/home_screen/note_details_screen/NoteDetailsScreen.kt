@@ -38,7 +38,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
@@ -122,7 +123,12 @@ class NoteDetailsScreenClass(
                     title = it
                     viewModel.setEvent(NoteDetailsContract.Event.OnTitleChanged(it))
                 },
-                placeholder = { Text(text = "Title") },
+                placeholder = {
+                    Text(
+                        text = "Title",
+                        fontFamily = FontFamily(Font(R.font.amiko_regular)),
+                    )
+                },
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                     imeAction = ImeAction.Next,
@@ -136,7 +142,12 @@ class NoteDetailsScreenClass(
                     description = it
                     viewModel.setEvent(NoteDetailsContract.Event.OnDescriptionChanged(it))
                 },
-                placeholder = { Text(text = "Description") },
+                placeholder = {
+                    Text(
+                        text = "Description",
+                        fontFamily = FontFamily(Font(R.font.amiko_regular)),
+                    )
+                },
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences,
                     imeAction = ImeAction.Default,
@@ -169,7 +180,7 @@ class NoteDetailsScreenClass(
             title = {
                 Text(
                     text = stringResource(R.string.note),
-                    fontWeight = FontWeight.Bold
+                    fontFamily = FontFamily(Font(R.font.amiko_bold)),
                 )
             },
             modifier = Modifier
@@ -215,6 +226,7 @@ class NoteDetailsScreenClass(
             }
             Text(
                 text = note.updatedAt,
+                fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f)
             )

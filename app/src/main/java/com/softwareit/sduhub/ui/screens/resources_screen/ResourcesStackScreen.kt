@@ -39,7 +39,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -109,7 +110,7 @@ class ResourcesScreenClass(
                     title = {
                         Text(
                             text = stringResource(R.string.resources),
-                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily(Font(R.font.amiko_bold)),
                         )
                     }
                 )
@@ -158,7 +159,7 @@ class ResourcesScreenClass(
         ) {
             Text(
                 text = "Trends",
-                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                 fontSize = 28.sp,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
@@ -209,6 +210,7 @@ class ResourcesScreenClass(
         Text(
             text = text,
             color = contentColor,
+            fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
             modifier = Modifier
                 .padding(vertical = 20.dp)
                 .clip(RoundedCornerShape(16.dp))
@@ -358,11 +360,12 @@ class ResourcesScreenClass(
                 ) {
                     Text(
                         text = internship.title,
-                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                         fontSize = 20.sp,
                     )
                     Text(
                         text = internship.company,
+                        fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         color = Color.Gray
                     )
                 }
@@ -405,7 +408,7 @@ class ResourcesScreenClass(
                     )
                     Text(
                         text = news.title,
-                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                         fontSize = 16.sp,
                         color = colorSduOrange,
                         overflow = TextOverflow.Ellipsis,
@@ -415,6 +418,7 @@ class ResourcesScreenClass(
                 Text(
                     text = news.announce,
                     color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.amiko_regular)),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
                     modifier = Modifier.padding(top = 8.dp)
