@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -122,6 +124,7 @@ fun CategoryItem(
         )
         Text(
             text = title,
+            fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
             textAlign = TextAlign.Center,
         )
     }

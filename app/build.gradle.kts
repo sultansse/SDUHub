@@ -14,10 +14,10 @@ android {
 //        no need sign for debug
 
         create("release") {
-            storeFile = file("Keys/SDUHubKey.keystore")
-            storePassword = "sduHub"
+            storeFile = File("${rootProject.rootDir}/app/release.keystore")
+            storePassword = "SDUHub1234"
             keyAlias = "sduhub"
-            keyPassword = "sduHub"
+            keyPassword = "SDUHub1234"
         }
     }
 
@@ -40,9 +40,8 @@ android {
             isMinifyEnabled = false
         }
 
-        release {
+        getByName("release") {
             isDebuggable = false
-            isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -62,14 +61,25 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.9"
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes.addAll(
+                listOf(
+                    "META-INF/DEPENDENCIES",
+                    "META-INF/LICENSE",
+                    "META-INF/LICENSE.txt",
+                    "META-INF/license.txt",
+                    "META-INF/NOTICE",
+                    "META-INF/NOTICE.txt",
+                    "META-INF/notice.txt",
+                    "META-INF/ASL2.0",
+                    "META-INF/*.kotlin_module"
+                )
+            )
         }
     }
 }
