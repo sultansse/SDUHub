@@ -7,13 +7,21 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 
-fun openGmail(context: Context) {
 
+/**
+ * Opens an email client with pre-filled recipient, subject, and body.
+ *
+ * @param context The context from which the intent is started.
+ * @param to The recipient email address.
+ * @param subject The subject of the email.
+ * @param body The body text of the email.
+ */
+fun openGmail(context: Context, to: String, subject: String, body: String) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:")
-        putExtra(Intent.EXTRA_EMAIL, arrayOf("recipient@stu.sdu.edu.kz"))
-        putExtra(Intent.EXTRA_SUBJECT, "Subject")
-        putExtra(Intent.EXTRA_TEXT, "Hello Teacher, I am ......")
+        data = Uri.parse("mailto:") // Only email apps should handle this
+        putExtra(Intent.EXTRA_EMAIL, arrayOf(to))
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, body)
     }
 
     try {

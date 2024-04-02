@@ -2,12 +2,12 @@ package com.softwareit.sduhub.ui.screens.profile_screen.faq_screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -33,9 +34,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,6 +51,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
+import com.softwareit.sduhub.utils.common.openGmail
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -84,32 +89,81 @@ class FaqDetailsScreenClass(
         val viewModel: FaqDetailsViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            item {
-                SearchTopBar()
-            }
-
-            when (val state = uiState.faqState) {
-                is FaqDetailsContract.FaqState.Idle -> {
-                    viewModel.setEvent(FaqDetailsContract.Event.OnFetchFaqItems)
+        Column {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                item {
+                    SearchTopBar()
                 }
 
-                is FaqDetailsContract.FaqState.Fetched -> {
-                    items(state.faqItems.size, key = { state.faqItems[it].id }) { index ->
-                        FaqItem(state.faqItems[index])
+                when (val state = uiState.faqState) {
+                    is FaqDetailsContract.FaqState.Idle -> {
+                        viewModel.setEvent(FaqDetailsContract.Event.OnFetchFaqItems)
+                    }
+
+                    is FaqDetailsContract.FaqState.Fetched -> {
+                        items(state.faqItems.size, key = { state.faqItems[it].id }) { index ->
+                            FaqItem(state.faqItems[index])
+                        }
                     }
                 }
             }
+            ContactUsItem()
         }
+    }
 
+    @Composable
+    private fun ContactUsItem() {
+        val context = LocalContext.current
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = Color.Gray,
+                    shape = RoundedCornerShape(12.dp)
+                )
+        ) {
+            Text(
+                text = "Still have questions?",
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            Button(
+                onClick = {
+                      openGmail(
+                          context,
+                          to = "200107106@stu.sdu.edu.kz",
+                          subject = "Your subject",
+                          body = "Hello SDUHUB! I have a question about..."
+                      )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Contact us",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
+                )
+            }
+        }
     }
 
     @Composable
     private fun FaqItem(faqItem: FaqDTO) {
         var isExpanded by remember { mutableStateOf(false) }
-        val rotationAngle by animateFloatAsState(targetValue = if (isExpanded) 180f else 0f)
+        val rotationAngle by animateFloatAsState(
+            targetValue = if (isExpanded) 180f else 0f,
+            label = if (isExpanded) "Collapse" else "Expand"
+        )
 
         Column {
             Box(
@@ -120,7 +174,8 @@ class FaqDetailsScreenClass(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 12.dp)
                 ) {
                     Text(
@@ -182,8 +237,7 @@ class FaqDetailsScreenClass(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
-//                    TODO
-//                    content of found items
+            // Placeholder for additional UI or functionality, if needed.
         }
     }
 }

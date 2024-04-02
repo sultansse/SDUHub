@@ -137,7 +137,7 @@ fun navigateToCategory(
 ) {
     val categoryActions = mapOf(
         categories[0].title to { navigator.forward(AiDosScreenClass()) },
-        categories[1].title to { openGmail(context) },
+        categories[1].title to { openGmail(context, "teacher@sdu.edu.kz", "Your subject", "Hello Teacher! I am [your name].. \n\n\n Regards, [your name]") },
         categories[2].title to { navigator.forward(MySduScreenClass()) },
         categories[3].title to { navigator.forward(SduKzScreenClass()) },
         categories[4].title to { openTelegramToUser(context, "SDUOrder_bot") },

@@ -52,6 +52,67 @@ class FaqDetailsViewModel(
                     "How can I contact SDUHUB?",
                     "You can contact SDUHUB by sending an email to sdu@sdu.edu.kz.",
                 ),
+                FaqDTO(
+                    5,
+                    "How can I contact SDUHUB?",
+                    "You can contact SDUHUB by sending an email to sdu@sdu.edu.kz.",
+                ),
+                FaqDTO(
+                    6,
+                    "How can I find resources?",
+                    "You can find resources by going to the Resources tab.",
+                ),
+                FaqDTO(
+                    7,
+                    "How can I find internships?",
+                    "You can find internships by going to the Internships tab.",
+                ),
+                FaqDTO(
+                    8,
+                    "What is SDUHUB?",
+                    "SDUHUB is a platform for students to find resources and internships.",
+                ),
+                FaqDTO(
+                    9,
+                    "How can I find internships?",
+                    "You can find internships by going to the Internships tab.",
+                ),
+                FaqDTO(
+                    10,
+                    "How can I find resources?",
+                    "You can find resources by going to the Resources tab.",
+                ),
+                FaqDTO(
+                    11,
+                    "How can I contact SDUHUB?",
+                    "You can contact SDUHUB by sending an email to",
+                ),
+                FaqDTO(
+                    12,
+                    "How can I contact SDUHUB?",
+                    "You can contact SDUHUB by sending an email to",
+                ),
+                FaqDTO(
+                    13,
+                    "How can I find resources?",
+                    "You can find resources by going to the Resources tab.",
+                ),
+                FaqDTO(
+                    14,
+                    "How can I find internships?",
+                    "You can find internships by going to the Internships tab.",
+                ),
+                FaqDTO(
+                    15,
+                    "What is SDUHUB?",
+                    "SDUHUB is a platform for students to find resources and internships.",
+                ),
+                FaqDTO(
+                    16,
+                    "How can I find internships?",
+                    "You can find internships by going to the Internships tab.",
+                ),
+
             )
             setState { copy(faqState = FaqDetailsContract.FaqState.Fetched(faqItems))}
         }
