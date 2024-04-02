@@ -15,14 +15,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -95,7 +93,7 @@ class FaqDetailsScreenClass(
                 modifier = Modifier.weight(1f)
             ) {
                 item {
-                    SearchTopBar()
+                    FaqHeader()
                 }
 
                 when (val state = uiState.faqState) {
@@ -119,7 +117,8 @@ class FaqDetailsScreenClass(
         val context = LocalContext.current
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .border(
                     width = 1.dp,
                     color = Color.Gray,
@@ -133,7 +132,7 @@ class FaqDetailsScreenClass(
                 fontFamily = FontFamily(Font(R.font.amiko_bold)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(top = 16.dp)
             )
             Button(
                 onClick = {
@@ -207,37 +206,23 @@ class FaqDetailsScreenClass(
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun SearchTopBar() {
-        var query by remember { mutableStateOf("") }
-
-        SearchBar(
-            query = query,
-            onQueryChange = { query = it },
-            onSearch = {
-                if (it.isNotEmpty()) {
-//                            onSearch(it)
-//                            keyboard?.hide()
-                }
-            },
-            active = false,
-            onActiveChange = {},
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
-                )
-            },
-            placeholder = {
-                Text(text = "Search here")
-            },
-            shape = RoundedCornerShape(12.dp),
+    private fun FaqHeader() {
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(16.dp)
         ) {
-            // Placeholder for additional UI or functionality, if needed.
+            Text(
+                text = "Frequently Asked Questions",
+                fontSize = 32.sp,
+                lineHeight = 40.sp,
+                fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                textAlign = TextAlign.Center,
+            )
         }
+
     }
+
 }
