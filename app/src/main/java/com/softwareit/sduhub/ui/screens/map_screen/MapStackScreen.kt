@@ -21,7 +21,7 @@ import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.StackNavModel
 import com.github.terrakok.modo.stack.StackScreen
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.SlideTransition
+import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.utils.common.presentation.WebViewComponent
 import kotlinx.parcelize.Parcelize
 

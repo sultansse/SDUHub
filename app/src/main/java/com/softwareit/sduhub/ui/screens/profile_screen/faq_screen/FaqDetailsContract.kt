@@ -5,7 +5,7 @@ import com.softwareit.sduhub.core.UiEvent
 import com.softwareit.sduhub.core.UiState
 import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
 
-class FaqContract {
+class FaqDetailsContract {
 
     sealed class Event : UiEvent {
         data object OnFetchFaqItems : Event()

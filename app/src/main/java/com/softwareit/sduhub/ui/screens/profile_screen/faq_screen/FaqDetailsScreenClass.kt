@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.ui.screens.profile_screen.faq_screen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -49,7 +51,7 @@ import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
 @Parcelize
-class FaqScreenClass(
+class FaqDetailsScreenClass(
     override val screenKey: ScreenKey = generateScreenKey(),
 ) : Screen {
 
@@ -79,7 +81,7 @@ class FaqScreenClass(
     @Composable
     fun FaqScreen() {
 
-        val viewModel: FaqScreenViewModel = koinViewModel()
+        val viewModel: FaqDetailsViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
         LazyColumn(
@@ -90,11 +92,11 @@ class FaqScreenClass(
             }
 
             when (val state = uiState.faqState) {
-                is FaqContract.FaqState.Idle -> {
-                    viewModel.setEvent(FaqContract.Event.OnFetchFaqItems)
+                is FaqDetailsContract.FaqState.Idle -> {
+                    viewModel.setEvent(FaqDetailsContract.Event.OnFetchFaqItems)
                 }
 
-                is FaqContract.FaqState.Fetched -> {
+                is FaqDetailsContract.FaqState.Fetched -> {
                     items(state.faqItems.size, key = { state.faqItems[it].id }) { index ->
                         FaqItem(state.faqItems[index])
                     }
@@ -107,6 +109,7 @@ class FaqScreenClass(
     @Composable
     private fun FaqItem(faqItem: FaqDTO) {
         var isExpanded by remember { mutableStateOf(false) }
+        val rotationAngle by animateFloatAsState(targetValue = if (isExpanded) 180f else 0f)
 
         Column {
             Box(
@@ -130,6 +133,7 @@ class FaqScreenClass(
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
                         contentDescription = if (isExpanded) "Collapse" else "Expand",
+                        modifier = Modifier.rotate(rotationAngle),
                     )
                 }
             }
@@ -176,7 +180,7 @@ class FaqScreenClass(
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
 //                    TODO
 //                    content of found items

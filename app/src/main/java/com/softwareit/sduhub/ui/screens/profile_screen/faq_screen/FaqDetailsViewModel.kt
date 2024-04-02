@@ -7,20 +7,20 @@ import com.softwareit.sduhub.domain.faq_usecase.GetFaqItemsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FaqScreenViewModel(
+class FaqDetailsViewModel(
     private val getFaqItems: GetFaqItemsUseCase,
-) : BaseViewModel<FaqContract.Event, FaqContract.State, FaqContract.Effect>() {
+) : BaseViewModel<FaqDetailsContract.Event, FaqDetailsContract.State, FaqDetailsContract.Effect>() {
 
 
-    override fun setInitialState(): FaqContract.State {
-        return FaqContract.State(
-            faqState = FaqContract.FaqState.Idle,
+    override fun setInitialState(): FaqDetailsContract.State {
+        return FaqDetailsContract.State(
+            faqState = FaqDetailsContract.FaqState.Idle,
         )
     }
 
-    override fun handleEvent(event: FaqContract.Event) {
+    override fun handleEvent(event: FaqDetailsContract.Event) {
         when (event) {
-            is FaqContract.Event.OnFetchFaqItems -> {
+            is FaqDetailsContract.Event.OnFetchFaqItems -> {
                 fetchFaqItems()
             }
         }
@@ -53,7 +53,7 @@ class FaqScreenViewModel(
                     "You can contact SDUHUB by sending an email to sdu@sdu.edu.kz.",
                 ),
             )
-            setState { copy(faqState = FaqContract.FaqState.Fetched(faqItems))}
+            setState { copy(faqState = FaqDetailsContract.FaqState.Fetched(faqItems))}
         }
     }
 

@@ -42,7 +42,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.SlideTransition
+import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem

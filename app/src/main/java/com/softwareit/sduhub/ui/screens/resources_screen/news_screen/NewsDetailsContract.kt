@@ -5,7 +5,7 @@ import com.softwareit.sduhub.core.UiEvent
 import com.softwareit.sduhub.core.UiState
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
 
-class NewsContract {
+class NewsDetailsContract {
 
     sealed class Event : UiEvent {
         data object OnFetchNews : Event()

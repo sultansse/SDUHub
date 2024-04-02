@@ -16,5 +16,6 @@
     <string name="logout">Шығу</string>
     <string name="dark_mode">Қараңғы режим</string>
     <string name="faq">Сұрақ-жауап</string>
-    <string name="trends">Трендтер</string>
+    <string name="recommended">Ұсынылады</string>
+    <string name="about_us">Қосымша туралы</string>
 </resources>

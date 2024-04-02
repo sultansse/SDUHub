@@ -57,13 +57,12 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
-import com.softwareit.sduhub.ui.SlideTransition
 import com.softwareit.sduhub.ui.screens.home_screen.components.StorylyViewComponent
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsScreenClass
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsScreenClass
 import com.softwareit.sduhub.ui.theme.colorSduBlue
-import com.softwareit.sduhub.ui.theme.colorSduOrange
 import com.softwareit.sduhub.utils.Constants
 import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.launch
@@ -158,7 +157,7 @@ class ResourcesScreenClass(
                 .padding(top = 16.dp)
         ) {
             Text(
-                text = stringResource(R.string.trends),
+                text = stringResource(R.string.recommended),
                 fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                 fontSize = 28.sp,
                 modifier = Modifier.padding(horizontal = 16.dp)
@@ -379,9 +378,13 @@ class ResourcesScreenClass(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp)
+//                .padding(4.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(colorSduBlue)
+                .border(
+                    width = 2.dp,
+                    color = colorSduBlue,
+                    shape = RoundedCornerShape(12),
+                )
                 .clickable { onClick() }
         ) {
             Column(
@@ -409,15 +412,15 @@ class ResourcesScreenClass(
                     Text(
                         text = news.title,
                         fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
-                        fontSize = 16.sp,
-                        color = colorSduOrange,
+                        fontSize = 18.sp,
+                        color = colorSduBlue,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
                 }
                 Text(
                     text = news.announce,
-                    color = Color.White,
+                    color = colorSduBlue,
                     fontFamily = FontFamily(Font(R.font.amiko_regular)),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,

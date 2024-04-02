@@ -17,5 +17,6 @@
     <string name="lost_and_found" translatable="false">Lost and Found</string>
     <string name="dark_mode">Dark mode</string>
     <string name="faq">FAQ</string>
-    <string name="trends">Trends</string>
+    <string name="recommended">Recommended</string>
+    <string name="about_us">About app</string>
 </resources>

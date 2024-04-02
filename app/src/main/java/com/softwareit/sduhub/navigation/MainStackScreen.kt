@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.github.terrakok.modo.Screen
 import com.github.terrakok.modo.stack.StackNavModel
 import com.github.terrakok.modo.stack.StackScreen
-import com.softwareit.sduhub.ui.SlideTransition
+import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.utils.common.presentation.hideKeyboardOnOutsideClick
 import kotlinx.parcelize.Parcelize
 

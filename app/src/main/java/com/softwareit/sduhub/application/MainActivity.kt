@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui
+package com.softwareit.sduhub.application
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

@@ -33,12 +33,12 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.SlideTransition
+import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardDialog
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileScreenListItemComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchComponent
-import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqScreenClass
+import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqDetailsScreenClass
 import com.softwareit.sduhub.utils.common.openTelegramToUser
 import kotlinx.parcelize.Parcelize
 import okhttp3.internal.immutableListOf
@@ -91,7 +91,7 @@ class ProfileScreenClass(
 
     @Composable
     fun ProfileScreen(navigator: NavigationContainer<StackState>) {
-        val viewModel: ProfileViewModel = koinViewModel()
+        val viewModel: ProfileScreenViewModel = koinViewModel()
         val context = LocalContext.current
 
         val profileItems = immutableListOf(
@@ -141,9 +141,9 @@ class ProfileScreenClass(
                     icon = profileItems[index].icon,
                     onClick = {
                         when (index) {
-                            0 -> { navigator.forward(FaqScreenClass()) }
+                            0 -> { navigator.forward(FaqDetailsScreenClass()) }
                             1 -> { openTelegramToUser(context, "sduhub") }
-                            3 -> { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() }
+                            2 -> { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() }
                         }
                     }
                 )

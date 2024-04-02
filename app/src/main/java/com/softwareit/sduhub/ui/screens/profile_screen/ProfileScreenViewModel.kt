@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(
+class ProfileScreenViewModel(
     private val repository: NetworkRepository
 ) : ViewModel() {
 

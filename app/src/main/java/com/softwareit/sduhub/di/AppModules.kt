@@ -20,11 +20,11 @@ import com.softwareit.sduhub.domain.notes_usecase.GetNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.note_details_screen.NoteDetailsViewModel
-import com.softwareit.sduhub.ui.screens.profile_screen.ProfileViewModel
-import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqScreenViewModel
+import com.softwareit.sduhub.ui.screens.profile_screen.ProfileScreenViewModel
+import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqDetailsViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.ResourceScreenViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsViewModel
-import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsScreenViewModel
+import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsViewModel
 import com.softwareit.sduhub.utils.datastore.DataStoreUtil
 import com.softwareit.sduhub.utils.datastore.ThemeViewModel
 import org.koin.android.ext.koin.androidContext
@@ -123,7 +123,7 @@ val viewModelModule = module {
         )
     }
     viewModel {
-        NewsScreenViewModel()
+        NewsDetailsViewModel()
     }
     viewModel {
         InternshipDetailsViewModel(
@@ -131,12 +131,12 @@ val viewModelModule = module {
         )
     }
     viewModel {
-        ProfileViewModel(
+        ProfileScreenViewModel(
             repository = get()
         )
     }
     viewModel {
-        FaqScreenViewModel(
+        FaqDetailsViewModel(
             getFaqItems = get(),
         )
     }
