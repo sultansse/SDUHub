@@ -1,7 +1,6 @@
 package com.softwareit.sduhub.data.network.backend
 
 import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
-import com.softwareit.sduhub.ui.screens.resources_screen.ResourceDTO
 import com.squareup.moshi.JsonClass
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -43,4 +42,4 @@ data class NewsItemDTO(
     val announce: String,
     val date: String,
     val link: String,
-) : ResourceDTO
+)

@@ -23,11 +23,11 @@ class ResourceContract {
 
     sealed class InternShipsState {
         data object Idle : InternShipsState()
-        data class Success(val data: List<InternshipItemDTO>) : InternShipsState()
+        data class Success(val internships: List<InternshipItemDTO>) : InternShipsState()
     }
 
     sealed class NewsState {
         data object Idle : NewsState()
-        data class Success(val data: List<NewsItemDTO>) : NewsState()
+        data class Success(val news: List<NewsItemDTO>) : NewsState()
     }
 }
