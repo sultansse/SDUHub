@@ -144,7 +144,10 @@ class ResourcesScreenClass(
 //                                    key = { state.internships[it].id }
 //                                ) {
 //                                val internship = state.internships[it]
-                                Column {
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                                    modifier = Modifier.fillMaxSize()
+                                ) {
                                     state.internships.forEach { internship ->
                                         InternshipsItem(
                                             internship,
@@ -270,7 +273,8 @@ data class InternshipItemDTO(
     val id: Int,
     val title: String,
     val salary: String,
-    val format: String,
+    val timeFormat: String,
+    val placeFormat: String,
     val duration: String,
     val company: String,
     val location: String,

@@ -65,6 +65,9 @@ val md_theme_dark_outlineVariant = Color(0xFF47464F)
 val md_theme_dark_scrim = Color(0xFF000000)
 
 
+val colorBlack = Color(0xFF000000)
+val colorWhite = Color(0xFFFFFFFF)
 val colorSduBlue = Color(0xFF212153)
 val colorSduOrange = Color(0xFFFF8040)
 val colorSduLightBlue = Color(0xFF00B2DA)
+val colorSduGray = Color(0xFFF3F2F2)

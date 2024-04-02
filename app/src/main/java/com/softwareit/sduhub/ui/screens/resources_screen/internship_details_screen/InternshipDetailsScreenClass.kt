@@ -44,6 +44,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.ui.theme.colorSduGray
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -102,7 +103,7 @@ class InternshipDetailsScreenClass(
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
-                            text = "Pay: ${internship.salary} KZT",
+                            text = "Pay: ${internship.salary} ₸",
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                             modifier = Modifier.fillMaxWidth()
@@ -110,11 +111,12 @@ class InternshipDetailsScreenClass(
                     }
 
                     Text(
-                        text = "Format: ${internship.format}",
+                        text = "Format: ${internship.timeFormat}, ${internship.placeFormat}",
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     Text(
                         text = "Duration: ${internship.duration}",
                         fontSize = 16.sp,
@@ -125,7 +127,7 @@ class InternshipDetailsScreenClass(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(color = Color.LightGray, shape = RoundedCornerShape(8.dp))
+                            .background(color = colorSduGray, shape = RoundedCornerShape(8.dp))
                             .padding(8.dp)
                     ) {
                         Column {
@@ -153,7 +155,8 @@ class InternshipDetailsScreenClass(
                     Text(
                         text = internship.description,
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(vertical = 16.dp)
                     )
 

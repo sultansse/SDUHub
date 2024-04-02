@@ -6,5 +6,6 @@
     <color name="color_sdu_blue">#151C52</color>
     <color name="color_sdu_purple">#1A1C44</color>
     <color name="color_sdu_orange">#FF914D</color>
+    <color name="color_sdu_gray">#F3F2F2</color>
 
 </resources>
