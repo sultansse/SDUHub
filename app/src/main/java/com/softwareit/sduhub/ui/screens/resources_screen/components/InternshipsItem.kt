@@ -34,10 +34,13 @@ import okhttp3.internal.immutableListOf
 
 
 @Composable
-internal fun InternshipsItem(internship: InternshipItemDTO, onClick: () -> Unit) {
-
+internal fun InternshipsItem(
+    internship: InternshipItemDTO,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .background(colorSduGray, RoundedCornerShape(12.dp))

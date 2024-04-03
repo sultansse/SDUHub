@@ -1,24 +1,15 @@
 package com.softwareit.sduhub.ui.screens.resources_screen
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,11 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -49,12 +39,13 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.ui.screens.resources_screen.components.InternshipsItem
 import com.softwareit.sduhub.ui.screens.resources_screen.components.NewsItem
+import com.softwareit.sduhub.ui.screens.resources_screen.components.PagerToggle
 import com.softwareit.sduhub.ui.screens.resources_screen.components.Recommended
+import com.softwareit.sduhub.ui.screens.resources_screen.components.ResourceTab
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsScreenClass
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsScreenClass
-import com.softwareit.sduhub.ui.theme.colorSduBlue
+import com.softwareit.sduhub.utils.common.presentation.LoadingMarioComponent
 import com.squareup.moshi.JsonClass
-import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -112,14 +103,17 @@ class ResourcesScreenClass(
         val viewModel: ResourceScreenViewModel = koinViewModel()
 
         val uiState by viewModel.uiState.collectAsState()
-        val pagerState = rememberPagerState(pageCount = { 2 })
+
 
         LaunchedEffect(key1 = true) {
             viewModel.setEvent(ResourceContract.Event.OnFetchInternships)
             viewModel.setEvent(ResourceContract.Event.OnFetchNews)
         }
 
+        var selectedTabIndex by remember { mutableIntStateOf(ResourceTab.INTERNSHIPS.page) }
+
         LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
             item {
@@ -127,146 +121,61 @@ class ResourcesScreenClass(
             }
 
             item {
-                PagerToggle(pagerState)
-            }
-
-            item {
-                HorizontalPager(
-                    state = pagerState,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-
-                    if (pagerState.currentPage == ResourceTab.INTERNSHIPS.page)
-                        when (val state = uiState.internshipsState) {
-                            is ResourceContract.InternShipsState.Success -> {
-//                                this@LazyColumn.items(
-//                                    count = state.internships.size,
-//                                    key = { state.internships[it].id }
-//                                ) {
-//                                val internship = state.internships[it]
-                                Column(
-                                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    state.internships.forEach { internship ->
-                                        InternshipsItem(
-                                            internship,
-                                            onClick = {
-                                                navigator.forward(
-                                                    InternshipDetailsScreenClass(
-                                                        internship.id
-                                                    )
-                                                )
-                                            }
-                                        )
-                                    }
-                                }
-                            }
-
-                            is ResourceContract.InternShipsState.Idle -> {
-//                                this@LazyColumn.item {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    CircularProgressIndicator()
-                                }
-//                                }
-                            }
-                        }
-
-                    if (pagerState.currentPage == ResourceTab.NEWS.page)
-                        when (val state = uiState.newsState) {
-                            is ResourceContract.NewsState.Success -> {
-//                                this@LazyColumn.items(
-//                                    state.news.size,
-//                                    key = { state.news[it].id }) {
-//                                    val currentNews = state.news[it]
-                                Column {
-                                    state.news.forEach { currentNews ->
-                                        NewsItem(
-                                            currentNews,
-                                            onClick = {
-                                                navigator.forward(NewsDetailsScreenClass(currentNews.id))
-                                            }
-                                        )
-                                    }
-                                }
-                            }
-
-                            is ResourceContract.NewsState.Idle -> {
-//                                this@LazyColumn.item {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    CircularProgressIndicator()
-                                }
-//                                }
-                            }
-                        }
-
-
-                }
-            }
-
-
-        }
-    }
-
-
-    @OptIn(ExperimentalFoundationApi::class)
-    @Composable
-    private fun PagerToggle(pagerState: PagerState) {
-        val coroutineScope = rememberCoroutineScope()
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            ResourceTab.entries.forEach { tab ->
-                Tab(
-                    text = tab.title,
-                    isSelected = pagerState.currentPage == tab.page,
-                    onClick = {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(tab.page)
-                        }
-                    }
+                PagerToggle(
+                    selectedTabIndex = selectedTabIndex,
+                    onClick = { selectedTabIndex = it },
                 )
             }
+
+            if (selectedTabIndex == ResourceTab.INTERNSHIPS.page)
+                when (val state = uiState.internshipsState) {
+                    is ResourceContract.InternShipsState.Success -> {
+
+                        items(
+                            count = state.internships.size,
+                            key = { state.internships[it].id }
+                        ) {
+                            val internship = state.internships[it]
+                            InternshipsItem(
+                                internship,
+                                onClick = {
+                                    navigator.forward(InternshipDetailsScreenClass(internship.id))
+                                },
+                                modifier = Modifier.animateItemPlacement(tween(500))
+                            )
+                        }
+                    }
+
+                    is ResourceContract.InternShipsState.Idle -> {
+                        item { LoadingMarioComponent() }
+                    }
+                }
+
+            if (selectedTabIndex == ResourceTab.NEWS.page)
+                when (val state = uiState.newsState) {
+                    is ResourceContract.NewsState.Success -> {
+
+                        items(
+                            state.news.size,
+                            key = { state.news[it].id }
+                        ) {
+                            val currentNews = state.news[it]
+                            NewsItem(
+                                currentNews,
+                                onClick = {
+                                    navigator.forward(NewsDetailsScreenClass(currentNews.id))
+                                }
+                            )
+                        }
+                    }
+
+                    is ResourceContract.NewsState.Idle -> {
+                        item { LoadingMarioComponent() }
+                    }
+                }
         }
-
     }
-
-    @Composable
-    private fun Tab(
-        text: String,
-        isSelected: Boolean,
-        onClick: () -> Unit
-    ) {
-        val backgroundColor = if (isSelected) colorSduBlue else Color.Transparent
-        val contentColor = if (isSelected) Color.White else Color.Gray
-
-        Text(
-            text = text,
-            color = contentColor,
-            fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
-            modifier = Modifier
-                .padding(vertical = 20.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .clickable { onClick() }
-                .background(backgroundColor)
-                .padding(vertical = 4.dp, horizontal = 16.dp)
-        )
-    }
-
 }
-
-enum class ResourceTab(val title: String, val page: Int) {
-    INTERNSHIPS("Internships", 0),
-    NEWS("News", 1)
-}
-
 
 @JsonClass(generateAdapter = true)
 data class InternshipItemDTO(
