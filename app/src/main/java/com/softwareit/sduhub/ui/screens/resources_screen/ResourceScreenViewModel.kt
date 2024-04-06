@@ -16,6 +16,7 @@ class ResourceScreenViewModel(
     private val getInternshipsUseCase: GetInternshipsUseCase,
 ) : BaseViewModel<ResourceContract.Event, ResourceContract.State, ResourceContract.Effect>() {
 
+//    todo remove since its not according to the MVI architecture (single state)
     private val _selectedTab = MutableStateFlow(ResourceTab.INTERNSHIPS.page)
     val selectedTab: StateFlow<Int> = _selectedTab
 

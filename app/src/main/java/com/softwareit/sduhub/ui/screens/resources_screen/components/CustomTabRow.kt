@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,8 +34,10 @@ import androidx.compose.ui.zIndex
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorWhite
+import com.softwareit.sduhub.utils.datastore.DataStoreUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import org.koin.compose.koinInject
 
 
 @Composable
@@ -41,6 +45,9 @@ internal fun PagerToggle(
     selectedTabIndex: Int,
     onClick: (Int) -> Unit,
 ) {
+    val dataStoreUtil: DataStoreUtil = koinInject()
+    val isDarkThemeEnabled by dataStoreUtil.getTheme().collectAsState(initial = isSystemInDarkTheme())
+
     TabRow(
         selectedTabIndex = selectedTabIndex,
         modifier = Modifier
@@ -67,7 +74,7 @@ internal fun PagerToggle(
                 interactionSource = DisabledInteractionSource(),
                 selected = tab.page == selectedTabIndex,
                 selectedContentColor = colorWhite,
-                unselectedContentColor = colorSduBlue,
+                unselectedContentColor = if (isDarkThemeEnabled) colorWhite.copy(alpha = 0.6f) else colorSduBlue,
                 onClick = { onClick(tab.page) },
                 modifier = Modifier
                     .zIndex(1f)
