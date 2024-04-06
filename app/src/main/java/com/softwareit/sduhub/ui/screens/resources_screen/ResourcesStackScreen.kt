@@ -118,8 +118,8 @@ class ResourcesScreenClass(
 
 
         LaunchedEffect(key1 = true) {
-            viewModel.setEvent(ResourceContract.Event.OnFetchInternships)
-            viewModel.setEvent(ResourceContract.Event.OnFetchNews)
+            viewModel.setEvent(ResourceScreenContract.Event.OnFetchInternships)
+            viewModel.setEvent(ResourceScreenContract.Event.OnFetchNews)
         }
 
         val selectedTabIndex by viewModel.selectedTab.collectAsState()
@@ -146,14 +146,14 @@ class ResourcesScreenClass(
                 PagerToggle(
                     selectedTabIndex = selectedTabIndex,
                     onClick = {
-                        viewModel.setEvent(ResourceContract.Event.OnChangeTabIndex(it))
+                        viewModel.setEvent(ResourceScreenContract.Event.OnChangeTabIndex(it))
                     },
                 )
             }
 
             if (selectedTabIndex == ResourceTab.INTERNSHIPS.page)
                 when (val state = uiState.internshipsState) {
-                    is ResourceContract.InternShipsState.Success -> {
+                    is ResourceScreenContract.InternShipsState.Success -> {
 
                         items(
                             count = state.internships.size,
@@ -170,11 +170,11 @@ class ResourcesScreenClass(
                         }
                     }
 
-                    is ResourceContract.InternShipsState.Loading -> {
+                    is ResourceScreenContract.InternShipsState.Loading -> {
                         item { LoadingLottieComponent() }
                     }
 
-                    is ResourceContract.InternShipsState.Error -> {
+                    is ResourceScreenContract.InternShipsState.Error -> {
                         item {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -192,7 +192,7 @@ class ResourcesScreenClass(
 
             if (selectedTabIndex == ResourceTab.NEWS.page)
                 when (val state = uiState.newsState) {
-                    is ResourceContract.NewsState.Success -> {
+                    is ResourceScreenContract.NewsState.Success -> {
 
                         items(
                             state.news.size,
@@ -208,11 +208,11 @@ class ResourcesScreenClass(
                         }
                     }
 
-                    is ResourceContract.NewsState.Loading -> {
+                    is ResourceScreenContract.NewsState.Loading -> {
                         item { LoadingLottieComponent() }
                     }
 
-                    is ResourceContract.NewsState.Error -> {
+                    is ResourceScreenContract.NewsState.Error -> {
                         item {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,

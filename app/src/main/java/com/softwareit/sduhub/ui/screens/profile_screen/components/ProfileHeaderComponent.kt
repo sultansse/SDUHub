@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -22,21 +24,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.network.backend.Student
+import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
 
 @Composable
 fun ProfileHeaderComponent(
     student: Student,
     onClick: () -> Unit
 ) {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)
-        .clip(RoundedCornerShape(16.dp))
-        .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
-        .clickable { onClick() }) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
+            .clickable { onClick() }) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(32.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -73,5 +79,52 @@ fun ProfileHeaderComponent(
                 contentDescription = "Go to profile settings",
             )
         }
+    }
+}
+
+@Composable
+fun ProfileHeaderIdleComponent(onClick: () -> Unit) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
+            .clickable { onClick() }
+    ) {
+        Text(
+            text = "Auth user",
+            fontFamily = FontFamily(Font(R.font.amiko_bold)),
+            fontSize = 24.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(42.dp) // todo remove since its specific values, it should be dynamic
+        )
+    }
+}
+
+@Composable
+fun ProfileHeaderLoadingComponent() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
+    ) {
+        Text(
+            text = "Loading...",
+            fontFamily = FontFamily(Font(R.font.amiko_bold)),
+            fontSize = 24.sp,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        GenericLottieAnimationComponent(
+            animationResource = R.raw.anim_cat_watching,
+            modifier = Modifier.height(118.dp)
+        )
     }
 }

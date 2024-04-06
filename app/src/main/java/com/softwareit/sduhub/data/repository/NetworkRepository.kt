@@ -9,7 +9,7 @@ import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 
 interface NetworkRepository {
 
-    suspend fun getStudent(): Student
+    suspend fun getStudent(): Result<Student>
 
     suspend fun getImportantInfo(): ImportantInfoDTO?
 
@@ -32,7 +32,7 @@ class NetworkRepositoryImpl(
 
 //        logic of caching and converting Result to data
 
-    override suspend fun getStudent(): Student {
+    override suspend fun getStudent(): Result<Student> {
         return backendDataSource.getStudent()
     }
 

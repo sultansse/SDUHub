@@ -20,6 +20,7 @@ import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.GetNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
+import com.softwareit.sduhub.domain.student_usecase.GetStudentUseCase
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.note_details_screen.NoteDetailsViewModel
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileScreenViewModel
@@ -98,6 +99,8 @@ val useCaseModule = module {
     factory { GetSpecificInternshipUseCase(repository = get()) }
 //    FAQ
     factory { GetFaqItemsUseCase(repository = get()) }
+//    profile-student
+    factory { GetStudentUseCase(repository = get()) }
 
 //    Notes
     factory { GetNotesUseCase(repository = get()) }
@@ -138,7 +141,7 @@ val viewModelModule = module {
     }
     viewModel {
         ProfileScreenViewModel(
-            repository = get()
+            getStudentUseCase = get(),
         )
     }
     viewModel {

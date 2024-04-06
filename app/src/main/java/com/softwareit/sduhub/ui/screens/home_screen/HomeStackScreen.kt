@@ -122,8 +122,8 @@ class HomeScreenClass(
         val uiState by viewModel.uiState.collectAsState()
 
         LaunchedEffect(key1 = true) {
-            viewModel.setEvent(HomeContract.Event.OnFetchImportantInfo)
-            viewModel.setEvent(HomeContract.Event.OnFetchNotes)
+            viewModel.setEvent(HomeScreenContract.Event.OnFetchImportantInfo)
+            viewModel.setEvent(HomeScreenContract.Event.OnFetchNotes)
         }
 
         LazyColumn {
@@ -136,12 +136,12 @@ class HomeScreenClass(
                 AnimatedVisibility(visible = true) {
 
                     when (val state = uiState.importantInfoState) {
-                        is HomeContract.ImportantInfoState.Success -> {
+                        is HomeScreenContract.ImportantInfoState.Success -> {
                             ImportantInfo(data = state.data)
 
                         }
 
-                        is HomeContract.ImportantInfoState.Idle -> {
+                        is HomeScreenContract.ImportantInfoState.Idle -> {
                             Text(
                                 text = stringResource(R.string.welcome_back),
                                 fontSize = 24.sp,
@@ -154,7 +154,7 @@ class HomeScreenClass(
             }
 
             when (val state = uiState.notesState) {
-                is HomeContract.NotesState.Success -> {
+                is HomeScreenContract.NotesState.Success -> {
                     items(state.notes.size, key = { state.notes[it].id }) {
                         val note = state.notes[it]
                         NoteItem(
@@ -163,10 +163,10 @@ class HomeScreenClass(
                                 navigator.forward(NoteDetailsScreenClass(note.id))
                             },
                             onDeleteClick = {
-                                viewModel.setEvent(HomeContract.Event.OnNoteDeleted(noteId = note.id))
+                                viewModel.setEvent(HomeScreenContract.Event.OnNoteDeleted(noteId = note.id))
                             },
                             onCopyClick = {
-                                viewModel.setEvent(HomeContract.Event.OnNoteCopied(note = note))
+                                viewModel.setEvent(HomeScreenContract.Event.OnNoteCopied(note = note))
                             },
                             modifier = Modifier
                                 .animateItemPlacement(tween(500))
@@ -174,7 +174,7 @@ class HomeScreenClass(
                     }
                 }
 
-                is HomeContract.NotesState.Idle -> {
+                is HomeScreenContract.NotesState.Idle -> {
                     item {
                         GenericLottieAnimationComponent(R.raw.anim_not_found)
                     }

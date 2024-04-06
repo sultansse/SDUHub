@@ -13,30 +13,30 @@ import kotlinx.coroutines.launch
 class ResourceScreenViewModel(
     private val getNewsUseCase: GetNewsUseCase,
     private val getInternshipsUseCase: GetInternshipsUseCase,
-) : BaseViewModel<ResourceContract.Event, ResourceContract.State, ResourceContract.Effect>() {
+) : BaseViewModel<ResourceScreenContract.Event, ResourceScreenContract.State, ResourceScreenContract.Effect>() {
 
     //    todo remove since its not according to the MVI architecture (single state)
     private val _selectedTab = MutableStateFlow(ResourceTab.INTERNSHIPS.page)
     val selectedTab: StateFlow<Int> = _selectedTab
 
-    override fun setInitialState(): ResourceContract.State {
-        return ResourceContract.State(
-            internshipsState = ResourceContract.InternShipsState.Loading,
-            newsState = ResourceContract.NewsState.Loading
+    override fun setInitialState(): ResourceScreenContract.State {
+        return ResourceScreenContract.State(
+            internshipsState = ResourceScreenContract.InternShipsState.Loading,
+            newsState = ResourceScreenContract.NewsState.Loading
         )
     }
 
-    override fun handleEvent(event: ResourceContract.Event) {
+    override fun handleEvent(event: ResourceScreenContract.Event) {
         when (event) {
-            is ResourceContract.Event.OnFetchInternships -> {
+            is ResourceScreenContract.Event.OnFetchInternships -> {
                 fetchInternships()
             }
 
-            is ResourceContract.Event.OnFetchNews -> {
+            is ResourceScreenContract.Event.OnFetchNews -> {
                 fetchNews()
             }
 
-            is ResourceContract.Event.OnChangeTabIndex -> {
+            is ResourceScreenContract.Event.OnChangeTabIndex -> {
                 _selectedTab.value = event.index
             }
         }
@@ -46,10 +46,10 @@ class ResourceScreenViewModel(
         viewModelScope.launch {
             getNewsUseCase.invoke().fold(
                 onSuccess = { newsList ->
-                    setState { copy(newsState = ResourceContract.NewsState.Success(newsList)) }
+                    setState { copy(newsState = ResourceScreenContract.NewsState.Success(newsList)) }
                 },
                 onFailure = { exception ->
-                    setState { copy(newsState = ResourceContract.NewsState.Error(exception)) }
+                    setState { copy(newsState = ResourceScreenContract.NewsState.Error(exception)) }
                 }
             )
         }
@@ -59,10 +59,10 @@ class ResourceScreenViewModel(
         viewModelScope.launch {
             getInternshipsUseCase.invoke().fold(
                 onSuccess = { internships ->
-                    setState { copy(internshipsState = ResourceContract.InternShipsState.Success(internships)) }
+                    setState { copy(internshipsState = ResourceScreenContract.InternShipsState.Success(internships)) }
                 },
                 onFailure = { exception ->
-                    setState { copy(internshipsState = ResourceContract.InternShipsState.Error(exception)) }
+                    setState { copy(internshipsState = ResourceScreenContract.InternShipsState.Error(exception)) }
                 }
             )
         }

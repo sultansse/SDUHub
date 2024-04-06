@@ -17,17 +17,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.network.backend.Student
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange
+import com.softwareit.sduhub.ui.theme.colorWhite
 
 
 @Composable
@@ -51,13 +52,13 @@ fun ProfileIdCardDialog(
             ) {
                 Text(
                     text = "SDU UNIVERSITY",
-                    color = Color.White,
+                    color = colorWhite,
                     fontFamily = FontFamily(Font(R.font.abhaya_libre_extra_bold)),
                     fontSize = 32.sp,
                     modifier = Modifier.padding(32.dp)
                 )
                 Image(
-                    painter = painterResource(R.drawable.img_sdukz),
+                    painter = rememberAsyncImagePainter(R.drawable.img_sdukz),
                     contentScale = ContentScale.Crop,
                     contentDescription = "Student image",
                     modifier = Modifier.size(160.dp, 200.dp)
@@ -71,7 +72,7 @@ fun ProfileIdCardDialog(
                 )
                 Text(
                     text = student.fullname,
-                    color = Color.White,
+                    color = colorWhite,
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     modifier = Modifier.padding(vertical = 16.dp)
@@ -93,14 +94,14 @@ fun ProfileIdCardDialog(
                 )
                 Text(
                     text = "Жеке нөмірі | ID Number",
-                    color = Color.White,
+                    color = colorWhite,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     fontSize = 16.sp,
                     modifier = Modifier.padding(top = 16.dp, bottom = 4.dp)
                 )
                 Text(
                     text = student.studentId.toString(),
-                    color = Color.White,
+                    color = colorWhite,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     fontSize = 16.sp,
                     modifier = Modifier.padding(bottom = 16.dp)

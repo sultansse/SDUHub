@@ -18,59 +18,59 @@ class HomeScreenViewModel(
     private val deleteNote: DeleteNoteUseCase,
     private val deleteNotes: DeleteNotesUseCase,
     private val getImportantInfo: GetImportantInfoUseCase,
-) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
+) : BaseViewModel<HomeScreenContract.Event, HomeScreenContract.State, HomeScreenContract.Effect>() {
 
     private fun fetchImportantInfo() {
         viewModelScope.launch {
             getImportantInfo()?.let {
-                setState { copy(importantInfoState = HomeContract.ImportantInfoState.Success(it)) }
+                setState { copy(importantInfoState = HomeScreenContract.ImportantInfoState.Success(it)) }
             }
         }
     }
 
-    override fun setInitialState(): HomeContract.State {
-        return HomeContract.State(
-            importantInfoState = HomeContract.ImportantInfoState.Idle,
-            notesState = HomeContract.NotesState.Idle,
+    override fun setInitialState(): HomeScreenContract.State {
+        return HomeScreenContract.State(
+            importantInfoState = HomeScreenContract.ImportantInfoState.Idle,
+            notesState = HomeScreenContract.NotesState.Idle,
         )
     }
 
-    override fun handleEvent(event: HomeContract.Event) {
+    override fun handleEvent(event: HomeScreenContract.Event) {
         when (event) {
-            is HomeContract.Event.OnFetchImportantInfo -> {
+            is HomeScreenContract.Event.OnFetchImportantInfo -> {
                 fetchImportantInfo()
             }
 
-            is HomeContract.Event.OnFetchNotes -> {
+            is HomeScreenContract.Event.OnFetchNotes -> {
                 fetchNotes()
             }
 
-            is HomeContract.Event.OnNoteClicked -> {
+            is HomeScreenContract.Event.OnNoteClicked -> {
                 setEffect {
-                    HomeContract.Effect.ShowError("note is clicked")
+                    HomeScreenContract.Effect.ShowError("note is clicked")
                 }
             }
 
-            is HomeContract.Event.OnNoteAdded -> {
+            is HomeScreenContract.Event.OnNoteAdded -> {
                 addNoteUseCase(event.note)
                 setEffect {
-                    HomeContract.Effect.ShowError("note is added")
+                    HomeScreenContract.Effect.ShowError("note is added")
                 }
             }
 
-            is HomeContract.Event.OnNoteDeleted -> {
+            is HomeScreenContract.Event.OnNoteDeleted -> {
                 deleteNote(event.noteId)
             }
 
-            is HomeContract.Event.OnNoteCopied -> {
+            is HomeScreenContract.Event.OnNoteCopied -> {
                copyNote(event.note)
             }
 
-            is HomeContract.Event.OnNotesDeleted -> {
+            is HomeScreenContract.Event.OnNotesDeleted -> {
                 viewModelScope.launch {
                     deleteNotes.invoke()
                     setState {
-                        copy(notesState = HomeContract.NotesState.Idle)
+                        copy(notesState = HomeScreenContract.NotesState.Idle)
                     }
                 }
             }
@@ -93,9 +93,9 @@ class HomeScreenViewModel(
         viewModelScope.launch {
             getNotes.invoke().collect() {
                 if (it.isEmpty()) {
-                    setState { copy(notesState = HomeContract.NotesState.Idle) }
+                    setState { copy(notesState = HomeScreenContract.NotesState.Idle) }
                 } else {
-                    setState { copy(notesState = HomeContract.NotesState.Success(it)) }
+                    setState { copy(notesState = HomeScreenContract.NotesState.Success(it)) }
                 }
             }
         }

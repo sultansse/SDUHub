@@ -1,29 +1,46 @@
 package com.softwareit.sduhub.ui.screens.profile_screen
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softwareit.sduhub.data.network.backend.Student
-import com.softwareit.sduhub.data.repository.NetworkRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.softwareit.sduhub.core.base.BaseViewModel
+import com.softwareit.sduhub.domain.student_usecase.GetStudentUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProfileScreenViewModel(
-    private val repository: NetworkRepository
-) : ViewModel() {
+    val getStudentUseCase: GetStudentUseCase,
+) : BaseViewModel<ProfileScreenContract.Event, ProfileScreenContract.State, ProfileScreenContract.Effect>() {
 
-    private val _student = MutableStateFlow(
-        Student(
-            fullname = "Name Surname",
-            studentId = 200100100,
-            faculty = "Faculty of Engineering",
+
+    override fun setInitialState(): ProfileScreenContract.State {
+        return ProfileScreenContract.State(
+            profileState = ProfileScreenContract.ProfileState.Idle
         )
-    )
-    val student: StateFlow<Student> = _student
+    }
 
-    init {
+    override fun handleEvent(event: ProfileScreenContract.Event) {
+        when (event) {
+            is ProfileScreenContract.Event.OnAuthUser -> {
+                setState { copy(profileState = ProfileScreenContract.ProfileState.Loading) }
+                fetchProfile()
+            }
+
+            is ProfileScreenContract.Event.OnStudentCardClick -> {
+                setEffect { ProfileScreenContract.Effect.ShowStudentCardDialog(event.student) }
+            }
+        }
+    }
+
+    private fun fetchProfile() {
         viewModelScope.launch {
-//            _student.value = repository.getStudent()
+            delay(2000) // todo remove
+            getStudentUseCase.invoke().fold(
+                onSuccess = {
+                    setState { copy(profileState = ProfileScreenContract.ProfileState.Success(it)) }
+                },
+                onFailure = {
+                    setEffect { ProfileScreenContract.Effect.ShowError(it.message) }
+                }
+            )
         }
     }
 }

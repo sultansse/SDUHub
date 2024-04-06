@@ -2,7 +2,6 @@ package com.softwareit.sduhub.utils.common.presentation
 
 import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,7 +28,7 @@ fun GenericLottieAnimationComponent(
 ) {
     Box(
         contentAlignment = contentAlignment,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
     ) {
         val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(animationResource))
         LottieAnimation(

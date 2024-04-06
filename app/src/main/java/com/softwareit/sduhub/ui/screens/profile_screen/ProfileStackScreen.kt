@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.ui.screens.profile_screen
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +36,8 @@ import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
+import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderIdleComponent
+import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderLoadingComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardDialog
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileScreenListItemComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchComponent
@@ -92,6 +95,8 @@ class ProfileScreenClass(
     @Composable
     fun ProfileScreen(navigator: NavigationContainer<StackState>) {
         val viewModel: ProfileScreenViewModel = koinViewModel()
+        val uiState by viewModel.uiState.collectAsState()
+        val uiEffect by viewModel.effect.collectAsState(initial = ProfileScreenContract.Effect.Nothing)
         val context = LocalContext.current
 
         val profileItems = immutableListOf(
@@ -109,25 +114,50 @@ class ProfileScreenClass(
             ),
         )
 
+        when (val effect = uiEffect) {
+            is ProfileScreenContract.Effect.Nothing -> {
+                // do nothing
+            }
+
+            is ProfileScreenContract.Effect.ShowStudentCardDialog -> {
+                var isDialogVisible by remember { mutableStateOf(true) }
+                AnimatedVisibility(visible = isDialogVisible) {
+                    ProfileIdCardDialog(
+                        student = effect.student,
+                        onClose = { isDialogVisible = false }
+                    )
+                }
+            }
+
+            is ProfileScreenContract.Effect.ShowError -> {
+                Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
             item {
-                var isDialogOpen by remember { mutableStateOf(false) }
-                val student by viewModel.student.collectAsState()
-
-                ProfileHeaderComponent(
-                    student,
-                    onClick = {
-                        isDialogOpen = true
+                when (val state = uiState.profileState) {
+                    is ProfileScreenContract.ProfileState.Idle -> {
+                        ProfileHeaderIdleComponent() {
+                            viewModel.setEvent(ProfileScreenContract.Event.OnAuthUser)
+                        }
                     }
-                )
 
-                if (isDialogOpen) {
-                    ProfileIdCardDialog(
-                        student = student,
-                        onClose = { isDialogOpen = false }
-                    )
+                    is ProfileScreenContract.ProfileState.Loading -> {
+                        ProfileHeaderLoadingComponent()
+                    }
+
+                    is ProfileScreenContract.ProfileState.Success -> {
+                        ProfileHeaderComponent(
+                            student = state.student,
+                            onClick = {
+                                viewModel.setEvent(ProfileScreenContract.Event.OnStudentCardClick(state.student))
+                            }
+                        )
+                    }
+
                 }
             }
 
@@ -141,9 +171,17 @@ class ProfileScreenClass(
                     icon = profileItems[index].icon,
                     onClick = {
                         when (index) {
-                            0 -> { navigator.forward(FaqDetailsScreenClass()) }
-                            1 -> { openTelegramToUser(context, "sduhub") }
-                            2 -> { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() }
+                            0 -> {
+                                navigator.forward(FaqDetailsScreenClass())
+                            }
+
+                            1 -> {
+                                openTelegramToUser(context, "sduhub")
+                            }
+
+                            2 -> {
+                                Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 )

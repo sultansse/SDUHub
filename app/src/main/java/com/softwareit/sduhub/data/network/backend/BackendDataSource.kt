@@ -10,8 +10,8 @@ class BackendDataSource(
 
 //        logic of mapping data safely
 
-    suspend fun getStudent(): Student {
-        return backendApi.getStudent()
+    suspend fun getStudent(): Result<Student> {
+        return apiCall { backendApi.getStudent() }
     }
 
     suspend fun getNews(): Result<List<NewsItemDTO>> {

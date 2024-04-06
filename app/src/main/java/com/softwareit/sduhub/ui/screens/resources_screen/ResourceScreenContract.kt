@@ -5,7 +5,7 @@ import com.softwareit.sduhub.core.base.UiEvent
 import com.softwareit.sduhub.core.base.UiState
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
 
-class ResourceContract {
+class ResourceScreenContract {
 
     sealed class Event : UiEvent {
         data object OnFetchInternships : Event()
