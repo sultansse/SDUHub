@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,10 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -44,9 +46,14 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
+import com.softwareit.sduhub.ui.theme.colorSduBlue
+import com.softwareit.sduhub.ui.theme.colorSduDarkGray
+import com.softwareit.sduhub.ui.theme.colorSduLightBlue
 import com.softwareit.sduhub.ui.theme.colorSduLightGray
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 @Parcelize
 class InternshipDetailsScreenClass(
@@ -80,6 +87,16 @@ class InternshipDetailsScreenClass(
         }
 
         val state by viewModel.uiState.collectAsState()
+
+        val dataStoreUtil: DataStoreUtil = koinInject()
+        val isDarkThemeEnabled by dataStoreUtil.getTheme()
+            .collectAsState(initial = isSystemInDarkTheme())
+
+        val boxBackgroundColor by remember(isDarkThemeEnabled) {
+            if (isDarkThemeEnabled) mutableStateOf(colorSduDarkGray)
+            else mutableStateOf(colorSduLightGray)
+        }
+
 
         when (val internshipState = state.internshipState) {
             is InternshipDetailsContract.InternShipState.Success -> {
@@ -127,7 +144,7 @@ class InternshipDetailsScreenClass(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(color = colorSduLightGray, shape = RoundedCornerShape(8.dp))
+                            .background(color = boxBackgroundColor, shape = RoundedCornerShape(8.dp))
                             .padding(8.dp)
                     ) {
                         Column {
@@ -160,10 +177,15 @@ class InternshipDetailsScreenClass(
                             .padding(vertical = 16.dp)
                     )
 
+                    val contactsTextColor by remember(isDarkThemeEnabled) {
+                        if (isDarkThemeEnabled) mutableStateOf(colorSduLightBlue)
+                        else mutableStateOf(colorSduBlue)
+                    }
+
                     val contactsText = buildAnnotatedString {
                         append("Contacts: ")
                         pushStringAnnotation(tag = "policy", annotation = "https://t.me/sduhub")
-                        withStyle(style = SpanStyle(color = Color.Blue)) {
+                        withStyle(style = SpanStyle(color = contactsTextColor)) {
                             append(internship.contacts)
                         }
                     }
