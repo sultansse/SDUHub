@@ -18,7 +18,7 @@ fun LoadingLottieComponent() {
         modifier = Modifier.fillMaxSize()
     ) {
         val composition by rememberLottieComposition(
-            LottieCompositionSpec.RawRes(R.raw.anim_blue_purple_loading)
+            LottieCompositionSpec.RawRes(R.raw.anim_squares_loading)
         )
         LottieAnimation(
             composition = composition,
