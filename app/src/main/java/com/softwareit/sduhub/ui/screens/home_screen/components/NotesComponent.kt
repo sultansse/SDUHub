@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +40,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.notes.NoteDBO
+import com.softwareit.sduhub.utils.datastore.DataStoreUtil
+import org.koin.compose.koinInject
 
 
 @Composable
@@ -49,6 +52,9 @@ fun NoteItem(
     onCopyClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val dataStoreUtil: DataStoreUtil = koinInject()
+    val isDarkThemeEnabled by dataStoreUtil.getTheme()
+        .collectAsState(initial = isSystemInDarkTheme())
 
     Box(
         modifier = modifier
@@ -60,13 +66,8 @@ fun NoteItem(
             }
     ) {
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.img_bg_note),
-            contentDescription = "background image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.matchParentSize(),
-//            TODO add dark mode support
-            colorFilter = if (isSystemInDarkTheme()) {
+        val imageDarkerFilter = remember(isDarkThemeEnabled) {
+            if (isDarkThemeEnabled) {
                 ColorFilter.tint(
                     color = Color.Black.copy(alpha = 0.5f),
                     blendMode = BlendMode.Darken
@@ -74,6 +75,13 @@ fun NoteItem(
             } else {
                 null
             }
+        }
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.img_bg_note),
+            contentDescription = "background image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.matchParentSize(),
+            colorFilter = imageDarkerFilter,
         )
 
         Column(
