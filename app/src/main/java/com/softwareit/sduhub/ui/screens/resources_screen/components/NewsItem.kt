@@ -28,7 +28,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
-import com.softwareit.sduhub.ui.theme.colorSduBlue
 
 
 @Composable
@@ -65,7 +64,6 @@ internal fun NewsItem(news: NewsItemDTO, onClick: () -> Unit) {
                 textAlign = TextAlign.Start,
                 fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                 fontSize = 18.sp,
-                color = colorSduBlue,
                 overflow = TextOverflow.Ellipsis,
             )
             Text(

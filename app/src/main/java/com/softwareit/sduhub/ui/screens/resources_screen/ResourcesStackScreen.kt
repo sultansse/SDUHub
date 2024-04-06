@@ -26,10 +26,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -55,7 +53,6 @@ import com.softwareit.sduhub.ui.screens.resources_screen.components.ResourceTab
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsScreenClass
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsScreenClass
 import com.softwareit.sduhub.utils.common.presentation.LoadingMarioComponent
-import com.softwareit.sduhub.utils.common.presentation.isScrollingUp
 import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -121,7 +118,8 @@ class ResourcesScreenClass(
             viewModel.setEvent(ResourceContract.Event.OnFetchNews)
         }
 
-        var selectedTabIndex by remember { mutableIntStateOf(ResourceTab.INTERNSHIPS.page) }
+        val selectedTabIndex by viewModel.selectedTab.collectAsState()
+
         val listState = rememberLazyListState()
         val scope = rememberCoroutineScope()
         val showButton by remember {
@@ -143,7 +141,9 @@ class ResourcesScreenClass(
             item {
                 PagerToggle(
                     selectedTabIndex = selectedTabIndex,
-                    onClick = { selectedTabIndex = it },
+                    onClick = {
+                        viewModel.setEvent(ResourceContract.Event.OnChangeTabIndex(it))
+                    },
                 )
             }
 
@@ -183,7 +183,7 @@ class ResourcesScreenClass(
                             NewsItem(
                                 news = currentNews,
                                 onClick = {
-                                    navigator.forward(NewsDetailsScreenClass(currentNews.id))
+                                    navigator.forward(NewsDetailsScreenClass(currentNews.link))
                                 },
                             )
                         }
@@ -196,7 +196,7 @@ class ResourcesScreenClass(
         }
 
         AnimatedVisibility(
-            visible = !listState.isScrollingUp(),
+            visible = showButton,
             enter = fadeIn(),
             exit = fadeOut()
         ) {

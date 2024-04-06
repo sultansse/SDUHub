@@ -4,7 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.BaseViewModel
 import com.softwareit.sduhub.domain.internship_usecase.GetInternshipsUseCase
 import com.softwareit.sduhub.domain.news_usecase.GetNewsUseCase
+import com.softwareit.sduhub.ui.screens.resources_screen.components.ResourceTab
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
@@ -12,6 +15,9 @@ class ResourceScreenViewModel(
     private val getNewsUseCase: GetNewsUseCase,
     private val getInternshipsUseCase: GetInternshipsUseCase,
 ) : BaseViewModel<ResourceContract.Event, ResourceContract.State, ResourceContract.Effect>() {
+
+    private val _selectedTab = MutableStateFlow(ResourceTab.INTERNSHIPS.page)
+    val selectedTab: StateFlow<Int> = _selectedTab
 
     override fun setInitialState(): ResourceContract.State {
         return ResourceContract.State(
@@ -27,6 +33,9 @@ class ResourceScreenViewModel(
             }
             is ResourceContract.Event.OnFetchNews -> {
                 fetchNews()
+            }
+            is ResourceContract.Event.OnChangeTabIndex -> {
+                _selectedTab.value = event.index
             }
         }
     }

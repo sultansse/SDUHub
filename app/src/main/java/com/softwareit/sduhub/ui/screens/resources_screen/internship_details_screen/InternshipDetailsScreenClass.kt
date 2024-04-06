@@ -44,7 +44,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.theme.colorSduGray
+import com.softwareit.sduhub.ui.theme.colorSduLightGray
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -127,7 +127,7 @@ class InternshipDetailsScreenClass(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(color = colorSduGray, shape = RoundedCornerShape(8.dp))
+                            .background(color = colorSduLightGray, shape = RoundedCornerShape(8.dp))
                             .padding(8.dp)
                     ) {
                         Column {

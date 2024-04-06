@@ -29,7 +29,7 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 import com.softwareit.sduhub.ui.theme.colorBlack
 import com.softwareit.sduhub.ui.theme.colorSduBlue
-import com.softwareit.sduhub.ui.theme.colorSduGray
+import com.softwareit.sduhub.ui.theme.colorSduLightGray
 import okhttp3.internal.immutableListOf
 
 
@@ -39,11 +39,13 @@ internal fun InternshipsItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .background(colorSduGray, RoundedCornerShape(12.dp))
+            .background(colorSduLightGray, RoundedCornerShape(12.dp))
             .border(
                 width = 2.dp,
                 color = colorSduBlue,
