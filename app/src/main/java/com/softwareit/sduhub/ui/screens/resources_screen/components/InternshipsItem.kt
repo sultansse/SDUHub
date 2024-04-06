@@ -126,7 +126,7 @@ internal fun InternshipsItem(
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier
                             .border(
-                                width = 0.1.dp,
+                                width = 0.5.dp,
                                 color = boxBorderColor,
                                 shape = RoundedCornerShape(4.dp)
                             )
@@ -137,7 +137,7 @@ internal fun InternshipsItem(
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier
                             .border(
-                                width = 0.1.dp,
+                                width = 0.5.dp,
                                 color = boxBorderColor,
                                 shape = RoundedCornerShape(4.dp)
                             )
