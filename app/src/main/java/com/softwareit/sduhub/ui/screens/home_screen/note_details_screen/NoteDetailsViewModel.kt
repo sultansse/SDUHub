@@ -1,12 +1,11 @@
 package com.softwareit.sduhub.ui.screens.home_screen.note_details_screen
 
 import androidx.lifecycle.viewModelScope
-import com.softwareit.sduhub.core.BaseViewModel
+import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDBO
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import com.softwareit.sduhub.utils.getFormattedTime
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NoteDetailsViewModel(
@@ -48,7 +47,7 @@ class NoteDetailsViewModel(
     }
 
     private fun fetchNote(noteId: Int?) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             when (noteId) {
                 null -> {
                     setState { copy(noteState = NoteDetailsContract.NoteState.NoteFound) }
@@ -74,14 +73,14 @@ class NoteDetailsViewModel(
     private fun deleteNote(noteId: Int) {
 
         if (noteId != NEW_NOTE_ID) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 notesRepository.deleteNote(noteId)
             }
         }
     }
 
     private fun saveNote() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             notesRepository.upsertNote(note)
         }
     }

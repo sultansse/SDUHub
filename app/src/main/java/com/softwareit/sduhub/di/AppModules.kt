@@ -1,7 +1,9 @@
 package com.softwareit.sduhub.di
 
 import com.google.firebase.database.FirebaseDatabase
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
+import com.softwareit.sduhub.data.network.backend.BackendService
 import com.softwareit.sduhub.data.network.firebase.FirebaseDataSource
 import com.softwareit.sduhub.data.repository.FaqRepository
 import com.softwareit.sduhub.data.repository.FaqRepositoryImpl
@@ -25,14 +27,14 @@ import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqDetailsView
 import com.softwareit.sduhub.ui.screens.resources_screen.ResourceScreenViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsViewModel
-import com.softwareit.sduhub.utils.datastore.DataStoreUtil
+import com.softwareit.sduhub.utils.Constants.Companion.BASE_URL
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val databaseModule = module {
     single { provideAppDatabase(context = androidContext()) }
-    single { provideFaqDao(appDatabase = get())}
+    single { provideFaqDao(appDatabase = get()) }
     single { provideNoteDao(appDatabase = get()) }
 
     single { DataStoreUtil(context = androidContext()) }
@@ -45,8 +47,17 @@ val networkModule = module {
     single { FirebaseDataSource(database = get()) }
 
     single { provideHttpClient(context = androidContext()) }
-    single { provideRetrofit(get()) }
-    single { provideBackendService(get()) }
+    single {
+        provideRetrofit(
+            moshi = get(),
+            okHttpClient = get(),
+            baseUrl = BASE_URL,
+        )
+    }
+    factory {
+        createService<BackendService>(get())
+    }
+    single { provideMoshi() }
 }
 
 

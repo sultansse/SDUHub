@@ -39,8 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.data.local.notes.NoteDBO
-import com.softwareit.sduhub.utils.datastore.DataStoreUtil
 import org.koin.compose.koinInject
 
 

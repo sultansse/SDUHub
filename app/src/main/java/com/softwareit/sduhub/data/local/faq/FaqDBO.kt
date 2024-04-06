@@ -3,9 +3,9 @@ package com.softwareit.sduhub.data.local.faq
 import androidx.compose.runtime.Stable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.softwareit.sduhub.core.network.Mappable
 import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
 import com.softwareit.sduhub.utils.Constants.Companion.FAQ_TABLE
-import com.softwareit.sduhub.utils.Mappable
 
 @Entity(tableName = FAQ_TABLE)
 @Stable

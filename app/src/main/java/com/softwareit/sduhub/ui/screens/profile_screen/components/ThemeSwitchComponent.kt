@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.utils.datastore.DataStoreUtil
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 

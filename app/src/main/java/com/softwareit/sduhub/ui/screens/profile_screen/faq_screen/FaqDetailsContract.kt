@@ -1,8 +1,8 @@
 package com.softwareit.sduhub.ui.screens.profile_screen.faq_screen
 
-import com.softwareit.sduhub.core.UiEffect
-import com.softwareit.sduhub.core.UiEvent
-import com.softwareit.sduhub.core.UiState
+import com.softwareit.sduhub.core.base.UiEffect
+import com.softwareit.sduhub.core.base.UiEvent
+import com.softwareit.sduhub.core.base.UiState
 import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
 
 class FaqDetailsContract {

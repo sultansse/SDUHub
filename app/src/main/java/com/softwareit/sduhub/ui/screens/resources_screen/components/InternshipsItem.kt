@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
 import com.softwareit.sduhub.ui.theme.colorSduLightGray
-import com.softwareit.sduhub.utils.datastore.DataStoreUtil
 import okhttp3.internal.immutableListOf
 import org.koin.compose.koinInject
 

@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.core
+package com.softwareit.sduhub.core.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -6,5 +6,5 @@ import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 class GetInternshipsUseCase(
     private val repository: NetworkRepository,
 ) {
-    suspend operator fun invoke(): List<InternshipItemDTO> = repository.getInternships()
+    suspend operator fun invoke(): Result<List<InternshipItemDTO>> = repository.getInternships()
 }

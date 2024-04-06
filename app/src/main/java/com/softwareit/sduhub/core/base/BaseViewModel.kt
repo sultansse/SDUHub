@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.core
+package com.softwareit.sduhub.core.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

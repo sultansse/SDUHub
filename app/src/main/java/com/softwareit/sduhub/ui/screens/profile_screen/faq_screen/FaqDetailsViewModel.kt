@@ -1,7 +1,7 @@
 package com.softwareit.sduhub.ui.screens.profile_screen.faq_screen
 
 import androidx.lifecycle.viewModelScope
-import com.softwareit.sduhub.core.BaseViewModel
+import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
 import com.softwareit.sduhub.domain.faq_usecase.GetFaqItemsUseCase
 import kotlinx.coroutines.Dispatchers
@@ -112,7 +112,6 @@ class FaqDetailsViewModel(
                     "How can I find internships?",
                     "You can find internships by going to the Internships tab.",
                 ),
-
             )
             setState { copy(faqState = FaqDetailsContract.FaqState.Fetched(faqItems))}
         }

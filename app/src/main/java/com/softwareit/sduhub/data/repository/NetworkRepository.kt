@@ -13,11 +13,11 @@ interface NetworkRepository {
 
     suspend fun getImportantInfo(): ImportantInfoDTO?
 
-    suspend fun getInternships(): List<InternshipItemDTO>
+    suspend fun getInternships(): Result<List<InternshipItemDTO>>
 
     suspend fun getSpecificInternship(id: Int): InternshipItemDTO
 
-    suspend fun getNews(): List<NewsItemDTO>
+    suspend fun getNews(): Result<List<NewsItemDTO>>
 
     suspend fun getNewsById(id: Int): NewsItemDTO
 }
@@ -36,7 +36,7 @@ class NetworkRepositoryImpl(
         return firebaseDataSource.getImportantInfo()
     }
 
-    override suspend fun getInternships(): List<InternshipItemDTO> {
+    override suspend fun getInternships(): Result<List<InternshipItemDTO>> {
         return backendDataSource.getInternships()
     }
 
@@ -44,7 +44,16 @@ class NetworkRepositoryImpl(
         return backendDataSource.getInternshipById(id)
     }
 
-    override suspend fun getNews(): List<NewsItemDTO> {
+    override suspend fun getNews(): Result<List<NewsItemDTO>> {
+//        logic of caching and converting Result to data
+//        when (val result = backendDataSource.getNews()) {
+//            is Result.Companion.S -> {
+//                return save to local, return result by strategy (ignoreCache, invalidateCache, cacheOnly, etc.)
+//            }
+//            is Result.Error -> {
+//                return local result
+//            }
+//        }
         return backendDataSource.getNews()
     }
 

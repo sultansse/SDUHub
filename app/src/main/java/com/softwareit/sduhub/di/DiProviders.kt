@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.softwareit.sduhub.data.local.LocalDatabase
-import com.softwareit.sduhub.data.network.backend.BackendService
 import com.softwareit.sduhub.utils.Constants.Companion.APPLICATION_DATABASE
-import com.softwareit.sduhub.utils.Constants.Companion.BASE_URL
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -25,17 +25,25 @@ fun provideAppDatabase(context: Context): LocalDatabase {
 
 //network
 fun provideRetrofit(
+    moshi: Moshi,
     okHttpClient: OkHttpClient,
+    baseUrl: String
 ): Retrofit {
+    val factory = MoshiConverterFactory.create(moshi)
+    val factoryNulls = factory.withNullSerialization()
+
     return Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(baseUrl)
         .client(okHttpClient)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(factoryNulls)
         .build()
 }
 
-fun provideBackendService(retrofit: Retrofit): BackendService =
-    retrofit.create(BackendService::class.java)
+fun provideMoshi(): Moshi {
+    return Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+}
 
 fun provideHttpClient(context: Context): OkHttpClient {
     return OkHttpClient
@@ -46,4 +54,9 @@ fun provideHttpClient(context: Context): OkHttpClient {
         .pingInterval(3, TimeUnit.SECONDS)
         .addInterceptor(ChuckerInterceptor(context))
         .build()
+}
+
+
+inline fun <reified T> createService(retrofit: Retrofit): T {
+    return retrofit.create(T::class.java)
 }

@@ -82,11 +82,11 @@ class NoteDetailsScreenClass(
 
         when (val state = uiState.noteState) {
             is NoteDetailsContract.NoteState.NoteFound -> {
-                val composition = rememberLottieComposition(
+                val composition by rememberLottieComposition(
                     LottieCompositionSpec.RawRes(R.raw.anim_not_found)
                 )
                 LottieAnimation(
-                    composition = composition.value,
+                    composition = composition,
                     iterations = Int.MAX_VALUE,
                     alignment = Alignment.Center
                 )

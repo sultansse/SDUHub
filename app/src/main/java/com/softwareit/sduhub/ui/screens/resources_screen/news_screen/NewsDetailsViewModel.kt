@@ -1,6 +1,6 @@
 package com.softwareit.sduhub.ui.screens.resources_screen.news_screen
 
-import com.softwareit.sduhub.core.BaseViewModel
+import com.softwareit.sduhub.core.base.BaseViewModel
 
 
 class NewsDetailsViewModel : BaseViewModel<NewsDetailsContract.Event, NewsDetailsContract.State, NewsDetailsContract.Effect>() {

@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,10 +31,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.Screen
@@ -52,7 +57,8 @@ import com.softwareit.sduhub.ui.screens.resources_screen.components.Recommended
 import com.softwareit.sduhub.ui.screens.resources_screen.components.ResourceTab
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsScreenClass
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsScreenClass
-import com.softwareit.sduhub.utils.common.presentation.LoadingMarioComponent
+import com.softwareit.sduhub.utils.common.data.network.getLocalMessage
+import com.softwareit.sduhub.utils.common.presentation.LoadingLottieComponent
 import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -166,8 +172,30 @@ class ResourcesScreenClass(
                         }
                     }
 
-                    is ResourceContract.InternShipsState.Idle -> {
-                        item { LoadingMarioComponent() }
+                    is ResourceContract.InternShipsState.Loading -> {
+                        item { LoadingLottieComponent() }
+                    }
+
+                    is ResourceContract.InternShipsState.Error -> {
+                        item {
+                            val composition by rememberLottieComposition(
+                                LottieCompositionSpec.RawRes(R.raw.anim_error_occured)
+                            )
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Text(
+                                    text = state.throwable.getLocalMessage(LocalContext.current),
+                                    fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                                )
+                                LottieAnimation(
+                                    composition = composition,
+                                    iterations = Int.MAX_VALUE,
+                                    alignment = Alignment.TopCenter,
+                                )
+                            }
+                        }
+
                     }
                 }
 
@@ -189,8 +217,30 @@ class ResourcesScreenClass(
                         }
                     }
 
-                    is ResourceContract.NewsState.Idle -> {
-                        item { LoadingMarioComponent() }
+                    is ResourceContract.NewsState.Loading -> {
+                        item { LoadingLottieComponent() }
+                    }
+
+                    is ResourceContract.NewsState.Error -> {
+                        item {
+                            val composition by rememberLottieComposition(
+                                LottieCompositionSpec.RawRes(R.raw.anim_error_occured)
+                            )
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Text(
+                                    text = state.throwable.getLocalMessage(LocalContext.current),
+                                    fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                                )
+                                LottieAnimation(
+                                    composition = composition,
+                                    iterations = Int.MAX_VALUE,
+                                    alignment = Alignment.TopCenter,
+                                )
+                            }
+                        }
+
                     }
                 }
         }
@@ -200,9 +250,7 @@ class ResourcesScreenClass(
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            GoToTop {
-                scope.launch { listState.animateScrollToItem(0) }
-            }
+            GoToTop { scope.launch { listState.animateScrollToItem(0) } }
         }
     }
 
@@ -218,7 +266,7 @@ class ResourcesScreenClass(
             ) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowUp,
-                    contentDescription = "go to top"
+                    contentDescription = "Scroll to top"
                 )
             }
         }

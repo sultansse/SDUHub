@@ -32,9 +32,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorWhite
-import com.softwareit.sduhub.utils.datastore.DataStoreUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import org.koin.compose.koinInject

@@ -18,4 +18,8 @@
     <string name="faq">ЧАВО</string>
     <string name="recommended">Рекомендации</string>
     <string name="about_us">О приложении</string>
+
+    <string name="failed_to_parse_json">Не удается прочитать данные, поскольку они представлены в неправильном формате</string>
+    <string name="failed_to_connect_to_server">Не удалось подключиться к серверу. попробуйте еще раз</string>
+    <string name="server_error">Ошибка сервера. попробуйте еще раз</string>
 </resources>

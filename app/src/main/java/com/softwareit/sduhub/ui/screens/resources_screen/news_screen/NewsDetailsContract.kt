@@ -1,8 +1,8 @@
 package com.softwareit.sduhub.ui.screens.resources_screen.news_screen
 
-import com.softwareit.sduhub.core.UiEffect
-import com.softwareit.sduhub.core.UiEvent
-import com.softwareit.sduhub.core.UiState
+import com.softwareit.sduhub.core.base.UiEffect
+import com.softwareit.sduhub.core.base.UiEvent
+import com.softwareit.sduhub.core.base.UiState
 import com.softwareit.sduhub.data.network.backend.NewsItemDTO
 
 class NewsDetailsContract {

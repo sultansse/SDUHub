@@ -1,7 +1,7 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.lifecycle.viewModelScope
-import com.softwareit.sduhub.core.BaseViewModel
+import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.data.local.notes.NoteDBO
 import com.softwareit.sduhub.domain.important_info_usecase.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
@@ -9,7 +9,6 @@ import com.softwareit.sduhub.domain.notes_usecase.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.GetNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
 import com.softwareit.sduhub.utils.getFormattedTime
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -22,7 +21,7 @@ class HomeScreenViewModel(
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
 
     private fun fetchImportantInfo() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getImportantInfo()?.let {
                 setState { copy(importantInfoState = HomeContract.ImportantInfoState.Success(it)) }
             }
@@ -68,7 +67,7 @@ class HomeScreenViewModel(
             }
 
             is HomeContract.Event.OnNotesDeleted -> {
-                viewModelScope.launch(Dispatchers.IO) {
+                viewModelScope.launch {
                     deleteNotes.invoke()
                     setState {
                         copy(notesState = HomeContract.NotesState.Idle)
@@ -79,19 +78,19 @@ class HomeScreenViewModel(
     }
 
     private fun copyNote(note: NoteDBO) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             upsertNote.invoke(note.copy(id = 0, title = "${note.title} (Copy)", updatedAt = getFormattedTime()))
         }
     }
 
     private fun addNoteUseCase(note: NoteDBO) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             upsertNote.invoke(note)
         }
     }
 
     private fun fetchNotes() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getNotes.invoke().collect() {
                 if (it.isEmpty()) {
                     setState { copy(notesState = HomeContract.NotesState.Idle) }
@@ -103,7 +102,7 @@ class HomeScreenViewModel(
     }
 
     private fun deleteNote(noteId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             deleteNote.invoke(noteId)
         }
     }

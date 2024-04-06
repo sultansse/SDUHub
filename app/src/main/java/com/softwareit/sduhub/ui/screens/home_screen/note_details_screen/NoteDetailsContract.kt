@@ -1,8 +1,8 @@
 package com.softwareit.sduhub.ui.screens.home_screen.note_details_screen
 
-import com.softwareit.sduhub.core.UiEffect
-import com.softwareit.sduhub.core.UiEvent
-import com.softwareit.sduhub.core.UiState
+import com.softwareit.sduhub.core.base.UiEffect
+import com.softwareit.sduhub.core.base.UiEvent
+import com.softwareit.sduhub.core.base.UiState
 import com.softwareit.sduhub.data.local.notes.NoteDBO
 
 class NoteDetailsContract {

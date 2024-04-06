@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.utils.datastore
+package com.softwareit.sduhub.data.local.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

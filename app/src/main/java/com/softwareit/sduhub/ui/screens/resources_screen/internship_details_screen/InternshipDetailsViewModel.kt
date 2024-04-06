@@ -1,9 +1,8 @@
 package com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen
 
 import androidx.lifecycle.viewModelScope
-import com.softwareit.sduhub.core.BaseViewModel
+import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.domain.internship_usecase.GetSpecificInternshipUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -26,7 +25,7 @@ class InternshipDetailsViewModel(
     }
 
     private fun fetchCurrentInternship(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getSpecificInternship.invoke(id).let {
                 setState { copy(internshipState = InternshipDetailsContract.InternShipState.Success(it)) }
             }

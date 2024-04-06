@@ -7,7 +7,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.softwareit.sduhub.utils.datastore.DataStoreUtil
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import org.koin.compose.koinInject
 
 
