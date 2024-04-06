@@ -8,7 +8,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class App: Application() {
+class SduHubApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -25,7 +25,7 @@ class App: Application() {
     private fun initKoin() {
         startKoin {
             androidLogger()
-            androidContext(this@App)
+            androidContext(this@SduHubApp)
             modules(appModule)
         }
     }

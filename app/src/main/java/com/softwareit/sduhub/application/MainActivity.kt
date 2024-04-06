@@ -25,7 +25,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.softwareit.sduhub.navigation.MainMultiScreen
 import com.softwareit.sduhub.navigation.MainStackScreen
-import com.softwareit.sduhub.ui.theme.SDUHubTheme
+import com.softwareit.sduhub.ui.theme.SduHubTheme
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContent {
-            SDUHubTheme {
+            SduHubTheme {
                 Surface {
                     rootScreen?.Content()
                 }

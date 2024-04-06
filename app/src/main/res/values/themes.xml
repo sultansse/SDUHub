@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.SDUHubTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.SduHubTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Status bar color. -->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
-    <style name="Theme.SDUHubTheme.MySplash" parent="Theme.SplashScreen">
+    <style name="Theme.SduHubTheme.MySplash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/color_sdu_purple</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/img_sduhub</item>
-        <item name="postSplashScreenTheme">@style/Theme.SDUHubTheme</item>
+        <item name="postSplashScreenTheme">@style/Theme.SduHubTheme</item>
     </style>
 
 </resources>

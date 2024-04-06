@@ -77,7 +77,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun SDUHubTheme(
+fun SduHubTheme(
     content: @Composable() () -> Unit
 ) {
     val dataStoreUtil: DataStoreUtil = koinInject()
