@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.utils.common.presentation
 
+import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -12,18 +13,29 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.softwareit.sduhub.R
 
 @Composable
-fun LoadingLottieComponent() {
+fun LoadingLottieComponent(@RawRes loadingAnimation: Int = R.raw.anim_squares_loading) {
+    GenericLottieAnimationComponent(
+        animationResource = loadingAnimation,
+    )
+}
+
+@Composable
+fun GenericLottieAnimationComponent(
+    @RawRes animationResource: Int,
+    modifier: Modifier = Modifier,
+    iterations: Int = Int.MAX_VALUE,
+    contentAlignment: Alignment = Alignment.Center,
+    lottieAlignment: Alignment = Alignment.TopCenter
+) {
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        contentAlignment = contentAlignment,
+        modifier = modifier.fillMaxSize()
     ) {
-        val composition by rememberLottieComposition(
-            LottieCompositionSpec.RawRes(R.raw.anim_squares_loading)
-        )
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(animationResource))
         LottieAnimation(
             composition = composition,
-            iterations = Int.MAX_VALUE,
-            alignment = Alignment.TopCenter
+            iterations = iterations,
+            alignment = lottieAlignment
         )
     }
 }

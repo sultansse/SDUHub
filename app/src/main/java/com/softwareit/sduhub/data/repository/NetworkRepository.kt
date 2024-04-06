@@ -15,18 +15,22 @@ interface NetworkRepository {
 
     suspend fun getInternships(): Result<List<InternshipItemDTO>>
 
-    suspend fun getSpecificInternship(id: Int): InternshipItemDTO
+    suspend fun getSpecificInternship(id: Int): Result<InternshipItemDTO>
 
     suspend fun getNews(): Result<List<NewsItemDTO>>
 
     suspend fun getNewsById(id: Int): NewsItemDTO
 }
 
-//its better to have different repositories for each data source
+/**
+ * Repository is responsible for single source of truth and caching
+ */
 class NetworkRepositoryImpl(
     private val firebaseDataSource: FirebaseDataSource,
     private val backendDataSource: BackendDataSource,
 ) : NetworkRepository {
+
+//        logic of caching and converting Result to data
 
     override suspend fun getStudent(): Student {
         return backendDataSource.getStudent()
@@ -40,12 +44,12 @@ class NetworkRepositoryImpl(
         return backendDataSource.getInternships()
     }
 
-    override suspend fun getSpecificInternship(id: Int): InternshipItemDTO {
+    override suspend fun getSpecificInternship(id: Int): Result<InternshipItemDTO> {
         return backendDataSource.getInternshipById(id)
     }
 
     override suspend fun getNews(): Result<List<NewsItemDTO>> {
-//        logic of caching and converting Result to data
+
 //        when (val result = backendDataSource.getNews()) {
 //            is Result.Companion.S -> {
 //                return save to local, return result by strategy (ignoreCache, invalidateCache, cacheOnly, etc.)

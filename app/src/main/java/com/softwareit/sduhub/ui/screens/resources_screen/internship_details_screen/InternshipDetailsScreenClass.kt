@@ -13,7 +13,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -51,6 +51,9 @@ import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
 import com.softwareit.sduhub.ui.theme.colorSduLightBlue
 import com.softwareit.sduhub.ui.theme.colorSduLightGray
+import com.softwareit.sduhub.utils.common.data.network.getLocalMessage
+import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
+import com.softwareit.sduhub.utils.common.presentation.LoadingLottieComponent
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -98,9 +101,9 @@ class InternshipDetailsScreenClass(
         }
 
 
-        when (val internshipState = state.internshipState) {
+        when (val state = state.internshipState) {
             is InternshipDetailsContract.InternShipState.Success -> {
-                val internship = internshipState.internship
+                val internship = state.internship
                 Column(
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     modifier = Modifier
@@ -144,7 +147,10 @@ class InternshipDetailsScreenClass(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(color = boxBackgroundColor, shape = RoundedCornerShape(8.dp))
+                            .background(
+                                color = boxBackgroundColor,
+                                shape = RoundedCornerShape(8.dp)
+                            )
                             .padding(8.dp)
                     ) {
                         Column {
@@ -198,15 +204,33 @@ class InternshipDetailsScreenClass(
                 }
             }
 
-            is InternshipDetailsContract.InternShipState.Idle -> {
-                // Loading
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxWidth()
+            is InternshipDetailsContract.InternShipState.Loading -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 64.dp)
                 ) {
-                    CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                    Text(
+                        text = "Loading...",
+                        fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                    )
+                    LoadingLottieComponent(R.raw.anim_cat_loading)
                 }
             }
+
+            is InternshipDetailsContract.InternShipState.Error -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(top = 64.dp)
+                ) {
+                    Text(
+                        text = state.exception.getLocalMessage(LocalContext.current),
+                        fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                    )
+                    GenericLottieAnimationComponent(R.raw.anim_error_occured)
+                }
+            }
+
         }
     }
 

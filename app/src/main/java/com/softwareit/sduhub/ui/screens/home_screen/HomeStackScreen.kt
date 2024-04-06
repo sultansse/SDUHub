@@ -22,16 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.Screen
@@ -49,6 +45,7 @@ import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
 import com.softwareit.sduhub.ui.screens.home_screen.note_details_screen.NoteDetailsScreenClass
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
+import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -179,14 +176,7 @@ class HomeScreenClass(
 
                 is HomeContract.NotesState.Idle -> {
                     item {
-                        val composition by rememberLottieComposition(
-                            LottieCompositionSpec.RawRes(R.raw.anim_not_found)
-                        )
-                        LottieAnimation(
-                            composition = composition,
-                            iterations = Int.MAX_VALUE,
-                            alignment = Alignment.TopCenter,
-                        )
+                        GenericLottieAnimationComponent(R.raw.anim_not_found)
                     }
                 }
             }

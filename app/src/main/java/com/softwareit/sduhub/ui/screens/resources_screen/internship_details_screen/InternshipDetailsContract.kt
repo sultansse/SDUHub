@@ -20,8 +20,9 @@ class InternshipDetailsContract {
     }
 
     sealed class InternShipState {
-        data object Idle : InternShipState()
+        data object Loading : InternShipState()
         data class Success(val internship: InternshipItemDTO) : InternShipState()
+        data class Error(val exception: Throwable) : InternShipState()
     }
 
 }

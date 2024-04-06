@@ -7,18 +7,17 @@ class BackendDataSource(
     private val backendApi: BackendService
 ) : CoroutineCaller {
 
+//        logic of mapping data safely
+
     suspend fun getStudent(): Student {
-//        use safeApiCall
         return backendApi.getStudent()
     }
 
     suspend fun getNews(): Result<List<NewsItemDTO>> {
-//        logic of mapping data safely
         return apiCall { backendApi.getNews() }
     }
 
     suspend fun getNewsById(id: Int): NewsItemDTO {
-//        use safeApiCall
         return backendApi.getNewsById(id)
     }
 
@@ -26,7 +25,7 @@ class BackendDataSource(
         return apiCall { backendApi.getInternships() }
     }
 
-    suspend fun getInternshipById(id: Int): InternshipItemDTO {
-        return backendApi.getInternshipById(id)
+    suspend fun getInternshipById(id: Int): Result<InternshipItemDTO> {
+        return apiCall { backendApi.getInternshipById(id) }
     }
 }

@@ -36,9 +36,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.Screen
@@ -58,6 +55,7 @@ import com.softwareit.sduhub.ui.screens.resources_screen.components.ResourceTab
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsScreenClass
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsScreenClass
 import com.softwareit.sduhub.utils.common.data.network.getLocalMessage
+import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
 import com.softwareit.sduhub.utils.common.presentation.LoadingLottieComponent
 import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.launch
@@ -178,9 +176,6 @@ class ResourcesScreenClass(
 
                     is ResourceContract.InternShipsState.Error -> {
                         item {
-                            val composition by rememberLottieComposition(
-                                LottieCompositionSpec.RawRes(R.raw.anim_error_occured)
-                            )
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
@@ -188,11 +183,7 @@ class ResourcesScreenClass(
                                     text = state.throwable.getLocalMessage(LocalContext.current),
                                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                                 )
-                                LottieAnimation(
-                                    composition = composition,
-                                    iterations = Int.MAX_VALUE,
-                                    alignment = Alignment.TopCenter,
-                                )
+                                GenericLottieAnimationComponent(R.raw.anim_error_occured)
                             }
                         }
 
@@ -223,9 +214,6 @@ class ResourcesScreenClass(
 
                     is ResourceContract.NewsState.Error -> {
                         item {
-                            val composition by rememberLottieComposition(
-                                LottieCompositionSpec.RawRes(R.raw.anim_error_occured)
-                            )
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
@@ -233,11 +221,7 @@ class ResourcesScreenClass(
                                     text = state.throwable.getLocalMessage(LocalContext.current),
                                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                                 )
-                                LottieAnimation(
-                                    composition = composition,
-                                    iterations = Int.MAX_VALUE,
-                                    alignment = Alignment.TopCenter,
-                                )
+                                GenericLottieAnimationComponent(R.raw.anim_error_occured)
                             }
                         }
 

@@ -12,7 +12,7 @@ class InternshipDetailsViewModel(
 
     override fun setInitialState(): InternshipDetailsContract.State {
         return InternshipDetailsContract.State(
-            internshipState = InternshipDetailsContract.InternShipState.Idle,
+            internshipState = InternshipDetailsContract.InternShipState.Loading,
         )
     }
 
@@ -26,9 +26,14 @@ class InternshipDetailsViewModel(
 
     private fun fetchCurrentInternship(id: Int) {
         viewModelScope.launch {
-            getSpecificInternship.invoke(id).let {
-                setState { copy(internshipState = InternshipDetailsContract.InternShipState.Success(it)) }
-            }
+            getSpecificInternship.invoke(id).fold(
+                onSuccess = { internship ->
+                    setState { copy(internshipState = InternshipDetailsContract.InternShipState.Success(internship)) }
+                },
+                onFailure = { exception ->
+                    setState { copy(internshipState = InternshipDetailsContract.InternShipState.Error(exception)) }
+                }
+            )
         }
     }
 
