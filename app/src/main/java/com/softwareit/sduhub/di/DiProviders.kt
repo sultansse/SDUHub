@@ -3,7 +3,7 @@ package com.softwareit.sduhub.di
 import android.content.Context
 import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.softwareit.sduhub.data.local.LocalDatabase
+import com.softwareit.sduhub.data.local.room.LocalDatabase
 import com.softwareit.sduhub.utils.Constants.Companion.APPLICATION_DATABASE
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit
 
 //db
 fun provideNoteDao(appDatabase: LocalDatabase) = appDatabase.noteDao()
-fun provideFaqDao(appDatabase: LocalDatabase) = appDatabase.faqDao()
 fun provideAppDatabase(context: Context): LocalDatabase {
     return Room.databaseBuilder(
         context,

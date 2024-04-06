@@ -1,7 +1,7 @@
 package com.softwareit.sduhub.data.repository
 
-import com.softwareit.sduhub.data.local.notes.NoteDBO
-import com.softwareit.sduhub.data.local.notes.NoteDao
+import com.softwareit.sduhub.data.local.room.notes.NoteDBO
+import com.softwareit.sduhub.data.local.room.notes.NoteDao
 import kotlinx.coroutines.flow.Flow
 
 

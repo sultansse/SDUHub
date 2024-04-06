@@ -1,20 +1,20 @@
 package com.softwareit.sduhub.data.repository
 
-import com.softwareit.sduhub.data.local.faq.FaqDBO
-import com.softwareit.sduhub.data.local.faq.FaqDao
-import kotlinx.coroutines.flow.Flow
+import com.softwareit.sduhub.data.network.backend.BackendDataSource
+import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
 
 
 interface FaqRepository {
 
-    fun getFaqItems(): Flow<List<FaqDBO>>
+    suspend fun getFaqItems(): Result<List<FaqDTO>>
 }
 
+
 class FaqRepositoryImpl(
-    private val faqDao: FaqDao,
+    val backendDataSource: BackendDataSource
 ) : FaqRepository {
 
-    override fun getFaqItems(): Flow<List<FaqDBO>> {
-        return faqDao.getFaqItems()
+    override suspend fun getFaqItems(): Result<List<FaqDTO>> {
+        return backendDataSource.getFaqItems()
     }
 }

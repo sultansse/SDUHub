@@ -25,12 +25,12 @@ class ResourceContract {
     sealed class InternShipsState {
         data object Loading : InternShipsState()
         data class Success(val internships: List<InternshipItemDTO>) : InternShipsState()
-        data class Error(val throwable: Throwable) : InternShipsState()
+        data class Error(val exception: Throwable) : InternShipsState()
     }
 
     sealed class NewsState {
         data object Loading : NewsState()
         data class Success(val news: List<NewsItemDTO>) : NewsState()
-        data class Error(val throwable: Throwable) : NewsState()
+        data class Error(val exception: Throwable) : NewsState()
     }
 }

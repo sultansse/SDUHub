@@ -2,7 +2,7 @@ package com.softwareit.sduhub.ui.screens.home_screen
 
 import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.base.BaseViewModel
-import com.softwareit.sduhub.data.local.notes.NoteDBO
+import com.softwareit.sduhub.data.local.room.notes.NoteDBO
 import com.softwareit.sduhub.domain.important_info_usecase.GetImportantInfoUseCase
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNoteUseCase
 import com.softwareit.sduhub.domain.notes_usecase.DeleteNotesUseCase

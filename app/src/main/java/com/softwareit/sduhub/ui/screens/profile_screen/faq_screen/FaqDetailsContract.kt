@@ -20,7 +20,8 @@ class FaqDetailsContract {
     }
 
     sealed class FaqState {
-        data object Idle : FaqState()
-        data class Fetched(val faqItems: List<FaqDTO>) : FaqState()
+        data object Loading : FaqState()
+        data class Success(val faqItems: List<FaqDTO>) : FaqState()
+        data class Error(val exception: Throwable) : FaqState()
     }
 }

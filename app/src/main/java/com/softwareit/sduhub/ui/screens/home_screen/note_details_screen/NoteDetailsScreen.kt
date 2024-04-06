@@ -58,7 +58,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.data.local.notes.NoteDBO
+import com.softwareit.sduhub.data.local.room.notes.NoteDBO
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 

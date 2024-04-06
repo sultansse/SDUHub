@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.data.local.notes
+package com.softwareit.sduhub.data.local.room.notes
 
 import androidx.compose.runtime.Stable
 import androidx.room.Entity

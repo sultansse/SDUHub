@@ -2,7 +2,7 @@ package com.softwareit.sduhub.ui.screens.home_screen.note_details_screen
 
 import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.base.BaseViewModel
-import com.softwareit.sduhub.data.local.notes.NoteDBO
+import com.softwareit.sduhub.data.local.room.notes.NoteDBO
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import com.softwareit.sduhub.utils.getFormattedTime

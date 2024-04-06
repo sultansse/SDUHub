@@ -180,7 +180,7 @@ class ResourcesScreenClass(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text(
-                                    text = state.throwable.getLocalMessage(LocalContext.current),
+                                    text = state.exception.getLocalMessage(LocalContext.current),
                                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                                 )
                                 GenericLottieAnimationComponent(R.raw.anim_error_occured)
@@ -218,7 +218,7 @@ class ResourcesScreenClass(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text(
-                                    text = state.throwable.getLocalMessage(LocalContext.current),
+                                    text = state.exception.getLocalMessage(LocalContext.current),
                                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                                 )
                                 GenericLottieAnimationComponent(R.raw.anim_error_occured)

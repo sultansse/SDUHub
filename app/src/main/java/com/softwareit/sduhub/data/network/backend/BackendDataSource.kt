@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.data.network.backend
 
 import com.softwareit.sduhub.core.network.CoroutineCaller
+import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
 import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
 
 class BackendDataSource(
@@ -27,5 +28,9 @@ class BackendDataSource(
 
     suspend fun getInternshipById(id: Int): Result<InternshipItemDTO> {
         return apiCall { backendApi.getInternshipById(id) }
+    }
+
+    suspend fun getFaqItems(): Result<List<FaqDTO>> {
+        return apiCall { backendApi.getFaqItems() }
     }
 }

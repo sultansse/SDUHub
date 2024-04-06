@@ -34,7 +34,6 @@ import org.koin.dsl.module
 
 val databaseModule = module {
     single { provideAppDatabase(context = androidContext()) }
-    single { provideFaqDao(appDatabase = get()) }
     single { provideNoteDao(appDatabase = get()) }
 
     single { DataStoreUtil(context = androidContext()) }
@@ -77,7 +76,7 @@ val repositoryModule = module {
 
     single<FaqRepository> {
         FaqRepositoryImpl(
-            faqDao = get(),
+            backendDataSource = get(),
         )
     }
 
@@ -144,7 +143,7 @@ val viewModelModule = module {
     }
     viewModel {
         FaqDetailsViewModel(
-            getFaqItems = get(),
+            getFaqItemsUseCase = get(),
         )
     }
 }

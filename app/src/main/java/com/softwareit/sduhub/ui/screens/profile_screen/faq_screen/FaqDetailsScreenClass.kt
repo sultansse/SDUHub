@@ -24,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +50,10 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
+import com.softwareit.sduhub.utils.common.data.network.getLocalMessage
 import com.softwareit.sduhub.utils.common.openGmail
+import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
+import com.softwareit.sduhub.utils.common.presentation.LoadingLottieComponent
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 
@@ -87,6 +91,10 @@ class FaqDetailsScreenClass(
         val viewModel: FaqDetailsViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
+        LaunchedEffect(key1 = true) {
+            viewModel.setEvent(FaqDetailsContract.Event.OnFetchFaqItems)
+        }
+
         Column {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -97,13 +105,28 @@ class FaqDetailsScreenClass(
                 }
 
                 when (val state = uiState.faqState) {
-                    is FaqDetailsContract.FaqState.Idle -> {
-                        viewModel.setEvent(FaqDetailsContract.Event.OnFetchFaqItems)
+                    is FaqDetailsContract.FaqState.Loading -> {
+                        item { LoadingLottieComponent() }
                     }
 
-                    is FaqDetailsContract.FaqState.Fetched -> {
+                    is FaqDetailsContract.FaqState.Success -> {
                         items(state.faqItems.size, key = { state.faqItems[it].id }) { index ->
                             FaqItem(state.faqItems[index])
+                        }
+                    }
+
+                    is FaqDetailsContract.FaqState.Error -> {
+                        item {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(top = 64.dp)
+                            ) {
+                                Text(
+                                    text = state.exception.getLocalMessage(LocalContext.current),
+                                    fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                                )
+                                GenericLottieAnimationComponent(R.raw.anim_error_occured)
+                            }
                         }
                     }
                 }

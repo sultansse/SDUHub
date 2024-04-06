@@ -3,7 +3,7 @@ package com.softwareit.sduhub.ui.screens.home_screen
 import com.softwareit.sduhub.core.base.UiEffect
 import com.softwareit.sduhub.core.base.UiEvent
 import com.softwareit.sduhub.core.base.UiState
-import com.softwareit.sduhub.data.local.notes.NoteDBO
+import com.softwareit.sduhub.data.local.room.notes.NoteDBO
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
 
 class HomeContract {
