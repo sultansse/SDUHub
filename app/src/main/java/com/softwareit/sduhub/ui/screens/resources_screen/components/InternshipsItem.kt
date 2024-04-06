@@ -93,7 +93,7 @@ internal fun InternshipsItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(iconList.random()),
+                    painter = rememberAsyncImagePainter(iconList[internship.id % iconList.size]),
                     contentDescription = internship.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.size(56.dp),
