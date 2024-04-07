@@ -10,6 +10,8 @@ data class ApiImportantInfo(
     val description: String,
     val tags: List<String>,
 ) : Mappable<ImportantInfoDTO> {
+//    empty must have for firebase to work
+    constructor() : this("", "", emptyList())
 
     override fun map() = ImportantInfoDTO(
         title,

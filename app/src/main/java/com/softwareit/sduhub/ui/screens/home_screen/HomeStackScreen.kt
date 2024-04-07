@@ -143,7 +143,7 @@ class HomeScreenClass(
                         is HomeScreenContract.ImportantInfoState.Error -> {
 //                            todo add something interesting
                             Text(
-                                text = stringResource(R.string.welcome_back),
+                                text = stringResource(R.string.error_occurred),
                                 fontSize = 24.sp,
                                 fontFamily = FontFamily(Font(R.font.amiko_bold)),
                                 modifier = Modifier.padding(20.dp)
