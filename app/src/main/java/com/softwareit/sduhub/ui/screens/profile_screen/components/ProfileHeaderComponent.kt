@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,9 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softwareit.sduhub.R
@@ -69,7 +72,7 @@ fun ProfileHeaderComponent(
 
                 )
                 Text(
-                    text = "Student",
+                    text = stringResource(R.string.student),
                     fontFamily = FontFamily(Font(R.font.amiko_regular)),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -79,6 +82,7 @@ fun ProfileHeaderComponent(
                 contentDescription = "Go to profile settings",
             )
         }
+        Spacer(modifier = Modifier.height(118.dp))
     }
 }
 
@@ -102,6 +106,7 @@ fun ProfileHeaderIdleComponent(onClick: () -> Unit) {
                 .fillMaxSize()
                 .padding(42.dp) // todo remove since its specific values, it should be dynamic
         )
+        Spacer(modifier = Modifier.height(118.dp))
     }
 }
 
@@ -116,7 +121,7 @@ fun ProfileHeaderLoadingComponent() {
             .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
     ) {
         Text(
-            text = "Loading...",
+            text = stringResource(R.string.loading),
             fontFamily = FontFamily(Font(R.font.amiko_bold)),
             fontSize = 24.sp,
             modifier = Modifier.fillMaxWidth(),
@@ -126,5 +131,28 @@ fun ProfileHeaderLoadingComponent() {
             animationResource = R.raw.anim_cat_watching,
             modifier = Modifier.height(118.dp)
         )
+        Spacer(modifier = Modifier.height(118.dp))
+    }
+}
+
+@Composable
+fun ProfileHeaderErrorComponent(onClick: () -> Unit) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
+            .clickable { onClick() }
+    ) {
+        Text(
+            text = stringResource(R.string.error_occurred_click_to_retry),
+            fontFamily = FontFamily(Font(R.font.amiko_bold)),
+            fontSize = 24.sp,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(118.dp))
     }
 }

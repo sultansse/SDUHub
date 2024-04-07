@@ -23,4 +23,7 @@
     <string name="failed_to_parse_json">Unable to read data because it is not in the correct format</string>
     <string name="failed_to_connect_to_server">Failed to connect to the server. try again</string>
     <string name="server_error">Server error. try again</string>
+    <string name="student">Student</string>
+    <string name="loading">Loading</string>
+    <string name="error_occurred_click_to_retry">Error occurred! Click to retry</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
@@ -25,7 +26,8 @@ fun GenericLottieAnimationComponent(
     modifier: Modifier = Modifier,
     iterations: Int = Int.MAX_VALUE,
     contentAlignment: Alignment = Alignment.Center,
-    lottieAlignment: Alignment = Alignment.TopCenter
+    lottieAlignment: Alignment = Alignment.TopCenter,
+    contentScale: ContentScale = ContentScale.Fit,
 ) {
     Box(
         contentAlignment = contentAlignment,
@@ -35,7 +37,8 @@ fun GenericLottieAnimationComponent(
         LottieAnimation(
             composition = composition,
             iterations = iterations,
-            alignment = lottieAlignment
+            alignment = lottieAlignment,
+            contentScale = contentScale,
         )
     }
 }

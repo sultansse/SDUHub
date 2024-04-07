@@ -16,9 +16,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -36,6 +33,7 @@ import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
+import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderErrorComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderIdleComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderLoadingComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardDialog
@@ -120,17 +118,17 @@ class ProfileScreenClass(
             }
 
             is ProfileScreenContract.Effect.ShowStudentCardDialog -> {
-                var isDialogVisible by remember { mutableStateOf(true) }
-                AnimatedVisibility(visible = isDialogVisible) {
+//                var isDialogVisible by remember { mutableStateOf(true) }
+                AnimatedVisibility(visible = true) {
                     ProfileIdCardDialog(
                         student = effect.student,
-                        onClose = { isDialogVisible = false }
+                        onClose = {
+                            viewModel.setEvent(
+                                ProfileScreenContract.Event.OnStudentCardDialogClose
+                            )
+                        }
                     )
                 }
-            }
-
-            is ProfileScreenContract.Effect.ShowError -> {
-                Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -140,20 +138,36 @@ class ProfileScreenClass(
             item {
                 when (val state = uiState.profileState) {
                     is ProfileScreenContract.ProfileState.Idle -> {
-                        ProfileHeaderIdleComponent() {
-                            viewModel.setEvent(ProfileScreenContract.Event.OnAuthUser)
-                        }
+                        ProfileHeaderIdleComponent(
+                            onClick = {
+                                viewModel.setEvent(
+                                    ProfileScreenContract.Event.OnAuthUser
+                                )
+                            }
+                        )
                     }
 
                     is ProfileScreenContract.ProfileState.Loading -> {
                         ProfileHeaderLoadingComponent()
                     }
 
+                    is ProfileScreenContract.ProfileState.Error -> {
+                        ProfileHeaderErrorComponent(
+                            onClick = {
+                                viewModel.setEvent(
+                                    ProfileScreenContract.Event.OnAuthUser
+                                )
+                            }
+                        )
+                    }
+
                     is ProfileScreenContract.ProfileState.Success -> {
                         ProfileHeaderComponent(
                             student = state.student,
                             onClick = {
-                                viewModel.setEvent(ProfileScreenContract.Event.OnStudentCardClick(state.student))
+                                viewModel.setEvent(
+                                    ProfileScreenContract.Event.OnStudentCardClick(state.student)
+                                )
                             }
                         )
                     }

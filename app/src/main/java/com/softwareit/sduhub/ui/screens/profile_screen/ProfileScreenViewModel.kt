@@ -27,6 +27,10 @@ class ProfileScreenViewModel(
             is ProfileScreenContract.Event.OnStudentCardClick -> {
                 setEffect { ProfileScreenContract.Effect.ShowStudentCardDialog(event.student) }
             }
+
+            is ProfileScreenContract.Event.OnStudentCardDialogClose -> {
+                setEffect { ProfileScreenContract.Effect.Nothing }
+            }
         }
     }
 
@@ -38,7 +42,7 @@ class ProfileScreenViewModel(
                     setState { copy(profileState = ProfileScreenContract.ProfileState.Success(it)) }
                 },
                 onFailure = {
-                    setEffect { ProfileScreenContract.Effect.ShowError(it.message) }
+                    setState { copy(profileState = ProfileScreenContract.ProfileState.Error(it))}
                 }
             )
         }

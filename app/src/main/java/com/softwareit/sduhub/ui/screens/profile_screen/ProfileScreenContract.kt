@@ -10,6 +10,7 @@ class ProfileScreenContract {
     sealed class Event : UiEvent {
         data object OnAuthUser : Event()
         data class OnStudentCardClick(val student: Student) : Event()
+        data object OnStudentCardDialogClose : Event()
     }
 
     data class State(
@@ -18,7 +19,6 @@ class ProfileScreenContract {
 
     sealed class Effect : UiEffect {
         data object Nothing : Effect()
-        data class ShowError(val message : String?) : Effect()
         data class ShowStudentCardDialog(val student: Student) : Effect()
 
     }
@@ -26,6 +26,7 @@ class ProfileScreenContract {
     sealed class ProfileState {
         data object Idle : ProfileState()
         data object Loading : ProfileState()
+        data class Error(val exception: Throwable) : ProfileState()
         data class Success(val student: Student) : ProfileState()
     }
 

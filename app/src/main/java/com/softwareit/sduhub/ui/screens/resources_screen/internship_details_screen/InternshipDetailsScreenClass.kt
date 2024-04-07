@@ -221,7 +221,8 @@ class InternshipDetailsScreenClass(
             is InternshipDetailsContract.InternShipState.Error -> {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(top = 64.dp)
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 64.dp)
                 ) {
                     Text(
                         text = state.exception.getLocalMessage(LocalContext.current),

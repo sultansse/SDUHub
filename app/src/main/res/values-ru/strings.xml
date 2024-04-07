@@ -22,4 +22,7 @@
     <string name="failed_to_parse_json">Не удается прочитать данные, поскольку они представлены в неправильном формате</string>
     <string name="failed_to_connect_to_server">Не удалось подключиться к серверу. попробуйте еще раз</string>
     <string name="server_error">Ошибка сервера. попробуйте еще раз</string>
+    <string name="student">Студент</string>
+    <string name="loading">Загрузка</string>
+    <string name="error_occurred_click_to_retry">Произошла ошибка! Нажмите чтобы попробовать снова</string>
 </resources>

@@ -22,4 +22,7 @@
     <string name="failed_to_parse_json">Деректерді оқу Мүмкін Емес, себебі ол дұрыс форматта емес</string>
     <string name="failed_to_connect_to_server">Серверге қосылу Сәтсіз аяқталды. қайталап көріңіз</string>
     <string name="server_error">Сервер қатесі. қайталап көріңіз</string>
+    <string name="student">Студент</string>
+    <string name="loading">Жүктелуде</string>
+    <string name="error_occurred_click_to_retry">Қате орын алды! Қайталап көру үшін басыңыз</string>
 </resources>
