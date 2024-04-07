@@ -16,4 +16,3 @@ data class NoteDBO(
     val updatedAt: String,
     val notifyTime: String? = String.empty,
 )
-// TODO add Mappable interface

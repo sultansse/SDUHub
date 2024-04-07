@@ -4,7 +4,7 @@ import com.softwareit.sduhub.core.base.UiEffect
 import com.softwareit.sduhub.core.base.UiEvent
 import com.softwareit.sduhub.core.base.UiState
 import com.softwareit.sduhub.data.local.room.notes.NoteDBO
-import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
+import com.softwareit.sduhub.ui.model.ImportantInfoDIO
 
 class HomeScreenContract {
 
@@ -29,7 +29,8 @@ class HomeScreenContract {
 
     sealed class ImportantInfoState {
         data object Idle : ImportantInfoState()
-        data class Success(val data: ImportantInfoDTO) : ImportantInfoState()
+        data class Success(val data: ImportantInfoDIO) : ImportantInfoState()
+        data class Error(val exception: Throwable) : ImportantInfoState()
     }
 
     sealed class NotesState {

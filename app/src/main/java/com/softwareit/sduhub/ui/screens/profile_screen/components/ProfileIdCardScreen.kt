@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.data.network.backend.Student
+import com.softwareit.sduhub.ui.model.StudentDIO
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange
 import com.softwareit.sduhub.ui.theme.colorWhite
@@ -33,7 +33,7 @@ import com.softwareit.sduhub.ui.theme.colorWhite
 
 @Composable
 fun ProfileIdCardDialog(
-    student: Student,
+    student: StudentDIO,
     onClose: () -> Unit,
 ) {
     Dialog(

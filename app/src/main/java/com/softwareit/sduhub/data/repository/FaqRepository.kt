@@ -1,7 +1,7 @@
 package com.softwareit.sduhub.data.repository
 
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
-import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
+import com.softwareit.sduhub.domain.model.FaqDTO
 
 
 interface FaqRepository {

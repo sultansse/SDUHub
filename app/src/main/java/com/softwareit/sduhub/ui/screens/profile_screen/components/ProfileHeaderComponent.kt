@@ -31,12 +31,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.data.network.backend.Student
+import com.softwareit.sduhub.ui.model.StudentDIO
 import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
 
 @Composable
 fun ProfileHeaderComponent(
-    student: Student,
+    apiStudent: StudentDIO,
     onClick: () -> Unit
 ) {
     Box(
@@ -61,12 +61,12 @@ fun ProfileHeaderComponent(
                 verticalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = student.fullname,
+                    text = apiStudent.fullname,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = student.studentId.toString(),
+                    text = apiStudent.studentId.toString(),
                     fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                     modifier = Modifier.fillMaxWidth()
 

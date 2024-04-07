@@ -58,7 +58,6 @@ import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetails
 import com.softwareit.sduhub.utils.common.data.network.getLocalMessage
 import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
 import com.softwareit.sduhub.utils.common.presentation.LoadingLottieComponent
-import com.squareup.moshi.JsonClass
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
@@ -261,18 +260,3 @@ class ResourcesScreenClass(
         }
     }
 }
-
-@JsonClass(generateAdapter = true)
-data class InternshipItemDTO(
-    val id: Int,
-    val title: String,
-    val salary: String,
-    val timeFormat: String,
-    val placeFormat: String,
-    val duration: String,
-    val company: String,
-    val location: String,
-    val applyDeadline: String,
-    val description: String,
-    val contacts: String,
-)

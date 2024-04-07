@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
-import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
+import com.softwareit.sduhub.ui.model.InternshipDIO
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
 import com.softwareit.sduhub.ui.theme.colorSduLightGray
 import okhttp3.internal.immutableListOf
@@ -48,7 +48,7 @@ val iconList = immutableListOf(
 
 @Composable
 internal fun InternshipsItem(
-    internship: InternshipItemDTO,
+    internship: InternshipDIO,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

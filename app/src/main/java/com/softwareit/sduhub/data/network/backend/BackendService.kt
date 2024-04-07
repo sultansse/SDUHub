@@ -1,50 +1,27 @@
 package com.softwareit.sduhub.data.network.backend
 
-import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
-import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
-import com.squareup.moshi.JsonClass
+import com.softwareit.sduhub.data.network.model.ApiFaq
+import com.softwareit.sduhub.data.network.model.ApiInternship
+import com.softwareit.sduhub.data.network.model.ApiNews
+import com.softwareit.sduhub.data.network.model.ApiStudent
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface BackendService {
 
     @GET("student") // TODO change to real endpoint
-    suspend fun getStudent(): Student
+    suspend fun getStudent(): ApiStudent
 
     @GET("v1/news")
-    suspend fun getNews(): List<NewsItemDTO>
-
-    /**
-     * currently not used
-     * */
-    @GET("v1/news/{id}")
-    suspend fun getNewsById(@Path("id") id: Int): NewsItemDTO
+    suspend fun getNews(): List<ApiNews>
 
     @GET("v1/internships")
-    suspend fun getInternships(): List<InternshipItemDTO>
+    suspend fun getInternships(): List<ApiInternship>
 
     @GET("v1/internships/{id}")
-    suspend fun getInternshipById(@Path("id") id: Int): InternshipItemDTO
+    suspend fun getInternshipById(@Path("id") id: Int): ApiInternship
 
     @GET("v1/faq")
-    suspend fun getFaqItems(): List<FaqDTO>
+    suspend fun getFaqItems(): List<ApiFaq>
 
 }
-
-// TODO use different data classes for different layers: ui-compose, domain, local, network
-@JsonClass(generateAdapter = true)
-data class Student(
-    val fullname: String,
-    val studentId: Int,
-    val faculty: String,
-)
-
-@JsonClass(generateAdapter = true)
-data class NewsItemDTO(
-    val id: String,
-    val imageUrl: String,
-    val title: String,
-    val announce: String,
-    val date: String,
-    val link: String,
-)

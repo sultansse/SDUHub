@@ -27,11 +27,11 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.data.network.backend.NewsItemDTO
+import com.softwareit.sduhub.ui.model.NewsDIO
 
 
 @Composable
-internal fun NewsItem(news: NewsItemDTO, onClick: () -> Unit) {
+internal fun NewsItem(news: NewsDIO, onClick: () -> Unit) {
     HorizontalDivider()
     Row(
         modifier = Modifier

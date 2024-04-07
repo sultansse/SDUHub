@@ -3,7 +3,7 @@ package com.softwareit.sduhub.ui.screens.resources_screen.news_screen
 import com.softwareit.sduhub.core.base.UiEffect
 import com.softwareit.sduhub.core.base.UiEvent
 import com.softwareit.sduhub.core.base.UiState
-import com.softwareit.sduhub.data.network.backend.NewsItemDTO
+import com.softwareit.sduhub.ui.model.NewsDIO
 
 class NewsDetailsContract {
 
@@ -21,6 +21,6 @@ class NewsDetailsContract {
 
     sealed class NewsState {
         data object Idle : NewsState()
-        data class Success(val data: NewsItemDTO?) : NewsState()
+        data class Success(val data: NewsDIO?) : NewsState()
     }
 }

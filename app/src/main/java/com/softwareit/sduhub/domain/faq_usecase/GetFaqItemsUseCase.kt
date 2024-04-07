@@ -1,17 +1,20 @@
 package com.softwareit.sduhub.domain.faq_usecase
 
+import com.google.common.collect.ImmutableList
 import com.softwareit.sduhub.data.repository.FaqRepository
-import com.squareup.moshi.JsonClass
+import com.softwareit.sduhub.ui.model.FaqDIO
 
 class GetFaqItemsUseCase(
     private val repository: FaqRepository,
 ) {
-    suspend operator fun invoke(): Result<List<FaqDTO>> = repository.getFaqItems()
+//    todo perform mapping optimization
+    suspend operator fun invoke(): Result<ImmutableList<FaqDIO>> {
+        return repository.getFaqItems().map { faqDtoList ->
+            ImmutableList.copyOf(
+                faqDtoList.map { faqDTO ->
+                    faqDTO.map()
+                }
+            )
+        }
+    }
 }
-
-@JsonClass(generateAdapter = true)
-data class FaqDTO(
-    val id: Int,
-    val question: String,
-    val answer: String,
-)

@@ -1,36 +1,33 @@
 package com.softwareit.sduhub.data.network.backend
 
 import com.softwareit.sduhub.core.network.CoroutineCaller
-import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
-import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
+import com.softwareit.sduhub.domain.model.FaqDTO
+import com.softwareit.sduhub.domain.model.InternshipDTO
+import com.softwareit.sduhub.domain.model.NewsDTO
+import com.softwareit.sduhub.domain.model.StudentDTO
 
 class BackendDataSource(
     private val backendApi: BackendService
 ) : CoroutineCaller {
 
-//        logic of mapping data safely
-
-    suspend fun getStudent(): Result<Student> {
-        return apiCall { backendApi.getStudent() }
+    suspend fun getStudent(): Result<StudentDTO> {
+        return apiCall { backendApi.getStudent().map() }
     }
 
-    suspend fun getNews(): Result<List<NewsItemDTO>> {
-        return apiCall { backendApi.getNews() }
+//    todo perform mapping optimization
+    suspend fun getNews(): Result<List<NewsDTO>> {
+        return apiCall { backendApi.getNews().map { it.map() }  }
     }
 
-    suspend fun getNewsById(id: Int): NewsItemDTO {
-        return backendApi.getNewsById(id)
+    suspend fun getInternships(): Result<List<InternshipDTO>> {
+        return apiCall { backendApi.getInternships().map { it.map() } }
     }
 
-    suspend fun getInternships(): Result<List<InternshipItemDTO>> {
-        return apiCall { backendApi.getInternships() }
-    }
-
-    suspend fun getInternshipById(id: Int): Result<InternshipItemDTO> {
-        return apiCall { backendApi.getInternshipById(id) }
+    suspend fun getInternshipById(id: Int): Result<InternshipDTO> {
+        return apiCall { backendApi.getInternshipById(id).map() }
     }
 
     suspend fun getFaqItems(): Result<List<FaqDTO>> {
-        return apiCall { backendApi.getFaqItems() }
+        return apiCall { backendApi.getFaqItems().map { it.map() } }
     }
 }

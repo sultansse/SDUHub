@@ -19,11 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.utils.empty
+import com.softwareit.sduhub.ui.model.ImportantInfoDIO
 
 
 @Composable
-fun ImportantInfo(data: ImportantInfoDTO) {
+fun ImportantInfo(data: ImportantInfoDIO) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,19 +69,11 @@ fun ImportantInfo(data: ImportantInfoDTO) {
     }
 }
 
-data class ImportantInfoDTO(
-    val title: String,
-    val description: String,
-    val tags: List<String>,
-) {
-    constructor() : this(String.empty, String.empty, emptyList())
-}
-
 @Preview(showBackground = true)
 @Composable
 fun ImportantInfoComponentPreview() {
     ImportantInfo(
-        ImportantInfoDTO(
+        ImportantInfoDIO(
             title = "Some title",
             description = "Lorem ipsum some description text",
             tags = listOf("13:00", "RedHall", "Podcast")

@@ -21,12 +21,6 @@ interface CoroutineCaller {
     suspend fun <T> apiCall(result: suspend () -> T): Result<T> =
         runCatching { result() }.fold(::handleSuccess, ::handleError)
 
-    suspend fun <FROM, TO> mappedApiCall(
-        mapper: BaseMapper<FROM, TO>,
-        call: suspend () -> FROM
-    ): Result<TO> = apiCall { mapper.map(call()) }
-
-
     fun <R> handleSuccess(result: R): Result<R> = Result.success(result)
     private fun <R> handleError(throwable: Throwable): Result<R> =
         when (throwable) {

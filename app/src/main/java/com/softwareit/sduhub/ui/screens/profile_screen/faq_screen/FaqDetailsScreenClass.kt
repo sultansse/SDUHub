@@ -49,7 +49,7 @@ import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
+import com.softwareit.sduhub.ui.model.FaqDIO
 import com.softwareit.sduhub.utils.common.data.network.getLocalMessage
 import com.softwareit.sduhub.utils.common.openGmail
 import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
@@ -182,7 +182,7 @@ class FaqDetailsScreenClass(
     }
 
     @Composable
-    private fun FaqItem(faqItem: FaqDTO) {
+    private fun FaqItem(faqItem: FaqDIO) {
         var isExpanded by remember { mutableStateOf(false) }
         val rotationAngle by animateFloatAsState(
             targetValue = if (isExpanded) 180f else 0f,

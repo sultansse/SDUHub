@@ -1,25 +1,23 @@
 package com.softwareit.sduhub.data.repository
 
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
-import com.softwareit.sduhub.data.network.backend.NewsItemDTO
-import com.softwareit.sduhub.data.network.backend.Student
 import com.softwareit.sduhub.data.network.firebase.FirebaseDataSource
-import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfoDTO
-import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
+import com.softwareit.sduhub.domain.model.ImportantInfoDTO
+import com.softwareit.sduhub.domain.model.InternshipDTO
+import com.softwareit.sduhub.domain.model.NewsDTO
+import com.softwareit.sduhub.domain.model.StudentDTO
 
 interface NetworkRepository {
 
-    suspend fun getStudent(): Result<Student>
+    suspend fun getStudent(): Result<StudentDTO>
 
-    suspend fun getImportantInfo(): ImportantInfoDTO?
+    suspend fun getImportantInfo(): Result<ImportantInfoDTO>
 
-    suspend fun getInternships(): Result<List<InternshipItemDTO>>
+    suspend fun getInternships(): Result<List<InternshipDTO>>
 
-    suspend fun getSpecificInternship(id: Int): Result<InternshipItemDTO>
+    suspend fun getInternshipById(id: Int): Result<InternshipDTO>
 
-    suspend fun getNews(): Result<List<NewsItemDTO>>
-
-    suspend fun getNewsById(id: Int): NewsItemDTO
+    suspend fun getNews(): Result<List<NewsDTO>>
 }
 
 /**
@@ -32,23 +30,23 @@ class NetworkRepositoryImpl(
 
 //        logic of caching and converting Result to data
 
-    override suspend fun getStudent(): Result<Student> {
+    override suspend fun getStudent(): Result<StudentDTO> {
         return backendDataSource.getStudent()
     }
 
-    override suspend fun getImportantInfo(): ImportantInfoDTO? {
+    override suspend fun getImportantInfo(): Result<ImportantInfoDTO> {
         return firebaseDataSource.getImportantInfo()
     }
 
-    override suspend fun getInternships(): Result<List<InternshipItemDTO>> {
+    override suspend fun getInternships(): Result<List<InternshipDTO>> {
         return backendDataSource.getInternships()
     }
 
-    override suspend fun getSpecificInternship(id: Int): Result<InternshipItemDTO> {
+    override suspend fun getInternshipById(id: Int): Result<InternshipDTO> {
         return backendDataSource.getInternshipById(id)
     }
 
-    override suspend fun getNews(): Result<List<NewsItemDTO>> {
+    override suspend fun getNews(): Result<List<NewsDTO>> {
 
 //        when (val result = backendDataSource.getNews()) {
 //            is Result.Companion.S -> {
@@ -60,9 +58,4 @@ class NetworkRepositoryImpl(
 //        }
         return backendDataSource.getNews()
     }
-
-    override suspend fun getNewsById(id: Int): NewsItemDTO {
-        return backendDataSource.getNewsById(id)
-    }
-
 }

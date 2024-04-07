@@ -163,7 +163,7 @@ class ProfileScreenClass(
 
                     is ProfileScreenContract.ProfileState.Success -> {
                         ProfileHeaderComponent(
-                            student = state.student,
+                            apiStudent = state.student,
                             onClick = {
                                 viewModel.setEvent(
                                     ProfileScreenContract.Event.OnStudentCardClick(state.student)

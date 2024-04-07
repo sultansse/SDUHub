@@ -1,9 +1,10 @@
 package com.softwareit.sduhub.ui.screens.profile_screen.faq_screen
 
+import com.google.common.collect.ImmutableList
 import com.softwareit.sduhub.core.base.UiEffect
 import com.softwareit.sduhub.core.base.UiEvent
 import com.softwareit.sduhub.core.base.UiState
-import com.softwareit.sduhub.domain.faq_usecase.FaqDTO
+import com.softwareit.sduhub.ui.model.FaqDIO
 
 class FaqDetailsContract {
 
@@ -21,7 +22,7 @@ class FaqDetailsContract {
 
     sealed class FaqState {
         data object Loading : FaqState()
-        data class Success(val faqItems: List<FaqDTO>) : FaqState()
+        data class Success(val faqItems: ImmutableList<FaqDIO>) : FaqState()
         data class Error(val exception: Throwable) : FaqState()
     }
 }

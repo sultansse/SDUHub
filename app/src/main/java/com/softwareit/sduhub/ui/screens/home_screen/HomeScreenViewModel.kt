@@ -23,9 +23,19 @@ class HomeScreenViewModel(
 
     private fun fetchImportantInfo() {
         viewModelScope.launch(Dispatchers.IO) {
-            getImportantInfo()?.let {
-                setState { copy(importantInfoState = HomeScreenContract.ImportantInfoState.Success(it)) }
-            }
+
+            getImportantInfo.invoke().fold(
+                onSuccess = {
+                    setState {
+                        copy(importantInfoState = HomeScreenContract.ImportantInfoState.Success(it))
+                    }
+                },
+                onFailure = {
+                    setState {
+                        copy(importantInfoState = HomeScreenContract.ImportantInfoState.Error(it))
+                    }
+                }
+            )
         }
     }
 

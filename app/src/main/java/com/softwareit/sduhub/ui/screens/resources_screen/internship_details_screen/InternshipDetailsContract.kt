@@ -3,7 +3,7 @@ package com.softwareit.sduhub.ui.screens.resources_screen.internship_details_scr
 import com.softwareit.sduhub.core.base.UiEffect
 import com.softwareit.sduhub.core.base.UiEvent
 import com.softwareit.sduhub.core.base.UiState
-import com.softwareit.sduhub.ui.screens.resources_screen.InternshipItemDTO
+import com.softwareit.sduhub.ui.model.InternshipDIO
 
 class InternshipDetailsContract {
 
@@ -21,7 +21,7 @@ class InternshipDetailsContract {
 
     sealed class InternShipState {
         data object Loading : InternShipState()
-        data class Success(val internship: InternshipItemDTO) : InternShipState()
+        data class Success(val internship: InternshipDIO) : InternShipState()
         data class Error(val exception: Throwable) : InternShipState()
     }
 
