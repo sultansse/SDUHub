@@ -3,6 +3,7 @@ package com.softwareit.sduhub.ui.screens.profile_screen.faq_screen
 import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.domain.faq_usecase.GetFaqItemsUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FaqDetailsViewModel(
@@ -25,7 +26,7 @@ class FaqDetailsViewModel(
     }
 
     private fun fetchFaqItems() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getFaqItemsUseCase.invoke().fold(
                 onSuccess = { faqItems ->
                     setState { copy(faqState = FaqDetailsContract.FaqState.Success(faqItems)) }

@@ -3,7 +3,7 @@ package com.softwareit.sduhub.ui.screens.profile_screen
 import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.domain.student_usecase.GetStudentUseCase
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ProfileScreenViewModel(
@@ -35,8 +35,7 @@ class ProfileScreenViewModel(
     }
 
     private fun fetchProfile() {
-        viewModelScope.launch {
-            delay(2000) // todo remove
+        viewModelScope.launch(Dispatchers.IO) {
             getStudentUseCase.invoke().fold(
                 onSuccess = {
                     setState { copy(profileState = ProfileScreenContract.ProfileState.Success(it)) }

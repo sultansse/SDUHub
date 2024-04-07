@@ -119,7 +119,8 @@ class FaqDetailsScreenClass(
                         item {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
                                     .padding(top = 64.dp)
                             ) {
                                 Text(
@@ -150,7 +151,7 @@ class FaqDetailsScreenClass(
                 )
         ) {
             Text(
-                text = "Still have questions?",
+                text = stringResource(R.string.still_have_questions),
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
                 fontFamily = FontFamily(Font(R.font.amiko_bold)),
@@ -172,7 +173,7 @@ class FaqDetailsScreenClass(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Contact us",
+                    text = stringResource(R.string.contact_us),
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                 )

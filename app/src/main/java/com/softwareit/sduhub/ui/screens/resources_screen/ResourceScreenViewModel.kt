@@ -5,6 +5,7 @@ import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.domain.internship_usecase.GetInternshipsUseCase
 import com.softwareit.sduhub.domain.news_usecase.GetNewsUseCase
 import com.softwareit.sduhub.ui.screens.resources_screen.components.ResourceTab
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -43,7 +44,7 @@ class ResourceScreenViewModel(
     }
 
     private fun fetchNews() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getNewsUseCase.invoke().fold(
                 onSuccess = { newsList ->
                     setState { copy(newsState = ResourceScreenContract.NewsState.Success(newsList)) }
@@ -56,7 +57,7 @@ class ResourceScreenViewModel(
     }
 
     private fun fetchInternships() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getInternshipsUseCase.invoke().fold(
                 onSuccess = { internships ->
                     setState { copy(internshipsState = ResourceScreenContract.InternShipsState.Success(internships)) }

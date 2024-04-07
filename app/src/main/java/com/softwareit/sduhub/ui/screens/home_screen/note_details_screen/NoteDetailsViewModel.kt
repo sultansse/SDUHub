@@ -6,6 +6,7 @@ import com.softwareit.sduhub.data.local.room.notes.NoteDBO
 import com.softwareit.sduhub.data.repository.NotesRepository
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
 import com.softwareit.sduhub.utils.getFormattedTime
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NoteDetailsViewModel(
@@ -47,7 +48,7 @@ class NoteDetailsViewModel(
     }
 
     private fun fetchNote(noteId: Int?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             when (noteId) {
                 null -> {
                     setState { copy(noteState = NoteDetailsContract.NoteState.NoteFound) }
@@ -73,14 +74,14 @@ class NoteDetailsViewModel(
     private fun deleteNote(noteId: Int) {
 
         if (noteId != NEW_NOTE_ID) {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 notesRepository.deleteNote(noteId)
             }
         }
     }
 
     private fun saveNote() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             notesRepository.upsertNote(note)
         }
     }

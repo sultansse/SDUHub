@@ -9,6 +9,7 @@ import com.softwareit.sduhub.domain.notes_usecase.DeleteNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.GetNotesUseCase
 import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
 import com.softwareit.sduhub.utils.getFormattedTime
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -21,7 +22,7 @@ class HomeScreenViewModel(
 ) : BaseViewModel<HomeScreenContract.Event, HomeScreenContract.State, HomeScreenContract.Effect>() {
 
     private fun fetchImportantInfo() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getImportantInfo()?.let {
                 setState { copy(importantInfoState = HomeScreenContract.ImportantInfoState.Success(it)) }
             }
@@ -67,7 +68,7 @@ class HomeScreenViewModel(
             }
 
             is HomeScreenContract.Event.OnNotesDeleted -> {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     deleteNotes.invoke()
                     setState {
                         copy(notesState = HomeScreenContract.NotesState.Idle)
@@ -78,19 +79,19 @@ class HomeScreenViewModel(
     }
 
     private fun copyNote(note: NoteDBO) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             upsertNote.invoke(note.copy(id = 0, title = "${note.title} (Copy)", updatedAt = getFormattedTime()))
         }
     }
 
     private fun addNoteUseCase(note: NoteDBO) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             upsertNote.invoke(note)
         }
     }
 
     private fun fetchNotes() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getNotes.invoke().collect() {
                 if (it.isEmpty()) {
                     setState { copy(notesState = HomeScreenContract.NotesState.Idle) }
@@ -102,7 +103,7 @@ class HomeScreenViewModel(
     }
 
     private fun deleteNote(noteId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             deleteNote.invoke(noteId)
         }
     }
