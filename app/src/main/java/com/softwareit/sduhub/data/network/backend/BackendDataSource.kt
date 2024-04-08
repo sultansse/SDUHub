@@ -14,7 +14,6 @@ class BackendDataSource(
         return apiCall { backendApi.getStudent().map() }
     }
 
-//    todo perform mapping optimization
     suspend fun getNews(): Result<List<NewsDTO>> {
         return apiCall { backendApi.getNews().map { it.map() }  }
     }
