@@ -13,7 +13,7 @@ data class ApiImportantInfo(
 //    empty must have for firebase to work
     constructor() : this("", "", emptyList())
 
-    override fun map() = ImportantInfoDTO(
+    override suspend fun map() = ImportantInfoDTO(
         title,
         description,
         tags

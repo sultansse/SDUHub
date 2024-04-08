@@ -14,7 +14,7 @@ data class ApiNews(
     val link: String,
 ) : Mappable<NewsDTO> {
 
-    override fun map() = NewsDTO(
+    override suspend fun map() = NewsDTO(
         id = id,
         imageUrl = imageUrl,
         title = title,

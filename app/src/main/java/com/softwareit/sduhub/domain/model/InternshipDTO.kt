@@ -17,7 +17,7 @@ data class InternshipDTO(
     val contacts: String,
 ) : Mappable<InternshipDIO> {
 
-    override fun map() = InternshipDIO(
+    override suspend fun map() = InternshipDIO(
         id = id,
         title = title,
         salary = salary,

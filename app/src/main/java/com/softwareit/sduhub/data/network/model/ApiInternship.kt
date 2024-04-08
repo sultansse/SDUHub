@@ -19,7 +19,7 @@ data class ApiInternship(
     val contacts: String,
 ) : Mappable<InternshipDTO> {
 
-    override fun map() = InternshipDTO(
+    override suspend fun map() = InternshipDTO(
         id = id,
         title = title,
         salary = salary,

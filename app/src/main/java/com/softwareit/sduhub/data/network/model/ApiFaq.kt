@@ -11,7 +11,7 @@ data class ApiFaq(
     val answer: String,
 ) : Mappable<FaqDTO> {
 
-    override fun map() = FaqDTO(
+    override suspend fun map() = FaqDTO(
         id = id,
         question = question,
         answer = answer

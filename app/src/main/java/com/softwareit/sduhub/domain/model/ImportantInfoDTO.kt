@@ -9,7 +9,7 @@ data class ImportantInfoDTO(
     val tags: List<String>,
 ) : Mappable<ImportantInfoDIO> {
 
-    override fun map() = ImportantInfoDIO(
+    override suspend fun map() = ImportantInfoDIO(
         title,
         description,
         tags,

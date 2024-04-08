@@ -9,7 +9,7 @@ data class FaqDTO(
     val answer: String,
 ) : Mappable<FaqDIO> {
 
-    override fun map() = FaqDIO(
+    override suspend fun map() = FaqDIO(
         id = id,
         question = question,
         answer = answer

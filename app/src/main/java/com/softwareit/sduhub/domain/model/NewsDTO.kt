@@ -12,7 +12,7 @@ data class NewsDTO(
     val link: String,
 ) : Mappable<NewsDIO> {
 
-    override fun map() = NewsDIO(
+    override suspend fun map() = NewsDIO(
         id = id,
         imageUrl = imageUrl,
         title = title,

@@ -11,7 +11,7 @@ data class ApiStudent(
     val faculty: String,
 ) : Mappable<StudentDTO> {
 
-    override fun map() = StudentDTO(
+    override suspend fun map() = StudentDTO(
         fullname = fullname,
         studentId = studentId,
         faculty = faculty
