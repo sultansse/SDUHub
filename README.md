@@ -1,22 +1,35 @@
 <h1>SDUHub android app</h1>
 SDUHub is app for SDU university, with mod of cons.
 It has: 
+
 - Informational daily stories
+
 - Note Taking feature
+
 - Important info from university
+
 - Interesting podcasts, meetups and conferences
+
 - News about education and universities
+
 - Internships
+
 - Indoor map of SDU
+
 - Community in telegram
+
 - FAQ
+
 - Centerized information system: gmail, moodle, mysdu, sdukz, library
+
 - ordering food from sdu
+
 - ai chat bot
 
-Technical stack: 
+<h2>Technical stack:</h2>
 Jetpack Compose, kotlin, Modo (navigation), Coroutines, Flow, DataStore preferences, Retrofit, Koin (DI)
- 
+
+
 The project itself has Clean architecture with Data, Presentation and Domain layers
 
 Data layer is responsible:
