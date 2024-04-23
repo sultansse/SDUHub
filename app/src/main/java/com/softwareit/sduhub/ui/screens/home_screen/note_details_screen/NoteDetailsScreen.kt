@@ -71,16 +71,18 @@ class NoteDetailsScreenClass(
     @Composable
     override fun Content() {
         val parent = LocalContainerScreen.current
-        val parentScreen = parent as StackScreen
+        val navigator = parent as StackScreen
 
         val viewModel: NoteDetailsViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        LaunchedEffect(key1 = true) {
-            viewModel.setEvent(NoteDetailsContract.Event.OnFetchNote(noteId))
-        }
-
         when (val state = uiState.noteState) {
+            is NoteDetailsContract.NoteState.Idle -> {
+                LaunchedEffect(key1 = Unit) {
+                    viewModel.setEvent(NoteDetailsContract.Event.OnFetchNote(noteId))
+                }
+            }
+
             is NoteDetailsContract.NoteState.NoteFound -> {
                 val composition by rememberLottieComposition(
                     LottieCompositionSpec.RawRes(R.raw.anim_not_found)
@@ -94,8 +96,8 @@ class NoteDetailsScreenClass(
 
             is NoteDetailsContract.NoteState.Fetched -> {
                 Scaffold(
-                    topBar = { EditNoteTopAppBar(parentScreen) },
-                    bottomBar = { EditNoteBottomBar(state.note, parentScreen) },
+                    topBar = { EditNoteTopAppBar(navigator) },
+                    bottomBar = { EditNoteBottomBar(state.note, navigator) },
                     content = {
                         Box(modifier = Modifier.padding(it)) {
                             EditNoteScreen(state.note)

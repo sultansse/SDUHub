@@ -20,10 +20,11 @@ class NoteDetailsContract {
     ) : UiState
 
     sealed class Effect : UiEffect {
-        data class ShowInformToast(val message : String?) : Effect()
+        data object Idle : Effect()
     }
 
     sealed class NoteState {
+        data object Idle : NoteState()
         data object NoteFound : NoteState()
         data class Fetched(val note: NoteDBO) : NoteState()
     }

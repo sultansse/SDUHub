@@ -40,5 +40,6 @@ class HomeScreenContract {
     sealed class NotesState {
         data object Idle : NotesState()
         data class Success(val notes: List<NoteDBO>) : NotesState()
+        data object Empty : NotesState()
     }
 }

@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,10 +38,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.stack.StackState
+import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.data.local.room.notes.NoteDBO
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenContract
+import com.softwareit.sduhub.ui.screens.home_screen.note_details_screen.NoteDetailsScreenClass
 import org.koin.compose.koinInject
 
 
@@ -48,6 +53,7 @@ import org.koin.compose.koinInject
 fun NoteItem(
     note: NoteDBO,
     onUiEvent: (HomeScreenContract.Event) -> Unit,
+    navigator: NavigationContainer<StackState>,
     modifier: Modifier = Modifier,
 ) {
     val dataStoreUtil: DataStoreUtil = koinInject()
@@ -59,6 +65,7 @@ fun NoteItem(
             .fillMaxWidth()
             .padding(16.dp)
             .clip(RoundedCornerShape(16.dp))
+            .clickable { navigator.forward(NoteDetailsScreenClass(note.id)) }
     ) {
 
         val imageDarkerFilter = remember(isDarkThemeEnabled) {

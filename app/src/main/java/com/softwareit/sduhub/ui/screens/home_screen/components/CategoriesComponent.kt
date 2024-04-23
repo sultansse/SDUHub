@@ -40,34 +40,42 @@ import okhttp3.internal.immutableListOf
 
 val categories = immutableListOf(
     ElementDIO(
+        id = 0,
         icon = R.drawable.img_aidos,
         title = "AI Dos"
     ),
     ElementDIO(
+        id = 1,
         icon = R.drawable.img_gmail,
         title = "Gmail"
     ),
     ElementDIO(
+        id = 2,
         icon = R.drawable.img_mysdu,
         title = "MySDU"
     ),
     ElementDIO(
+        id = 3,
         icon = R.drawable.img_sdukz,
         title = "Sdu.kz"
     ),
     ElementDIO(
+        id = 4,
         icon = R.drawable.img_order_food,
         title = "Order Food"
     ),
     ElementDIO(
+        id = 5,
         icon = R.drawable.img_free_offices,
         title = "Free Offices"
     ),
     ElementDIO(
+        id = 6,
         icon = R.drawable.img_moodle,
         title = "Moodle"
     ),
     ElementDIO(
+        id = 7,
         icon = R.drawable.img_more_horz,
         title = "More"
     ),
@@ -84,8 +92,11 @@ fun Categories(
     ) {
         repeat(categories.size) {
             CategoryItem(
+                ElementDIO(
+                    id = categories[it].id,
                 icon = categories[it].icon,
                 title = categories[it].title,
+                ),
                 onUiEvent = onUiEvent,
                 navigator = navigator,
             )
@@ -95,8 +106,7 @@ fun Categories(
 
 @Composable
 fun CategoryItem(
-    icon: Int,
-    title: String,
+    category: ElementDIO,
     onUiEvent: (HomeScreenContract.Event) -> Unit,
     navigator: NavigationContainer<StackState>,
 ) {
@@ -108,12 +118,12 @@ fun CategoryItem(
         modifier = Modifier
             .padding(horizontal = 2.dp, vertical = 8.dp)
             .clickable {
-                navigateToCategory(title, context, navigator, onUiEvent)
+                navigateToCategory(category.id, context, navigator, onUiEvent)
             }
     ) {
         Image(
-            painter = rememberAsyncImagePainter(icon),
-            contentDescription = title,
+            painter = rememberAsyncImagePainter(category.icon),
+            contentDescription = category.title,
             modifier = Modifier
                 .size(56.dp)
                 .clip(CircleShape)
@@ -121,7 +131,7 @@ fun CategoryItem(
                 .shadow(elevation = 4.dp, shape = CircleShape)
         )
         Text(
-            text = title,
+            text = category.title,
             fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
             textAlign = TextAlign.Center,
         )
@@ -129,21 +139,19 @@ fun CategoryItem(
 }
 
 internal fun navigateToCategory(
-    title: String,
+    categoryId: Int,
     context: Context,
     navigator: NavigationContainer<StackState>,
     onUiEvent: (HomeScreenContract.Event) -> Unit,
 ) {
-    val categoryActions = mapOf(
-        categories[0].title to { navigator.forward(AiDosScreenClass()) },
-        categories[1].title to { openGmail(context, "teacher@sdu.edu.kz", "Your subject", "Hello Teacher! I am [your name].. \n\n\n Regards, [your name]") },
-        categories[2].title to { navigator.forward(MySduScreenClass()) },
-        categories[3].title to { navigator.forward(SduKzScreenClass()) },
-        categories[4].title to { openTelegramToUser(context, "SDUOrder_bot") },
-        categories[5].title to { openTelegramToUser(context, "sduflexbot") },
-        categories[6].title to { navigator.forward(MoodleScreenClass()) },
-        categories[7].title to { onUiEvent(HomeScreenContract.Event.OnServicesClicked) }
-    )
-
-    categoryActions[title]?.invoke()
+    when (categoryId) {
+        0 -> navigator.forward(AiDosScreenClass())
+        1 -> openGmail(context, "teacher@sdu.edu.kz", "Your subject", "Hello Teacher! I am [your name].. \n\n\n Regards, [your name]")
+        2 -> navigator.forward(MySduScreenClass())
+        3 -> navigator.forward(SduKzScreenClass())
+        4 -> openTelegramToUser(context, "SDUOrder_bot")
+        5 -> openTelegramToUser(context, "sduflexbot")
+        6 -> navigator.forward(MoodleScreenClass())
+        7 -> onUiEvent(HomeScreenContract.Event.OnServicesClicked)
+    }
 }

@@ -100,7 +100,7 @@ class HomeScreenViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             getNotes.invoke().collect() {
                 if (it.isEmpty()) {
-                    setState { copy(notesState = HomeScreenContract.NotesState.Idle) }
+                    setState { copy(notesState = HomeScreenContract.NotesState.Empty) }
                 } else {
                     setState { copy(notesState = HomeScreenContract.NotesState.Success(it)) }
                 }

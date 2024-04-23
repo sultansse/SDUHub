@@ -1,8 +1,9 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
 import android.content.Context
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -23,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -130,7 +130,7 @@ class HomeScreenClass(
         }
     }
 
-    @[Composable OptIn(ExperimentalMaterial3Api::class)]
+    @[Composable OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)]
     fun HomeScreen(
         uiState: HomeScreenContract.State,
         uiEffect: HomeScreenContract.Effect,
@@ -139,30 +139,21 @@ class HomeScreenClass(
     ) {
 
         when (val effect = uiEffect) {
-            is HomeScreenContract.Effect.Idle -> {
-
-            }
+            is HomeScreenContract.Effect.Idle -> {}
 
             is HomeScreenContract.Effect.ServicesBottomSheet -> {
-
-
                 ModalBottomSheet(
-                    onDismissRequest = { onUiEvent(HomeScreenContract.Event.EmptyEffect) }
+                    onDismissRequest = { onUiEvent(HomeScreenContract.Event.EmptyEffect) },
                 ) {
-                    val context = LocalContext.current
-                    val parent = LocalContainerScreen.current
-                    val parentScreen = parent as StackScreen
-
-                    Column(modifier = Modifier.padding(bottom = 16.dp)) {
-                        services.forEach { service ->
-                            ServiceItem(
+                    services.forEach { service ->
+                        ServiceItem(
+                            ElementDIO(
+                                id = service.id,
                                 icon = service.icon,
                                 title = service.title,
-                                onClick = {
-                                    navigateToService(service.title, context, parentScreen)
-                                }
-                            )
-                        }
+                            ),
+                            navigator = navigator,
+                        )
                     }
                 }
             }
@@ -204,59 +195,69 @@ class HomeScreenClass(
             }
 
             when (val state = uiState.notesState) {
+                is HomeScreenContract.NotesState.Idle -> {
+                    item {
+                        LaunchedEffect(key1 = Unit) {
+                            onUiEvent(HomeScreenContract.Event.OnFetchNotes)
+                        }
+                    }
+                }
+
                 is HomeScreenContract.NotesState.Success -> {
                     items(state.notes.size, key = { state.notes[it].id }) {
                         val note = state.notes[it]
                         NoteItem(
                             note = note,
                             onUiEvent = onUiEvent,
+                            navigator = navigator,
+                            modifier = Modifier.animateItemPlacement(tween(300)),
                         )
                     }
                 }
 
-                is HomeScreenContract.NotesState.Idle -> {
+                is HomeScreenContract.NotesState.Empty -> {
                     item {
                         GenericLottieAnimationComponent(R.raw.anim_not_found)
                     }
                 }
             }
-
         }
     }
-
 }
 
 
 val services = immutableListOf(
     ElementDIO(
+        id = 0,
         icon = R.drawable.img_library,
         title = "SDU Library" // todo stringres
     ),
     ElementDIO(
+        id = 1,
         icon = R.drawable.img_lost_and_found,
         title = "Lost & Found" // todo stringres
     ),
     ElementDIO(
+        id = 2,
         icon = R.drawable.img_faculties,
         title = "Faculties" // todo stringres
     ),
     ElementDIO(
+        id = 3,
         icon = R.drawable.img_student_clubs,
         title = "Student Clubs" // todo stringres
     ),
 )
 
 fun navigateToService(
-    title: String,
+    serviceId: Int,
     context: Context,
     navigator: NavigationContainer<StackState>
 ) {
-    val serviceActions = mapOf(
-        services[0].title to { navigator.forward(SduLibraryScreenClass()) },
-        services[1].title to { openTelegramToUser(context, "SDU_Lost_AND_Found") },
-        services[2].title to { navigator.forward(FacultiesScreenClass()) },
-        services[3].title to { navigator.forward(StudentClubsScreenClass()) },
-    )
-
-    serviceActions[title]?.invoke()
+    when (serviceId) {
+        0 -> navigator.forward(SduLibraryScreenClass())
+        1 -> openTelegramToUser(context, "SDU_Lost_AND_Found")
+        2 -> navigator.forward(FacultiesScreenClass())
+        3 -> navigator.forward(StudentClubsScreenClass())
+    }
 }

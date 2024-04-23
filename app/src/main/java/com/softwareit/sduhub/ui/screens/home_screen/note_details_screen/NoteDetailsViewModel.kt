@@ -17,7 +17,7 @@ class NoteDetailsViewModel(
 
     override fun setInitialState(): NoteDetailsContract.State {
         return NoteDetailsContract.State(
-            noteState = NoteDetailsContract.NoteState.NoteFound,
+            noteState = NoteDetailsContract.NoteState.Idle,
         )
     }
 
@@ -29,12 +29,10 @@ class NoteDetailsViewModel(
 
             is NoteDetailsContract.Event.OnDeleteNote -> {
                 deleteNote(event.note.id)
-                setEffect { NoteDetailsContract.Effect.ShowInformToast("Note deleted") }
             }
 
             is NoteDetailsContract.Event.OnSaveNote -> {
                 saveNote()
-                setEffect { NoteDetailsContract.Effect.ShowInformToast("Note saved") }
             }
 
             is NoteDetailsContract.Event.OnTitleChanged -> {

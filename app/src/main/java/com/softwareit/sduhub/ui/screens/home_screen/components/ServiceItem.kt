@@ -12,34 +12,40 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.github.terrakok.modo.NavigationContainer
+import com.github.terrakok.modo.stack.StackState
+import com.softwareit.sduhub.ui.model.ElementDIO
+import com.softwareit.sduhub.ui.screens.home_screen.navigateToService
 
 @Composable
-    fun ServiceItem(
-        icon: Int,
-        title: String,
-        onClick: () -> Unit,
+fun ServiceItem(
+    service: ElementDIO,
+    navigator: NavigationContainer<StackState>,
+) {
+    val context = LocalContext.current
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clickable { navigateToService(service.id, context, navigator) }
+            .fillMaxWidth()
+            .padding(16.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        Image(
+            painter = rememberAsyncImagePainter(service.icon),
+            contentDescription = "icon of service",
             modifier = Modifier
-                .clickable { onClick() }
-                .fillMaxWidth()
-                .padding(16.dp),
-        ) {
-            Image(
-                painter = rememberAsyncImagePainter(icon),
-                contentDescription = "icon of service",
-                modifier = Modifier
-                    .size(56.dp)
-                    .clip(CircleShape)
-            )
-            Text(
-                text = title,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 16.dp),
-            )
-        }
+                .size(56.dp)
+                .clip(CircleShape)
+        )
+        Text(
+            text = service.title,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 16.dp),
+        )
     }
+}
