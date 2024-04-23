@@ -9,13 +9,16 @@ import com.softwareit.sduhub.ui.model.ImportantInfoDIO
 class HomeScreenContract {
 
     sealed class Event : UiEvent {
+        data object EmptyEffect : Event()
+
         data object OnFetchImportantInfo : Event()
+
         data object OnFetchNotes : Event()
-        data class OnNoteClicked(val note : NoteDBO) : Event()
         data class OnNoteAdded(val note: NoteDBO) : Event()
         data class OnNoteDeleted(val noteId: Int) : Event()
-        data object OnNotesDeleted : Event()
         data class OnNoteCopied(val note: NoteDBO): Event()
+
+        data object OnServicesClicked : Event()
     }
 
     data class State(
@@ -24,13 +27,14 @@ class HomeScreenContract {
     ) : UiState
 
     sealed class Effect : UiEffect {
-        data class ShowError(val message : String?) : Effect()
+        data object Idle : Effect()
+        data object ServicesBottomSheet : Effect()
     }
 
     sealed class ImportantInfoState {
         data object Idle : ImportantInfoState()
         data class Success(val data: ImportantInfoDIO) : ImportantInfoState()
-        data class Error(val exception: Throwable) : ImportantInfoState()
+        data class Empty(val exception: Throwable) : ImportantInfoState()
     }
 
     sealed class NotesState {

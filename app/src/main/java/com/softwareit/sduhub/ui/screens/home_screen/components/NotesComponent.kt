@@ -1,7 +1,6 @@
 package com.softwareit.sduhub.ui.screens.home_screen.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,16 +40,15 @@ import coil.compose.rememberAsyncImagePainter
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.data.local.room.notes.NoteDBO
+import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenContract
 import org.koin.compose.koinInject
 
 
 @Composable
 fun NoteItem(
     note: NoteDBO,
-    onNoteClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-    onCopyClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onUiEvent: (HomeScreenContract.Event) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val dataStoreUtil: DataStoreUtil = koinInject()
     val isDarkThemeEnabled by dataStoreUtil.getTheme()
@@ -61,9 +59,6 @@ fun NoteItem(
             .fillMaxWidth()
             .padding(16.dp)
             .clip(RoundedCornerShape(16.dp))
-            .clickable {
-                onNoteClick()
-            }
     ) {
 
         val imageDarkerFilter = remember(isDarkThemeEnabled) {
@@ -119,7 +114,7 @@ fun NoteItem(
                             DropdownMenuItem(
                                 onClick = {
                                     isMenuExpanded = false
-                                    onDeleteClick()
+                                    onUiEvent(HomeScreenContract.Event.OnNoteDeleted(note.id))
                                 },
                                 text = {
                                     Text(stringResource(R.string.delete))
@@ -128,7 +123,7 @@ fun NoteItem(
                             DropdownMenuItem(
                                 onClick = {
                                     isMenuExpanded = false
-                                    onCopyClick()
+                                    onUiEvent(HomeScreenContract.Event.OnNoteCopied(note))
                                 },
                                 text = {
                                     Text(stringResource(R.string.copy))

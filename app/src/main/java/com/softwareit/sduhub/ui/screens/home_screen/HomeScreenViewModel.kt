@@ -32,7 +32,7 @@ class HomeScreenViewModel(
                 },
                 onFailure = {
                     setState {
-                        copy(importantInfoState = HomeScreenContract.ImportantInfoState.Error(it))
+                        copy(importantInfoState = HomeScreenContract.ImportantInfoState.Empty(it))
                     }
                 }
             )
@@ -48,6 +48,10 @@ class HomeScreenViewModel(
 
     override fun handleEvent(event: HomeScreenContract.Event) {
         when (event) {
+            is HomeScreenContract.Event.EmptyEffect -> {
+                setEffect { HomeScreenContract.Effect.Idle }
+            }
+
             is HomeScreenContract.Event.OnFetchImportantInfo -> {
                 fetchImportantInfo()
             }
@@ -56,17 +60,8 @@ class HomeScreenViewModel(
                 fetchNotes()
             }
 
-            is HomeScreenContract.Event.OnNoteClicked -> {
-                setEffect {
-                    HomeScreenContract.Effect.ShowError("note is clicked")
-                }
-            }
-
             is HomeScreenContract.Event.OnNoteAdded -> {
                 addNoteUseCase(event.note)
-                setEffect {
-                    HomeScreenContract.Effect.ShowError("note is added")
-                }
             }
 
             is HomeScreenContract.Event.OnNoteDeleted -> {
@@ -74,23 +69,24 @@ class HomeScreenViewModel(
             }
 
             is HomeScreenContract.Event.OnNoteCopied -> {
-               copyNote(event.note)
+                copyNote(event.note)
             }
 
-            is HomeScreenContract.Event.OnNotesDeleted -> {
-                viewModelScope.launch(Dispatchers.IO) {
-                    deleteNotes.invoke()
-                    setState {
-                        copy(notesState = HomeScreenContract.NotesState.Idle)
-                    }
-                }
+            is HomeScreenContract.Event.OnServicesClicked -> {
+                setEffect { HomeScreenContract.Effect.ServicesBottomSheet }
             }
         }
     }
 
     private fun copyNote(note: NoteDBO) {
         viewModelScope.launch(Dispatchers.IO) {
-            upsertNote.invoke(note.copy(id = 0, title = "${note.title} (Copy)", updatedAt = getFormattedTime()))
+            upsertNote.invoke(
+                note.copy(
+                    id = 0,
+                    title = "${note.title} (Copy)",
+                    updatedAt = getFormattedTime()
+                )
+            )
         }
     }
 
@@ -117,5 +113,4 @@ class HomeScreenViewModel(
             deleteNote.invoke(noteId)
         }
     }
-
 }

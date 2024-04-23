@@ -34,7 +34,7 @@ import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.ui.screens.home_screen.components.CategoryDIO
+import com.softwareit.sduhub.ui.model.ElementDIO
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
@@ -42,19 +42,19 @@ import kotlinx.parcelize.Parcelize
 
 
 val faculties = listOf(
-    CategoryDIO(
+    ElementDIO(
         icon = R.drawable.img_faculty_business,
         title = "Business school" // todo stringres
     ),
-    CategoryDIO(
+    ElementDIO(
         icon = R.drawable.img_faculty_engineering,
         title = "Engineering and Natural Sciences" // todo stringres
     ),
-    CategoryDIO(
+    ElementDIO(
         icon = R.drawable.img_faculty_law,
         title = "Law and Social Sciences" // todo stringres
     ),
-    CategoryDIO(
+    ElementDIO(
         icon = R.drawable.img_faculty_education,
         title = "Education and Humanities" // todo stringres
     ),
@@ -129,7 +129,7 @@ class FacultiesScreenClass(
                     .clip(RoundedCornerShape(16.dp))
                     .clipToBounds()
                     .background(colorSduBlue, RoundedCornerShape(16.dp))
-                    .height(200.dp)
+                    .height(220.dp)
                     .padding(8.dp)
 
             )
