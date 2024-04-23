@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.home_screen.categories.sdu_library_screen
+package com.softwareit.sduhub.ui.screens.home_screen.categories.services.sdu_library_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding

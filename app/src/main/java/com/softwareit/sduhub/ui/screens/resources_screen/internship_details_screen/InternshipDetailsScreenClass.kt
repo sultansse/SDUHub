@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,12 +30,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.terrakok.modo.LocalContainerScreen
@@ -89,7 +89,7 @@ class InternshipDetailsScreenClass(
             viewModel.setEvent(InternshipDetailsContract.Event.OnFetchInternship(internshipId))
         }
 
-        val state by viewModel.uiState.collectAsState()
+        val uiState by viewModel.uiState.collectAsState()
 
         val dataStoreUtil: DataStoreUtil = koinInject()
         val isDarkThemeEnabled by dataStoreUtil.getTheme()
@@ -101,7 +101,7 @@ class InternshipDetailsScreenClass(
         }
 
 
-        when (val state = state.internshipState) {
+        when (val state = uiState.internshipState) {
             is InternshipDetailsContract.InternShipState.Success -> {
                 val internship = state.internship
                 Column(
@@ -123,7 +123,8 @@ class InternshipDetailsScreenClass(
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
-                            text = "Pay: ${internship.salary} ₸",
+                            text = internship.salary
+                                ?: "Salary: ${stringResource(R.string.not_provided)}",
                             fontSize = 20.sp,
                             fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                             modifier = Modifier.fillMaxWidth()
@@ -131,14 +132,15 @@ class InternshipDetailsScreenClass(
                     }
 
                     Text(
-                        text = "Format: ${internship.timeFormat}, ${internship.placeFormat}",
+                        text = "Format: ${internship.timeFormat ?: stringResource(R.string.not_provided)}, ${
+                            internship.placeFormat ?: stringResource(R.string.not_provided)}",
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier.fillMaxWidth()
                     )
 
                     Text(
-                        text = "Duration: ${internship.duration}",
+                        text = "Duration: ${internship.duration ?: stringResource(R.string.not_provided)}",
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier.fillMaxWidth()
@@ -161,13 +163,13 @@ class InternshipDetailsScreenClass(
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Text(
-                                text = "Location: ${internship.location}",
+                                text = "Location: ${internship.location ?: stringResource(R.string.not_provided)}",
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Text(
-                                text = "Apply Deadline: ${internship.applyDeadline}",
+                                text = "Apply Deadline: ${internship.applyDeadline ?: stringResource(R.string.not_provided)}",
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                                 modifier = Modifier.fillMaxWidth()
@@ -187,18 +189,16 @@ class InternshipDetailsScreenClass(
                         if (isDarkThemeEnabled) mutableStateOf(colorSduLightBlue)
                         else mutableStateOf(colorSduBlue)
                     }
-
-                    val contactsText = buildAnnotatedString {
-                        append("Contacts: ")
-                        pushStringAnnotation(tag = "policy", annotation = "https://t.me/sduhub")
-                        withStyle(style = SpanStyle(color = contactsTextColor)) {
-                            append(internship.contacts)
-                        }
-                    }
+                    val uriHandler = LocalUriHandler.current
                     Text(
-                        text = contactsText,
+                        text = internship.contacts,
+                        color = contactsTextColor,
                         fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .clickable {
+                                internship.contactsLink?.let { uriHandler.openUri(it) }
+                            }
+
                     )
 
                 }
@@ -212,7 +212,9 @@ class InternshipDetailsScreenClass(
                 ) {
                     Text(
                         text = "Loading...",
+                        textAlign = TextAlign.Center,
                         fontFamily = FontFamily(Font(R.font.amiko_bold)),
+                        modifier = Modifier.fillMaxWidth()
                     )
                     LoadingLottieComponent(R.raw.anim_cat_loading)
                 }
@@ -221,7 +223,8 @@ class InternshipDetailsScreenClass(
             is InternshipDetailsContract.InternShipState.Error -> {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(top = 64.dp)
                 ) {
                     Text(

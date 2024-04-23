@@ -6,13 +6,14 @@ import androidx.compose.runtime.Stable
 data class InternshipDIO(
     val id: Int,
     val title: String,
-    val salary: String,
-    val timeFormat: String,
-    val placeFormat: String,
-    val duration: String,
+    val salary: String? = null,
+    val timeFormat: String? = null,
+    val placeFormat: String? = null,
+    val duration: String? = null,
     val company: String,
-    val location: String,
-    val applyDeadline: String,
+    val location: String? = null,
+    val applyDeadline: String? = null,
     val description: String,
     val contacts: String,
+    val contactsLink : String?
 )

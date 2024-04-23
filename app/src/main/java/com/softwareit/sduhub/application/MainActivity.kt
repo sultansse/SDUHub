@@ -61,8 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@Composable
-@OptIn(ExperimentalAnimationApi::class, ExperimentalModoApi::class)
+@[Composable OptIn(ExperimentalAnimationApi::class, ExperimentalModoApi::class)]
 fun ComposeRendererScope<StackState>.SlideTransition() {
     ScreenTransition(
         transitionSpec = {

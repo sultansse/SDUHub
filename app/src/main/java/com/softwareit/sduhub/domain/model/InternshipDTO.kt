@@ -6,15 +6,16 @@ import com.softwareit.sduhub.ui.model.InternshipDIO
 data class InternshipDTO(
     val id: Int,
     val title: String,
-    val salary: String,
-    val timeFormat: String,
-    val placeFormat: String,
-    val duration: String,
+    val salary: String? = null,
+    val timeFormat: String? = null,
+    val placeFormat: String? = null,
+    val duration: String? = null,
     val company: String,
-    val location: String,
-    val applyDeadline: String,
+    val location: String? = null,
+    val applyDeadline: String? = null,
     val description: String,
     val contacts: String,
+    val contactsLink : String?
 ) : Mappable<InternshipDIO> {
 
     override suspend fun map() = InternshipDIO(
@@ -29,5 +30,6 @@ data class InternshipDTO(
         applyDeadline = applyDeadline,
         description = description,
         contacts = contacts,
+        contactsLink = contactsLink,
     )
 }

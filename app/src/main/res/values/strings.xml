@@ -30,4 +30,5 @@
     <string name="error_occurred_click_to_retry">Error occurred! Click to retry</string>
     <string name="still_have_questions">Still have questions?</string>
     <string name="contact_us">Contact us</string>
+    <string name="not_provided">Not Provided</string>
 </resources>

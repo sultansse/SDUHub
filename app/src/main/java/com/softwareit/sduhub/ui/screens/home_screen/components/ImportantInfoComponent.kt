@@ -27,12 +27,12 @@ fun ImportantInfo(data: ImportantInfoDIO) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8))
+            .clip(RoundedCornerShape(4))
             .padding(16.dp)
             .border(
                 width = 2.dp,
                 color = Color.Red,
-                shape = RoundedCornerShape(10),
+                shape = RoundedCornerShape(4),
             )
     ) {
         Column(

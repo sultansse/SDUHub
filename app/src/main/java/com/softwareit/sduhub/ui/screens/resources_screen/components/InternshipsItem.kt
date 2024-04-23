@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -122,7 +123,7 @@ internal fun InternshipsItem(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Text(
-                        text = internship.placeFormat,
+                        text = internship.placeFormat ?: "Not Provided",
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier
                             .border(
@@ -133,7 +134,7 @@ internal fun InternshipsItem(
                             .padding(4.dp)
                     )
                     Text(
-                        text = internship.timeFormat,
+                        text = internship.timeFormat ?: "Not Provided",
                         fontFamily = FontFamily(Font(R.font.amiko_regular)),
                         modifier = Modifier
                             .border(
@@ -146,7 +147,7 @@ internal fun InternshipsItem(
                 }
 
                 Text(
-                    text = internship.salary,
+                    text = internship.salary ?: stringResource(R.string.not_provided),
                     textAlign = TextAlign.End,
                     maxLines = 1,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
