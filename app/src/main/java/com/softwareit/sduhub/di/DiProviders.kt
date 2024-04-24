@@ -1,12 +1,16 @@
 package com.softwareit.sduhub.di
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.softwareit.sduhub.data.local.room.LocalDatabase
 import com.softwareit.sduhub.utils.Constants.Companion.APPLICATION_DATABASE
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.Cache
+import okhttp3.CacheControl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -45,17 +49,58 @@ fun provideMoshi(): Moshi {
 }
 
 fun provideHttpClient(context: Context): OkHttpClient {
-    return OkHttpClient
-        .Builder()
-        .connectTimeout(2, TimeUnit.MINUTES)
-        .writeTimeout(2, TimeUnit.MINUTES)
-        .readTimeout(2, TimeUnit.MINUTES)
-        .pingInterval(3, TimeUnit.SECONDS)
+    // Defining a cache of 5 MB size
+    val cacheSize = (5 * 1024 * 1024).toLong()
+
+//Initializing instance of Cache class
+    val myCache = Cache(context.cacheDir, cacheSize)
+
+//defining okhttpclient instance
+    val okHttpClient = OkHttpClient.Builder()
+        .cache(myCache)
         .addInterceptor(ChuckerInterceptor(context))
+        .addInterceptor { chain ->
+            var request = chain.request()
+            request = if (hasNetwork(context))
+                request
+                    .newBuilder()
+                    .cacheControl(
+                        CacheControl.Builder()
+                            .maxAge(30, TimeUnit.MINUTES)
+                            .build()
+                    )
+                    .build()
+            else
+                request
+                    .newBuilder()
+                    .cacheControl(
+                        CacheControl.Builder()
+                            .maxStale(1, TimeUnit.DAYS)
+                            .build()
+                    )
+                    .build()
+            chain.proceed(request)
+        }
         .build()
+
+    return okHttpClient
 }
 
 
 inline fun <reified T> createService(retrofit: Retrofit): T {
     return retrofit.create(T::class.java)
+}
+
+fun hasNetwork(context: Context): Boolean {
+    val connectivityManager = context
+        .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val nw = connectivityManager.activeNetwork ?: return false
+    val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+    return when {
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+        else -> false
+    }
 }
