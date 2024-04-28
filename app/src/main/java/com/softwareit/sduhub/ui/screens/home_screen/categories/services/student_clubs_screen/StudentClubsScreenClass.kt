@@ -137,7 +137,11 @@ class StudentClubsScreenClass(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .clickable {
-//                    todo navigate to student club details
+//                    todo
+//                    StudentClubDialogComponent(
+//                        faculty: FacultyDIO,
+//                        onUiEvent: (StudentClubsContract.Event) -> Unit,
+//                    )
                 }
                 .border(width = 1.dp, color = colorSduDarkGray, shape = RoundedCornerShape(8.dp))
         ) {
