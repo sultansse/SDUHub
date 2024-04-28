@@ -117,6 +117,14 @@ class ProfileScreenClass(
                 // do nothing
             }
 
+            is ProfileScreenContract.Effect.UnavailableFeature -> {
+                Toast.makeText(
+                    context,
+                    stringResource(R.string.currently_this_feature_can_t_be_used),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
             is ProfileScreenContract.Effect.ShowStudentCardDialog -> {
 //                var isDialogVisible by remember { mutableStateOf(true) }
                 AnimatedVisibility(visible = true) {
@@ -194,7 +202,7 @@ class ProfileScreenClass(
                             }
 
                             2 -> {
-                                Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
+                                viewModel.setEvent(ProfileScreenContract.Event.OnLogoutClick)
                             }
                         }
                     }

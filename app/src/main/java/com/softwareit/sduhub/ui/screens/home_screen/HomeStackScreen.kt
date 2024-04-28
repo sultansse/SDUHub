@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.ui.screens.home_screen
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -156,6 +158,13 @@ class HomeScreenClass(
                         )
                     }
                 }
+            }
+
+            is HomeScreenContract.Effect.OrderClick -> {
+                val context = LocalContext.current
+                Toast.makeText(context,
+                    stringResource(R.string.currently_this_feature_can_t_be_used), Toast.LENGTH_LONG).show()
+                openTelegramToUser(context, "SDUOrder_bot")
             }
         }
 

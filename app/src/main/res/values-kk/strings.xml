@@ -30,4 +30,5 @@
     <string name="error_occurred">Қате орын алды</string>
     <string name="not_provided">Көрсетілмеген</string>
     <string name="apply">Тіркелу</string>
+    <string name="currently_this_feature_can_t_be_used">Қазіргі уақытта бұл фичаны пайдалану мүмкін емес</string>
 </resources>

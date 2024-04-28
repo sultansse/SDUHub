@@ -21,6 +21,7 @@ class ProfileScreenViewModel(
     override fun handleEvent(event: ProfileScreenContract.Event) {
         when (event) {
             is ProfileScreenContract.Event.OnAuthUser -> {
+                setEffect { ProfileScreenContract.Effect.UnavailableFeature }
                 setState { copy(profileState = ProfileScreenContract.ProfileState.Loading) }
                 fetchProfile()
             }
@@ -31,6 +32,10 @@ class ProfileScreenViewModel(
 
             is ProfileScreenContract.Event.OnStudentCardDialogClose -> {
                 setEffect { ProfileScreenContract.Effect.Nothing }
+            }
+
+            is ProfileScreenContract.Event.OnLogoutClick -> {
+                setEffect { ProfileScreenContract.Effect.UnavailableFeature }
             }
         }
     }

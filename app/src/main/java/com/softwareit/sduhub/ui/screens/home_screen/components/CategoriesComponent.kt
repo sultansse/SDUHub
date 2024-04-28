@@ -149,7 +149,7 @@ internal fun navigateToCategory(
         1 -> openGmail(context, "teacher@sdu.edu.kz", "Your subject", "Hello Teacher! I am [your name].. \n\n\n Regards, [your name]")
         2 -> navigator.forward(MySduScreenClass())
         3 -> navigator.forward(SduKzScreenClass())
-        4 -> openTelegramToUser(context, "SDUOrder_bot")
+        4 -> onUiEvent(HomeScreenContract.Event.OnOrderFoodClicked)
         5 -> openTelegramToUser(context, "sduflexbot")
         6 -> navigator.forward(MoodleScreenClass())
         7 -> onUiEvent(HomeScreenContract.Event.OnServicesClicked)

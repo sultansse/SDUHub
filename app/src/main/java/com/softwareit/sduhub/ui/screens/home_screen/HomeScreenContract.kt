@@ -19,6 +19,8 @@ class HomeScreenContract {
         data class OnNoteCopied(val note: NoteDBO): Event()
 
         data object OnServicesClicked : Event()
+
+        data object OnOrderFoodClicked : Event()
     }
 
     data class State(
@@ -28,6 +30,7 @@ class HomeScreenContract {
 
     sealed class Effect : UiEffect {
         data object Idle : Effect()
+        data object OrderClick : Effect()
         data object ServicesBottomSheet : Effect()
     }
 

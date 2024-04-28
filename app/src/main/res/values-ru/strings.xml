@@ -30,4 +30,5 @@
     <string name="error_occurred">Произошла ошибка</string>
     <string name="not_provided">Не указано</string>
     <string name="apply">Зарегестрироваться</string>
+    <string name="currently_this_feature_can_t_be_used">На данный момент эта фича не может быть использована</string>
 </resources>
