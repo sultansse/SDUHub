@@ -29,4 +29,5 @@
     <string name="contact_us">Свяжитесь с нами</string>
     <string name="error_occurred">Произошла ошибка</string>
     <string name="not_provided">Не указано</string>
+    <string name="apply">Зарегестрироваться</string>
 </resources>

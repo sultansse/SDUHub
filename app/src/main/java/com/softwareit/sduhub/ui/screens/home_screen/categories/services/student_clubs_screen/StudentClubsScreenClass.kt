@@ -21,8 +21,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -33,55 +36,12 @@ import com.github.terrakok.modo.ScreenKey
 import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.back
-import com.softwareit.sduhub.R
+import com.softwareit.sduhub.ui.model.StudentClubDIO
+import com.softwareit.sduhub.ui.screens.home_screen.categories.services.student_clubs_screen.components.StudentClubBottomSheetComponent
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
+import com.softwareit.sduhub.utils.common.openWebsite
 import kotlinx.parcelize.Parcelize
-
-val studentClubs = listOf(
-    StudentClub(
-        name = "SDU IT Club",
-        shortDescription = "This club is for students who are interested in IT",
-        longDescription = "This club could help you to improve your programming skills, and furthermore you can participate in hackathons",
-        imageResId = R.drawable.img_library,
-    ),
-    StudentClub(
-        name = "Vision Club",
-        shortDescription = "This club for women, who want to be successful in their life",
-        longDescription = "Club members are very friendly and helpful, they will help you to achieve your goals",
-        imageResId = R.drawable.img_library,
-    ),
-    StudentClub(
-        name = "Music Club",
-        shortDescription = "Music club is a place where you can learn how to play musical instruments. The club members are very friendly and helpful",
-        longDescription = "Music club is a place where you can learn how to play musical instruments. The club members are very friendly and helpful. Music club is a place where you can learn how to play musical instruments. The club members are very friendly and helpful",
-        imageResId = R.drawable.img_library,
-    ),
-    StudentClub(
-        name = "Mountain kings",
-        shortDescription = "This club is for students who are interested in hiking, and climbing mountains",
-        longDescription = "Club members are very friendly and helpful, they will help you to achieve your goals, and furthermore you can participate in hiking trips",
-        imageResId = R.drawable.img_library,
-    ),
-    StudentClub(
-        name = "IQ club",
-        shortDescription = "This club is for students who are interested in IQ tests",
-        longDescription = "Club members are very friendly and helpful, they will help you to achieve your goals, and furthermore you can participate in IQ tests",
-        imageResId = R.drawable.img_library,
-    ),
-    StudentClub(
-        name = "Puzzle club",
-        shortDescription = "This club is for students who are interested in puzzles",
-        longDescription = "Club members are very friendly and helpful, they will help you to achieve your goals, and furthermore you can participate in puzzle contests",
-        imageResId = R.drawable.img_library,
-    ),
-)
-
-data class StudentClub(
-    val name: String,
-    val shortDescription : String,
-    val longDescription: String,
-    val imageResId: Int,
-)
+import org.koin.androidx.compose.koinViewModel
 
 @Parcelize
 class StudentClubsScreenClass(
@@ -92,6 +52,22 @@ class StudentClubsScreenClass(
     override fun Content() {
         val parent = LocalContainerScreen.current
         val parentScreen = parent as StackScreen
+        val context = LocalContext.current
+        val viewModel: StudentClubsViewModel = koinViewModel()
+
+        val uiEffect by viewModel.effect.collectAsState(initial = StudentClubsContract.Effect.Idle)
+
+        when (val effect = uiEffect) {
+            is StudentClubsContract.Effect.Idle -> {
+                // do nothing
+            }
+            is StudentClubsContract.Effect.StudentClubDialog -> {
+                StudentClubBottomSheetComponent(effect.studentClub, viewModel::setEvent)
+            }
+            is StudentClubsContract.Effect.ApplyGoogleForms -> {
+                openWebsite(context, "https://docs.google.com/forms/d/e/1FAIpQLSfNn9rhtOFLDZerT6jhtqR0S1fosnnrDh57aKRX1hzjW32itw/viewform")
+            }
+        }
 
         Scaffold(
             topBar = {
@@ -106,20 +82,18 @@ class StudentClubsScreenClass(
             }
         ) {
             Box(modifier = Modifier.padding(it)) {
-                StudentClubsScreen()
+                StudentClubsScreen(viewModel::setEvent)
             }
         }
     }
 
     @Composable
-    fun StudentClubsScreen() {
+    fun StudentClubsScreen(onUiEvent: (StudentClubsContract.Event) -> Unit) {
         LazyColumn {
             items(studentClubs.size, key = { studentClubs[it].name }) { index ->
                 StudentClubItem(
-                    name = studentClubs[index].name,
-                    shortDescription = studentClubs[index].shortDescription,
-                    longDescription = studentClubs[index].longDescription,
-                    imageResId = studentClubs[index].imageResId,
+                    studentClub = studentClubs[index],
+                    onUiEvent = onUiEvent,
                 )
             }
         }
@@ -127,22 +101,14 @@ class StudentClubsScreenClass(
 
     @Composable
     fun StudentClubItem(
-        name: String,
-        shortDescription: String,
-        longDescription: String,
-        imageResId: Int,
+        studentClub: StudentClubDIO,
+        onUiEvent: (StudentClubsContract.Event) -> Unit,
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable {
-//                    todo
-//                    StudentClubDialogComponent(
-//                        faculty: FacultyDIO,
-//                        onUiEvent: (StudentClubsContract.Event) -> Unit,
-//                    )
-                }
+                .clickable { onUiEvent(StudentClubsContract.Event.OnStudentClubClick(studentClub)) }
                 .border(width = 1.dp, color = colorSduDarkGray, shape = RoundedCornerShape(8.dp))
         ) {
             Row(
@@ -152,7 +118,7 @@ class StudentClubsScreenClass(
                     .padding(8.dp)
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter(imageResId),
+                    painter = rememberAsyncImagePainter(studentClub.imageResId),
                     contentDescription = "Student club image",
                     modifier = Modifier.size(72.dp)
                 )
@@ -161,11 +127,11 @@ class StudentClubsScreenClass(
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
                     Text(
-                        text = name,
+                        text = studentClub.name,
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = shortDescription,
+                        text = studentClub.shortDescription,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )

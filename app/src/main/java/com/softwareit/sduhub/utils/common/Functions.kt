@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 
-
 /**
  * Opens an email client with pre-filled recipient, subject, and body.
  *
@@ -51,4 +50,11 @@ fun openTelegramToUser(context: Context, username: String) {
         telegramIntent.data = telegramUri
         context.startActivity(telegramIntent)
     }
+}
+
+fun openWebsite(context: Context, url: String) {
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        data = Uri.parse(url)
+    }
+    context.startActivity(intent)
 }

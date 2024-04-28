@@ -29,4 +29,5 @@
     <string name="contact_us">Бізге хабарласыңыз</string>
     <string name="error_occurred">Қате орын алды</string>
     <string name="not_provided">Көрсетілмеген</string>
+    <string name="apply">Тіркелу</string>
 </resources>
