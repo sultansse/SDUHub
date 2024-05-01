@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.softwareit.sduhub.core.base.BaseViewModel
 import com.softwareit.sduhub.domain.student_usecase.GetStudentUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProfileScreenViewModel(
@@ -21,7 +20,6 @@ class ProfileScreenViewModel(
     override fun handleEvent(event: ProfileScreenContract.Event) {
         when (event) {
             is ProfileScreenContract.Event.OnAuthUser -> {
-                setEffect { ProfileScreenContract.Effect.UnavailableFeature }
                 setState { copy(profileState = ProfileScreenContract.ProfileState.Loading) }
                 fetchProfile()
             }
@@ -42,7 +40,6 @@ class ProfileScreenViewModel(
 
     private fun fetchProfile() {
         viewModelScope.launch(Dispatchers.IO) {
-            delay(2000)
             getStudentUseCase.invoke().fold(
                 onSuccess = {
                     setState { copy(profileState = ProfileScreenContract.ProfileState.Success(it)) }

@@ -5,7 +5,7 @@ import com.softwareit.sduhub.ui.model.StudentDIO
 
 data class StudentDTO(
     val fullname: String,
-    val studentId: Int,
+    val studentId: String,
     val faculty: String,
 ) : Mappable<StudentDIO> {
 

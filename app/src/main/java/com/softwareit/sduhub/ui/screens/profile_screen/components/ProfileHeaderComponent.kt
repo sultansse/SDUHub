@@ -66,7 +66,7 @@ fun ProfileHeaderComponent(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = apiStudent.studentId.toString(),
+                    text = apiStudent.studentId,
                     fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                     modifier = Modifier.fillMaxWidth()
 

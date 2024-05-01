@@ -1,5 +1,7 @@
 package com.softwareit.sduhub.ui.screens.profile_screen
 
+import android.app.Activity
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
@@ -14,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -126,7 +129,14 @@ class ProfileScreenClass(
             }
 
             is ProfileScreenContract.Effect.ShowStudentCardDialog -> {
-//                var isDialogVisible by remember { mutableStateOf(true) }
+                // todo fix unavailable to make screenshots
+                val window = (context as Activity).window
+                DisposableEffect(key1 = true) {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    onDispose {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+                    }
+                }
                 AnimatedVisibility(visible = true) {
                     ProfileIdCardDialog(
                         student = effect.student,

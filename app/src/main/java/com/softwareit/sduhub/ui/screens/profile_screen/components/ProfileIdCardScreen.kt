@@ -100,7 +100,7 @@ fun ProfileIdCardDialog(
                     modifier = Modifier.padding(top = 16.dp, bottom = 4.dp)
                 )
                 Text(
-                    text = student.studentId.toString(),
+                    text = student.studentId,
                     color = colorWhite,
                     fontFamily = FontFamily(Font(R.font.amiko_bold)),
                     fontSize = 16.sp,

@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ApiStudent(
     val fullname: String,
-    val studentId: Int,
+    val studentId: String,
     val faculty: String,
 ) : Mappable<StudentDTO> {
 

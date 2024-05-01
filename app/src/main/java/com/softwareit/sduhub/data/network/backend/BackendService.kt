@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 interface BackendService {
 
-    @GET("student") // TODO change to real endpoint
+    @GET("v1/auth") // TODO change to real endpoint
     suspend fun getStudent(): ApiStudent
 
     @GET("v1/news")

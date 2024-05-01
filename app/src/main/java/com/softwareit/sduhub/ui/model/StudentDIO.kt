@@ -5,6 +5,6 @@ import androidx.compose.runtime.Stable
 @Stable
 data class StudentDIO(
     val fullname: String,
-    val studentId: Int,
+    val studentId: String,
     val faculty: String,
 )
