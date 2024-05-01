@@ -45,7 +45,6 @@ import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchCom
 import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqDetailsScreenClass
 import com.softwareit.sduhub.utils.common.openTelegramToUser
 import kotlinx.parcelize.Parcelize
-import okhttp3.internal.immutableListOf
 import org.koin.androidx.compose.koinViewModel
 
 @Parcelize
@@ -99,21 +98,6 @@ class ProfileScreenClass(
         val uiState by viewModel.uiState.collectAsState()
         val uiEffect by viewModel.effect.collectAsState(initial = ProfileScreenContract.Effect.Nothing)
         val context = LocalContext.current
-
-        val profileItems = immutableListOf(
-            ProfileScreenListItem(
-                icon = R.drawable.ic_faq,
-                title = stringResource(R.string.faq),
-            ),
-            ProfileScreenListItem(
-                icon = R.drawable.ic_community,
-                title = stringResource(R.string.community),
-            ),
-            ProfileScreenListItem(
-                icon = R.drawable.ic_logout,
-                title = stringResource(R.string.logout),
-            ),
-        )
 
         when (val effect = uiEffect) {
             is ProfileScreenContract.Effect.Nothing -> {
@@ -197,32 +181,50 @@ class ProfileScreenClass(
                 ThemeSwitchComponent()
             }
 
-            items(profileItems.size, key = { profileItems[it].title }) { index ->
+            item {
+//                faq
                 ProfileScreenListItemComponent(
-                    title = profileItems[index].title,
-                    icon = profileItems[index].icon,
+                    title = stringResource(R.string.faq),
+                    icon = R.drawable.ic_faq,
                     onClick = {
-                        when (index) {
-                            0 -> {
-                                navigator.forward(FaqDetailsScreenClass())
-                            }
+                        navigator.forward(FaqDetailsScreenClass())
+                    }
+                )
+            }
 
-                            1 -> {
-                                openTelegramToUser(context, "sduhub")
-                            }
+            item {
+//                community
+                ProfileScreenListItemComponent(
+                    title = stringResource(R.string.community),
+                    icon = R.drawable.ic_community,
+                    onClick = {
+                        openTelegramToUser(context, "sduhub")
+                    }
+                )
+            }
 
-                            2 -> {
-                                viewModel.setEvent(ProfileScreenContract.Event.OnLogoutClick)
-                            }
-                        }
+            item {
+//                about us
+                ProfileScreenListItemComponent(
+                    title = stringResource(R.string.about_us),
+                    icon = R.drawable.ic_info,
+                    onClick = {
+//                        todo
+                        Toast.makeText(context, "About us", Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+
+            item {
+//                logout
+                ProfileScreenListItemComponent(
+                    title = stringResource(R.string.logout),
+                    icon = R.drawable.ic_logout,
+                    onClick = {
+                        viewModel.setEvent(ProfileScreenContract.Event.OnLogoutClick)
                     }
                 )
             }
         }
     }
 }
-
-data class ProfileScreenListItem(
-    val icon: Int,
-    val title: String,
-)

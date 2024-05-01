@@ -77,7 +77,7 @@ class HomeScreenViewModel(
             }
 
             is HomeScreenContract.Event.OnOrderFoodClicked -> {
-                setEffect { HomeScreenContract.Effect.OrderClick }
+                setEffect { HomeScreenContract.Effect.OrderClickBottomSheet }
             }
         }
     }

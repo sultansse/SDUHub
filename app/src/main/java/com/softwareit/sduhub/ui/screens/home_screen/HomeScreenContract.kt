@@ -30,7 +30,7 @@ class HomeScreenContract {
 
     sealed class Effect : UiEffect {
         data object Idle : Effect()
-        data object OrderClick : Effect()
+        data object OrderClickBottomSheet : Effect()
         data object ServicesBottomSheet : Effect()
     }
 

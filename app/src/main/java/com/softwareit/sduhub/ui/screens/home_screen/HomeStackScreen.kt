@@ -46,6 +46,7 @@ import com.softwareit.sduhub.ui.screens.home_screen.categories.services.facultie
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.sdu_library_screen.SduLibraryScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.student_clubs_screen.StudentClubsScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.components.Categories
+import com.softwareit.sduhub.ui.screens.home_screen.components.FoodBotItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.ServiceItem
@@ -159,9 +160,21 @@ class HomeScreenClass(
                 }
             }
 
-            is HomeScreenContract.Effect.OrderClick -> {
+            is HomeScreenContract.Effect.OrderClickBottomSheet -> {
                 val context = LocalContext.current
-                openTelegramToUser(context, "SDUOrder_bot")
+                ModalBottomSheet(
+                    onDismissRequest = { onUiEvent(HomeScreenContract.Event.EmptyEffect) },
+                ) {
+                    orderFoodBots.forEach { bot ->
+                        FoodBotItem(
+                            ElementDIO(
+                                id = bot.id,
+                                icon = bot.icon,
+                                title = bot.title,
+                            ),
+                        )
+                    }
+                }
             }
         }
 
@@ -265,5 +278,40 @@ fun navigateToService(
         1 -> openTelegramToUser(context, "SDU_Lost_AND_Found")
         2 -> navigator.forward(FacultiesScreenClass())
         3 -> navigator.forward(StudentClubsScreenClass())
+    }
+}
+
+val orderFoodBots = immutableListOf(
+    ElementDIO(
+        id = 0,
+        icon = R.drawable.img_urbo_coffee,
+        title = "Urbo Coffee" // todo stringres
+    ),
+    ElementDIO(
+        id = 1,
+        icon = R.drawable.img_order_food,
+        title = "Donerka 1 floor" // todo stringres
+    ),
+    ElementDIO(
+        id = 2,
+        icon = R.drawable.img_eat_and_chat,
+        title = "Eat and Chat" // todo stringres
+    ),
+    ElementDIO(
+        id = 3,
+        icon = R.drawable.img_red_coffee,
+        title = "Red Coffee" // todo stringres
+    ),
+)
+
+fun navigateToOrderFood(
+    botId: Int,
+    context: Context,
+) {
+    when (botId) {
+        0 -> openTelegramToUser(context, "SDUUrbobot")
+        1 -> openTelegramToUser(context, "SDUOrder_bot")
+        2 -> openTelegramToUser(context, "SDUDonerkabot")
+        3 -> openTelegramToUser(context, "RedCoffeeeBot")
     }
 }
