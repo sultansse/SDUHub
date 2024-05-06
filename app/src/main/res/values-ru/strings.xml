@@ -31,4 +31,10 @@
     <string name="not_provided">Не указано</string>
     <string name="apply">Зарегестрироваться</string>
     <string name="currently_this_feature_can_t_be_used">На данный момент эта фича не может быть использована</string>
+    <string name="_2024_sduhub_all_rights_reserved">" © 2024 SDUHub. Все права защищены."</string>
+    <string name="privacy_policy">Политика конфеденциальности</string>
+    <string name="license_agreement">Лицензионное соглашение</string>
+    <string name="terms_of_use">Условия использования</string>
+    <string name="version_history">История версий</string>
+    <string name="about_developers">О Разработчиках</string>
 </resources>

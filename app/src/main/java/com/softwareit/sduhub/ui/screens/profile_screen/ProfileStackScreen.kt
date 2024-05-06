@@ -35,6 +35,7 @@ import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.application.SlideTransition
+import com.softwareit.sduhub.ui.screens.profile_screen.about_us_screen.AboutUsScreenClass
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderErrorComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileHeaderIdleComponent
@@ -209,11 +210,11 @@ class ProfileScreenClass(
                     title = stringResource(R.string.about_us),
                     icon = R.drawable.ic_info,
                     onClick = {
-//                        todo
-                        Toast.makeText(context, "About us", Toast.LENGTH_SHORT).show()
+                        navigator.forward(AboutUsScreenClass())
                     }
                 )
             }
+
 
             item {
 //                logout

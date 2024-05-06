@@ -31,4 +31,10 @@
     <string name="not_provided">Көрсетілмеген</string>
     <string name="apply">Тіркелу</string>
     <string name="currently_this_feature_can_t_be_used">Қазіргі уақытта бұл фичаны пайдалану мүмкін емес</string>
+    <string name="_2024_sduhub_all_rights_reserved">© 2024 Stubhub. Барлық құқықтар қорғалған.</string>
+    <string name="privacy_policy">Құпиялылық саясаты</string>
+    <string name="license_agreement">Құпиялылық саясаты</string>
+    <string name="terms_of_use">Құпиялылық саясаты</string>
+    <string name="version_history">Құпиялылық саясаты</string>
+    <string name="about_developers">Құпиялылық саясаты</string>
 </resources>

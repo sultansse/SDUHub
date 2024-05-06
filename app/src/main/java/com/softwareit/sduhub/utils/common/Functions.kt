@@ -2,6 +2,7 @@ package com.softwareit.sduhub.utils.common
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -52,9 +53,20 @@ fun openTelegramToUser(context: Context, username: String) {
     }
 }
 
+
 fun openWebsite(context: Context, url: String) {
     val intent = Intent(Intent.ACTION_VIEW).apply {
         data = Uri.parse(url)
     }
     context.startActivity(intent)
+}
+
+
+fun getAppVersion(context: Context): String {
+    return try {
+        val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+        pInfo.versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        "Unable to get version info"
+    }
 }
