@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.profile_screen.about_us_screen
+package com.softwareit.sduhub.ui.screens.about_us_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -41,9 +41,9 @@ import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.common.presentation.getAppVersion
+import com.softwareit.sduhub.common.presentation.openWebsite
 import com.softwareit.sduhub.utils.Constants.Companion.BASE_URL
-import com.softwareit.sduhub.utils.common.getAppVersion
-import com.softwareit.sduhub.utils.common.openWebsite
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

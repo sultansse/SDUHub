@@ -45,7 +45,7 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.data.local.room.notes.NoteDBO
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenContract
-import com.softwareit.sduhub.ui.screens.home_screen.note_details_screen.NoteDetailsScreenClass
+import com.softwareit.sduhub.ui.screens.note_details_screen.NoteDetailsScreenClass
 import org.koin.compose.koinInject
 
 

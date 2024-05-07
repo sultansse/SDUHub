@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 fun Any?.isNull() = this == null
-fun Any?.isNotNull() = this != isNull()
+fun Any?.isNotNull() = this != null
 
 val String.Companion.empty get() = ""
 

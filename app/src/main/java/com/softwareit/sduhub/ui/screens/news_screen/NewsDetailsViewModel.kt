@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.resources_screen.news_screen
+package com.softwareit.sduhub.ui.screens.news_screen
 
 import com.softwareit.sduhub.core.base.BaseViewModel
 

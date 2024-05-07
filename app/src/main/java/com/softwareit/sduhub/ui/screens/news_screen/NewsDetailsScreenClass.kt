@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.resources_screen.news_screen
+package com.softwareit.sduhub.ui.screens.news_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +26,7 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
-import com.softwareit.sduhub.utils.common.presentation.WebViewComponent
+import com.softwareit.sduhub.common.presentation.WebViewComponent
 import kotlinx.parcelize.Parcelize
 
 

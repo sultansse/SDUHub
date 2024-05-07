@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.profile_screen.about_us_screen
+package com.softwareit.sduhub.ui.screens.about_us_screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding

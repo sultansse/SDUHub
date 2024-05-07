@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.profile_screen.faq_screen
+package com.softwareit.sduhub.ui.screens.faq_screen
 
 import com.google.common.collect.ImmutableList
 import com.softwareit.sduhub.core.base.UiEffect

@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen
+package com.softwareit.sduhub.ui.screens.internship_details_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,14 +46,14 @@ import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.back
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.common.data.network.getLocalMessage
+import com.softwareit.sduhub.common.presentation.GenericLottieAnimationComponent
+import com.softwareit.sduhub.common.presentation.LoadingLottieComponent
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
 import com.softwareit.sduhub.ui.theme.colorSduLightBlue
 import com.softwareit.sduhub.ui.theme.colorSduLightGray
-import com.softwareit.sduhub.utils.common.data.network.getLocalMessage
-import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
-import com.softwareit.sduhub.utils.common.presentation.LoadingLottieComponent
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject

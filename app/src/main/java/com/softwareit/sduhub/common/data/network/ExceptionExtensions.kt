@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.utils.common.data.network
+package com.softwareit.sduhub.common.data.network
 
 import android.content.Context
 import androidx.annotation.StringRes

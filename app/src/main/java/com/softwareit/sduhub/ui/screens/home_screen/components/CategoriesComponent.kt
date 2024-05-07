@@ -25,6 +25,8 @@ import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.common.presentation.openGmail
+import com.softwareit.sduhub.common.presentation.openTelegramToUser
 import com.softwareit.sduhub.ui.model.ElementDIO
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenContract
 import com.softwareit.sduhub.ui.screens.home_screen.categories.ai_dos_screen.AiDosScreenClass
@@ -32,8 +34,6 @@ import com.softwareit.sduhub.ui.screens.home_screen.categories.moodle_screen.Moo
 import com.softwareit.sduhub.ui.screens.home_screen.categories.my_sdu_screen.MySduScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.sdukz_screen.SduKzScreenClass
 import com.softwareit.sduhub.ui.theme.colorWhite
-import com.softwareit.sduhub.utils.common.openGmail
-import com.softwareit.sduhub.utils.common.openTelegramToUser
 import io.woong.compose.grid.SimpleGridCells
 import io.woong.compose.grid.VerticalGrid
 import okhttp3.internal.immutableListOf

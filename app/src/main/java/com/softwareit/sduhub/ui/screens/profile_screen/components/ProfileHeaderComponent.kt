@@ -31,8 +31,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.common.presentation.GenericLottieAnimationComponent
 import com.softwareit.sduhub.ui.model.StudentDIO
-import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
 
 @Composable
 fun ProfileHeaderComponent(

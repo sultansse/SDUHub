@@ -36,10 +36,10 @@ import com.github.terrakok.modo.ScreenKey
 import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.StackScreen
 import com.github.terrakok.modo.stack.back
+import com.softwareit.sduhub.common.presentation.openWebsite
 import com.softwareit.sduhub.ui.model.StudentClubDIO
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.student_clubs_screen.components.StudentClubBottomSheetComponent
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
-import com.softwareit.sduhub.utils.common.openWebsite
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
 

@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.utils.common
+package com.softwareit.sduhub.common.presentation
 
 import android.content.Context
 import android.content.Intent

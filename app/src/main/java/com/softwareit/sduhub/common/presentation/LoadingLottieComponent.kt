@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.utils.common.presentation
+package com.softwareit.sduhub.common.presentation
 
 import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.Box

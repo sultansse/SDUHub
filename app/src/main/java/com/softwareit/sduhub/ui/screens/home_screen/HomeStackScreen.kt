@@ -41,6 +41,8 @@ import com.github.terrakok.modo.stack.StackState
 import com.github.terrakok.modo.stack.forward
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.application.SlideTransition
+import com.softwareit.sduhub.common.presentation.GenericLottieAnimationComponent
+import com.softwareit.sduhub.common.presentation.openTelegramToUser
 import com.softwareit.sduhub.ui.model.ElementDIO
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.faculties_screen.FacultiesScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.sdu_library_screen.SduLibraryScreenClass
@@ -51,10 +53,8 @@ import com.softwareit.sduhub.ui.screens.home_screen.components.ImportantInfo
 import com.softwareit.sduhub.ui.screens.home_screen.components.NoteItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.ServiceItem
 import com.softwareit.sduhub.ui.screens.home_screen.components.Stories
-import com.softwareit.sduhub.ui.screens.home_screen.note_details_screen.NoteDetailsScreenClass
+import com.softwareit.sduhub.ui.screens.note_details_screen.NoteDetailsScreenClass
 import com.softwareit.sduhub.utils.Constants.Companion.NEW_NOTE_ID
-import com.softwareit.sduhub.utils.common.openTelegramToUser
-import com.softwareit.sduhub.utils.common.presentation.GenericLottieAnimationComponent
 import kotlinx.parcelize.Parcelize
 import okhttp3.internal.immutableListOf
 import org.koin.androidx.compose.koinViewModel

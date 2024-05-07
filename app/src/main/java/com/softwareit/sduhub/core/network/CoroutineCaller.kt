@@ -1,11 +1,11 @@
 package com.softwareit.sduhub.core.network
 
+import com.softwareit.sduhub.common.data.network.fromJson
 import com.softwareit.sduhub.core.network.model.ApiError
 import com.softwareit.sduhub.core.network.model.ApiException
 import com.softwareit.sduhub.core.network.model.ConnectionException
 import com.softwareit.sduhub.core.network.model.JSONException
 import com.softwareit.sduhub.core.network.model.ServerException
-import com.softwareit.sduhub.utils.common.data.network.fromJson
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
 import org.koin.java.KoinJavaComponent

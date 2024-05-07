@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.ui.screens.home_screen.note_details_screen
+package com.softwareit.sduhub.ui.screens.note_details_screen
 
 import android.content.Context
 import android.content.Intent

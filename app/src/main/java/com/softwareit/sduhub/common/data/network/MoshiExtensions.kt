@@ -1,4 +1,4 @@
-package com.softwareit.sduhub.utils.common.data.network
+package com.softwareit.sduhub.common.data.network
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
