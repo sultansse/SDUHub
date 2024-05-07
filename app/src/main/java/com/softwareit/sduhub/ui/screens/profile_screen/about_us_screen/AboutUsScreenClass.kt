@@ -156,12 +156,12 @@ class AboutUsScreenClass(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
             Text(
                 text = title,
                 fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.amiko_regular)),
+                fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
