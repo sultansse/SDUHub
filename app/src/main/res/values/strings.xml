@@ -11,6 +11,7 @@
     <string name="community">Community</string>
     <string name="logout">Logout</string>
     <string name="login">Login</string>
+    <string name="cancel">Cancel</string>
     <string name="saved_successfully">Saved successfully!</string>
     <string name="coming_soon">Coming soon!</string>
     <string name="news">News</string>
@@ -28,7 +29,7 @@
     <string name="loading">Loading</string>
     <string name="error_occurred">Error occurred</string>
 
-    <string name="error_occurred_click_to_retry">Error occurred! Click to retry</string>
+    <string name="error_occurred_click_to_retry">Error occurred!\n Click to retry</string>
     <string name="still_have_questions">Still have questions?</string>
     <string name="contact_us">Contact us</string>
     <string name="not_provided">Not Provided</string>
@@ -40,4 +41,6 @@
     <string name="terms_of_use">Terms of Use</string>
     <string name="version_history">Version History</string>
     <string name="about_developers">About Developers</string>
+    <string name="auth_dialog_title">Please, enter your ID number and password to login.</string>
+    <string name="auth_dialog_description">Don\'t worry, we don\'t store your data. They will be used to provide data from portal to you</string>
 </resources>

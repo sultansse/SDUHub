@@ -7,4 +7,5 @@ data class StudentDIO(
     val fullname: String,
     val studentId: String,
     val faculty: String,
+    val photoUrl: String? = null,
 )

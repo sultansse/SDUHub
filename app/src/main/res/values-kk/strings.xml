@@ -9,6 +9,7 @@
     <string name="copy">Көшіру</string>
     <string name="note">Ескертпе</string>
     <string name="community">Қоғамдастық</string>
+    <string name="cancel">" Бас тарту"</string>
     <string name="saved_successfully">Сәтті сақталды!</string>
     <string name="coming_soon">Жақында шығады!</string>
     <string name="news">Жаңалықтар</string>
@@ -38,4 +39,6 @@
     <string name="version_history">Құпиялылық саясаты</string>
     <string name="about_developers">Құпиялылық саясаты</string>
     <string name="login">Кіру</string>
+    <string name="auth_dialog_title">Тіркелу үшін студенттік ID нөміріңізді және құпия сөзіңізді енгізіңіз.</string>
+    <string name="auth_dialog_description">Уайымдамаңыз, біз сіздің деректеріңізді сақтамаймыз. Олар порталдан деректерді сізге ұсыну үшін пайдаланылады</string>
 </resources>

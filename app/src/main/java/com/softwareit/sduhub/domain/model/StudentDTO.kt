@@ -7,11 +7,13 @@ data class StudentDTO(
     val fullname: String,
     val studentId: String,
     val faculty: String,
+    val photoUrl: String? = null,
 ) : Mappable<StudentDIO> {
 
     override suspend fun map() = StudentDIO(
         fullname = fullname,
         studentId = studentId,
-        faculty = faculty
+        faculty = faculty,
+        photoUrl = photoUrl,
     )
 }

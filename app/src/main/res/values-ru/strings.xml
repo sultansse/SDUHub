@@ -9,6 +9,7 @@
     <string name="copy">Копировать</string>
     <string name="note">Заметка</string>
     <string name="community">Сообщество</string>
+    <string name="cancel">Отменить</string>
     <string name="saved_successfully">Успешно сохранено!</string>
     <string name="coming_soon">Скоро!</string>
     <string name="news">Новости</string>
@@ -38,4 +39,6 @@
     <string name="version_history">История версий</string>
     <string name="about_developers">О Разработчиках</string>
     <string name="login">Войти</string>
+    <string name="auth_dialog_title">Пожалуйста, введите свой идентификационный номер студента и пароль для входа.</string>
+    <string name="auth_dialog_description">Не волнуйтесь, мы не храним ваши данные. Они будут использованы для предоставления данных с портала вам</string>
 </resources>

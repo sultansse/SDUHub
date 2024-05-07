@@ -1,6 +1,5 @@
 package com.softwareit.sduhub.ui.screens.profile_screen.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,13 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.softwareit.sduhub.R
 import com.softwareit.sduhub.ui.model.StudentDIO
 import com.softwareit.sduhub.ui.theme.colorSduBlue
@@ -57,8 +59,12 @@ fun ProfileIdCardDialog(
                     fontSize = 32.sp,
                     modifier = Modifier.padding(32.dp)
                 )
-                Image(
-                    painter = rememberAsyncImagePainter(R.drawable.img_sdukz),
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(student.photoUrl)
+                        .setHeader("User-Agent", "Mozilla/5.0")
+                        .build(),
+                    error = rememberAsyncImagePainter(R.drawable.img_sdukz),
                     contentScale = ContentScale.Crop,
                     contentDescription = "Student image",
                     modifier = Modifier.size(160.dp, 200.dp)

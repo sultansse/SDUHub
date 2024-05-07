@@ -9,11 +9,13 @@ data class ApiStudent(
     val fullname: String,
     val studentId: String,
     val faculty: String,
+    val photoUrl: String? = null,
 ) : Mappable<StudentDTO> {
 
     override suspend fun map() = StudentDTO(
         fullname = fullname,
         studentId = studentId,
-        faculty = faculty
+        faculty = faculty,
+        photoUrl = photoUrl,
     )
 }

@@ -37,7 +37,7 @@ class ProfileScreenViewModel(
             }
 
             is ProfileScreenContract.Event.OnLogoutClick -> {
-                setEffect { ProfileScreenContract.Effect.Nothing }
+                setState { copy(authState = ProfileScreenContract.AuthState.Idle) }
             }
         }
     }
