@@ -21,6 +21,7 @@ class ProfileScreenContract {
 
     sealed class Effect : UiEffect {
         data object Nothing : Effect()
+        data class ShowExceptionToast(val exception: Throwable) : Effect()
         data class ShowStudentCardDialog(val student: StudentDIO) : Effect()
         data object ShowAuthDialog : Effect()
     }

@@ -2,6 +2,7 @@ package com.softwareit.sduhub.ui.screens.profile_screen
 
 import android.app.Activity
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -103,6 +104,10 @@ class ProfileScreenClass(
         when (val effect = uiEffect) {
             is ProfileScreenContract.Effect.Nothing -> {
                 // do nothing
+            }
+
+            is ProfileScreenContract.Effect.ShowExceptionToast -> {
+                Toast.makeText(context, effect.exception.message.orEmpty(), Toast.LENGTH_SHORT).show()
             }
 
             is ProfileScreenContract.Effect.ShowStudentCardDialog -> {

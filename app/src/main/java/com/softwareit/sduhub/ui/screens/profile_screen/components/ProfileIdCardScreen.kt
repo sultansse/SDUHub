@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -31,6 +32,7 @@ import com.softwareit.sduhub.ui.model.StudentDIO
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduOrange
 import com.softwareit.sduhub.ui.theme.colorWhite
+import org.koin.compose.koinInject
 
 
 @Composable
@@ -38,6 +40,7 @@ fun ProfileIdCardDialog(
     student: StudentDIO,
     onClose: () -> Unit,
 ) {
+    val imageLoader: ImageLoader = koinInject()
     Dialog(
         onDismissRequest = { onClose() },
     ) {
@@ -62,12 +65,13 @@ fun ProfileIdCardDialog(
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(student.photoUrl)
-                        .setHeader("User-Agent", "Mozilla/5.0")
+                        .addHeader("User-Agent", "Mozilla/5.0")
                         .build(),
+                    imageLoader = imageLoader,
                     error = rememberAsyncImagePainter(R.drawable.img_sdukz),
                     contentScale = ContentScale.Crop,
                     contentDescription = "Student image",
-                    modifier = Modifier.size(160.dp, 200.dp)
+                    modifier = Modifier.size(150.dp, 200.dp)
                 )
                 Text(
                     text = "STUDENT",

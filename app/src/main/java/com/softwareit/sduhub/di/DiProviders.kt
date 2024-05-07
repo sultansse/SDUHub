@@ -14,7 +14,12 @@ import okhttp3.CacheControl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 //db
 fun provideNoteDao(appDatabase: LocalDatabase) = appDatabase.noteDao()
@@ -49,21 +54,33 @@ fun provideMoshi(): Moshi {
 }
 
 fun provideHttpClient(context: Context): OkHttpClient {
-    // Defining a cache of 5 MB size
-    val cacheSize = (5 * 1024 * 1024).toLong()
+    // Create a trust manager that trusts all certificates
+    val trustAllCertificates = arrayOf<TrustManager>(object : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
+        }
 
-//Initializing instance of Cache class
-    val myCache = Cache(context.cacheDir, cacheSize)
+        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+        }
 
-//defining okhttpclient instance
-    val okHttpClient = OkHttpClient.Builder()
-        .cache(myCache)
-        .addInterceptor(ChuckerInterceptor(context))
+        override fun getAcceptedIssuers(): Array<X509Certificate> {
+            return arrayOf()
+        }
+    })
+
+    // Create SSL context that trusts all certificates
+    val sslContext = SSLContext.getInstance("SSL")
+    sslContext.init(null, trustAllCertificates, SecureRandom())
+
+    // Create OkHttpClient
+    return OkHttpClient.Builder()
+        .sslSocketFactory(sslContext.socketFactory, trustAllCertificates[0] as X509TrustManager)
+        .hostnameVerifier { _, _ -> true } // Trust all hostnames
+        .cache(Cache(context.cacheDir, (5 * 1024 * 1024).toLong())) // 5 MB cache
+        .addInterceptor(ChuckerInterceptor(context)) // Add Chucker interceptor
         .addInterceptor { chain ->
             var request = chain.request()
             request = if (hasNetwork(context))
-                request
-                    .newBuilder()
+                request.newBuilder()
                     .cacheControl(
                         CacheControl.Builder()
                             .maxAge(30, TimeUnit.MINUTES)
@@ -71,8 +88,7 @@ fun provideHttpClient(context: Context): OkHttpClient {
                     )
                     .build()
             else
-                request
-                    .newBuilder()
+                request.newBuilder()
                     .cacheControl(
                         CacheControl.Builder()
                             .maxStale(1, TimeUnit.DAYS)
@@ -82,8 +98,26 @@ fun provideHttpClient(context: Context): OkHttpClient {
             chain.proceed(request)
         }
         .build()
+}
 
-    return okHttpClient
+fun provideCoilOkHttp(): OkHttpClient {
+    val trustAllCertificates = arrayOf<TrustManager>(object : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+
+        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+
+        override fun getAcceptedIssuers(): Array<X509Certificate> {
+            return emptyArray()
+        }
+    })
+
+    val sslContext = SSLContext.getInstance("SSL")
+    sslContext.init(null, trustAllCertificates, SecureRandom())
+
+    return OkHttpClient.Builder()
+        .sslSocketFactory(sslContext.socketFactory, trustAllCertificates[0] as X509TrustManager)
+        .hostnameVerifier { _, _ -> true }
+        .build()
 }
 
 

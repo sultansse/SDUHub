@@ -50,6 +50,7 @@ class ProfileScreenViewModel(
                 },
                 onFailure = {
                     setState { copy(authState = ProfileScreenContract.AuthState.Error(it)) }
+                    setEffect { ProfileScreenContract.Effect.ShowExceptionToast(it) }
                 }
             )
         }

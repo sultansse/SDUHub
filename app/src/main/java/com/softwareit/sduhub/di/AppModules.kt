@@ -1,5 +1,6 @@
 package com.softwareit.sduhub.di
 
+import coil.ImageLoader
 import com.google.firebase.database.FirebaseDatabase
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.data.network.backend.BackendDataSource
@@ -31,6 +32,7 @@ import com.softwareit.sduhub.ui.screens.resources_screen.ResourceScreenViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.internship_details_screen.InternshipDetailsViewModel
 import com.softwareit.sduhub.ui.screens.resources_screen.news_screen.NewsDetailsViewModel
 import com.softwareit.sduhub.utils.Constants.Companion.BASE_URL
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -60,6 +62,12 @@ val networkModule = module {
         createService<BackendService>(get())
     }
     single { provideMoshi() }
+    single { provideCoilOkHttp() }
+    single {
+         ImageLoader.Builder(androidContext())
+            .okHttpClient(get<OkHttpClient>())
+            .build()
+    }
 }
 
 
