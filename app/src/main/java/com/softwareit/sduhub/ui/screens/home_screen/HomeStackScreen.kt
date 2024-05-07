@@ -24,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -161,7 +160,6 @@ class HomeScreenClass(
             }
 
             is HomeScreenContract.Effect.OrderClickBottomSheet -> {
-                val context = LocalContext.current
                 ModalBottomSheet(
                     onDismissRequest = { onUiEvent(HomeScreenContract.Event.EmptyEffect) },
                 ) {
@@ -290,12 +288,12 @@ val orderFoodBots = immutableListOf(
     ElementDIO(
         id = 1,
         icon = R.drawable.img_order_food,
-        title = "Donerka 1 floor" // todo stringres
+        title = "Doner House" // todo stringres
     ),
     ElementDIO(
         id = 2,
         icon = R.drawable.img_eat_and_chat,
-        title = "Eat and Chat" // todo stringres
+        title = "Eat & Chat" // todo stringres
     ),
     ElementDIO(
         id = 3,
