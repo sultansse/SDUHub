@@ -5,7 +5,6 @@ import androidx.compose.runtime.Stable
 @Stable
 data class StudentClubDIO(
     val name: String,
-    val shortDescription : String,
-    val longDescription: String,
+    val description : String,
     val imageResId: Int,
 )

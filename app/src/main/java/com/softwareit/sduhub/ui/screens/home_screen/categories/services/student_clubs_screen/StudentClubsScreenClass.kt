@@ -131,7 +131,7 @@ class StudentClubsScreenClass(
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = studentClub.shortDescription,
+                        text = studentClub.description,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
