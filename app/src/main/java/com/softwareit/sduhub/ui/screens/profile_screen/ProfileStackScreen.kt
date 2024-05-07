@@ -2,28 +2,36 @@ package com.softwareit.sduhub.ui.screens.profile_screen
 
 import android.app.Activity
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.github.terrakok.modo.LocalContainerScreen
 import com.github.terrakok.modo.NavigationContainer
 import com.github.terrakok.modo.Screen
@@ -44,6 +52,7 @@ import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileIdCardD
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ProfileScreenListItemComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.components.ThemeSwitchComponent
 import com.softwareit.sduhub.ui.screens.profile_screen.faq_screen.FaqDetailsScreenClass
+import com.softwareit.sduhub.ui.theme.colorWhite
 import com.softwareit.sduhub.utils.common.openTelegramToUser
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.koinViewModel
@@ -105,14 +114,6 @@ class ProfileScreenClass(
                 // do nothing
             }
 
-            is ProfileScreenContract.Effect.UnavailableFeature -> {
-                Toast.makeText(
-                    context,
-                    stringResource(R.string.currently_this_feature_can_t_be_used),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
             is ProfileScreenContract.Effect.ShowStudentCardDialog -> {
                 // todo fix unavailable to make screenshots
                 val window = (context as Activity).window
@@ -127,11 +128,56 @@ class ProfileScreenClass(
                         student = effect.student,
                         onClose = {
                             viewModel.setEvent(
-                                ProfileScreenContract.Event.OnStudentCardDialogClose
+                                ProfileScreenContract.Event.EmptyEffect
                             )
                         }
                     )
                 }
+            }
+
+            is ProfileScreenContract.Effect.ShowAuthDialog -> {
+                Dialog(
+                    onDismissRequest = {
+                        viewModel.setEvent(ProfileScreenContract.Event.EmptyEffect)
+                    }
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .background(colorWhite)
+                            .padding(16.dp),
+                    ) {
+                        var username by remember { mutableStateOf("") }
+                        var password by remember { mutableStateOf("") }
+
+                        Text(text = "You need to log in to use this feature.")
+
+                        TextField(
+                            value = username,
+                            onValueChange = { username = it },
+                            singleLine = true,
+                            label = { Text(text = "ID number") },
+                        )
+                        TextField(
+                            value = password,
+                            onValueChange = { password = it },
+                            singleLine = true,
+                            label = { Text(text = "Password") },
+                        )
+                        Button(
+                            onClick = {
+                                viewModel.setEvent(
+                                    ProfileScreenContract.Event.OnSubmitAuth(
+                                        username = username,
+                                        password = password,
+                                    )
+                                )
+                            }
+                        ) {
+                            Text(text = stringResource(R.string.logout))
+                        }
+                    }
+                }
+
             }
         }
 
@@ -139,32 +185,28 @@ class ProfileScreenClass(
             modifier = Modifier.fillMaxSize(),
         ) {
             item {
-                when (val state = uiState.profileState) {
-                    is ProfileScreenContract.ProfileState.Idle -> {
+                when (val state = uiState.authState) {
+                    is ProfileScreenContract.AuthState.Idle -> {
                         ProfileHeaderIdleComponent(
                             onClick = {
-                                viewModel.setEvent(
-                                    ProfileScreenContract.Event.OnAuthUser
-                                )
+                                viewModel.setEvent(ProfileScreenContract.Event.OnAuthClick)
                             }
                         )
                     }
 
-                    is ProfileScreenContract.ProfileState.Loading -> {
+                    is ProfileScreenContract.AuthState.Loading -> {
                         ProfileHeaderLoadingComponent()
                     }
 
-                    is ProfileScreenContract.ProfileState.Error -> {
+                    is ProfileScreenContract.AuthState.Error -> {
                         ProfileHeaderErrorComponent(
                             onClick = {
-                                viewModel.setEvent(
-                                    ProfileScreenContract.Event.OnAuthUser
-                                )
+                                viewModel.setEvent(ProfileScreenContract.Event.OnAuthClick)
                             }
                         )
                     }
 
-                    is ProfileScreenContract.ProfileState.Success -> {
+                    is ProfileScreenContract.AuthState.Success -> {
                         ProfileHeaderComponent(
                             apiStudent = state.student,
                             onClick = {

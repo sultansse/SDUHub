@@ -151,7 +151,11 @@ fun ProfileHeaderErrorComponent(onClick: () -> Unit) {
             fontFamily = FontFamily(Font(R.font.amiko_bold)),
             fontSize = 24.sp,
             overflow = TextOverflow.Ellipsis,
+            maxLines = 2,
             textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 42.dp)
         )
         Spacer(modifier = Modifier.height(118.dp))
     }

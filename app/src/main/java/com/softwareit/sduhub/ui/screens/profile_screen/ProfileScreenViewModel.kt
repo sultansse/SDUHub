@@ -7,45 +7,49 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ProfileScreenViewModel(
-    val getStudentUseCase: GetStudentUseCase,
+    private val getStudentUseCase: GetStudentUseCase,
 ) : BaseViewModel<ProfileScreenContract.Event, ProfileScreenContract.State, ProfileScreenContract.Effect>() {
-
 
     override fun setInitialState(): ProfileScreenContract.State {
         return ProfileScreenContract.State(
-            profileState = ProfileScreenContract.ProfileState.Idle
+            authState = ProfileScreenContract.AuthState.Idle
         )
     }
 
     override fun handleEvent(event: ProfileScreenContract.Event) {
         when (event) {
-            is ProfileScreenContract.Event.OnAuthUser -> {
-                setState { copy(profileState = ProfileScreenContract.ProfileState.Loading) }
-                fetchProfile()
+            is ProfileScreenContract.Event.EmptyEffect -> {
+                setEffect { ProfileScreenContract.Effect.Nothing }
             }
 
             is ProfileScreenContract.Event.OnStudentCardClick -> {
                 setEffect { ProfileScreenContract.Effect.ShowStudentCardDialog(event.student) }
             }
 
-            is ProfileScreenContract.Event.OnStudentCardDialogClose -> {
+            is ProfileScreenContract.Event.OnAuthClick -> {
+                setEffect { ProfileScreenContract.Effect.ShowAuthDialog }
+            }
+
+            is ProfileScreenContract.Event.OnSubmitAuth -> {
                 setEffect { ProfileScreenContract.Effect.Nothing }
+                setState { copy(authState = ProfileScreenContract.AuthState.Loading)}
+                fetchProfile(event.username, event.password)
             }
 
             is ProfileScreenContract.Event.OnLogoutClick -> {
-                setEffect { ProfileScreenContract.Effect.UnavailableFeature }
+                setEffect { ProfileScreenContract.Effect.Nothing }
             }
         }
     }
 
-    private fun fetchProfile() {
+    private fun fetchProfile(username: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            getStudentUseCase.invoke().fold(
+            getStudentUseCase.invoke(username, password).fold(
                 onSuccess = {
-                    setState { copy(profileState = ProfileScreenContract.ProfileState.Success(it)) }
+                    setState { copy(authState = ProfileScreenContract.AuthState.Success(it)) }
                 },
                 onFailure = {
-                    setState { copy(profileState = ProfileScreenContract.ProfileState.Error(it))}
+                    setState { copy(authState = ProfileScreenContract.AuthState.Error(it)) }
                 }
             )
         }

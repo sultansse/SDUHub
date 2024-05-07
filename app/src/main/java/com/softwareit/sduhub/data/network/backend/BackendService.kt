@@ -4,13 +4,16 @@ import com.softwareit.sduhub.data.network.model.ApiFaq
 import com.softwareit.sduhub.data.network.model.ApiInternship
 import com.softwareit.sduhub.data.network.model.ApiNews
 import com.softwareit.sduhub.data.network.model.ApiStudent
+import com.softwareit.sduhub.data.network.model.ApiUserCredential
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface BackendService {
 
-    @GET("v1/auth") // TODO change to real endpoint
-    suspend fun getStudent(): ApiStudent
+    @POST("v1/auth")
+    suspend fun authStudent(@Body credentials: ApiUserCredential): ApiStudent
 
     @GET("v1/news")
     suspend fun getNews(): List<ApiNews>

@@ -1,6 +1,7 @@
 package com.softwareit.sduhub.data.network.backend
 
 import com.softwareit.sduhub.core.network.CoroutineCaller
+import com.softwareit.sduhub.data.network.model.ApiUserCredential
 import com.softwareit.sduhub.domain.model.FaqDTO
 import com.softwareit.sduhub.domain.model.InternshipDTO
 import com.softwareit.sduhub.domain.model.NewsDTO
@@ -10,8 +11,9 @@ class BackendDataSource(
     private val backendApi: BackendService
 ) : CoroutineCaller {
 
-    suspend fun getStudent(): Result<StudentDTO> {
-        return apiCall { backendApi.getStudent().map() }
+    suspend fun getStudent(username: String, password: String): Result<StudentDTO> {
+        val credentials = ApiUserCredential(username, password)
+        return apiCall { backendApi.authStudent(credentials).map() }
     }
 
     suspend fun getNews(): Result<List<NewsDTO>> {

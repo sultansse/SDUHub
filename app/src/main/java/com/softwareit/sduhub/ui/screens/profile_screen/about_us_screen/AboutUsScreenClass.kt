@@ -118,7 +118,7 @@ class AboutUsScreenClass(
             item {
                 AboutUsItem(
                     title = stringResource(id = R.string.license_agreement),
-                    modifier = Modifier.clickable { openWebsite(context, "${BASE_URL}static/docs/agreement-license.html") },
+                    modifier = Modifier.clickable { openWebsite(context, "${BASE_URL}static/docs/license-agreement.html") },
                 )
             }
 

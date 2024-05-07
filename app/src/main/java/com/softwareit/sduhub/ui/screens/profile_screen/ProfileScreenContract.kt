@@ -8,27 +8,28 @@ import com.softwareit.sduhub.ui.model.StudentDIO
 class ProfileScreenContract {
 
     sealed class Event : UiEvent {
-        data object OnAuthUser : Event()
+        data object EmptyEffect : Event()
         data class OnStudentCardClick(val student: StudentDIO) : Event()
-        data object OnStudentCardDialogClose : Event()
+        data object OnAuthClick : Event()
         data object OnLogoutClick : Event()
+        data class OnSubmitAuth(val username : String, val password : String) : Event()
     }
 
     data class State(
-        val profileState: ProfileState,
+        val authState: AuthState,
     ) : UiState
 
     sealed class Effect : UiEffect {
         data object Nothing : Effect()
-        data object UnavailableFeature : Effect()
         data class ShowStudentCardDialog(val student: StudentDIO) : Effect()
+        data object ShowAuthDialog : Effect()
     }
 
-    sealed class ProfileState {
-        data object Idle : ProfileState()
-        data object Loading : ProfileState()
-        data class Error(val exception: Throwable) : ProfileState()
-        data class Success(val student: StudentDIO) : ProfileState()
+    sealed class AuthState {
+        data object Idle : AuthState()
+        data object Loading : AuthState()
+        data class Error(val exception: Throwable) : AuthState()
+        data class Success(val student: StudentDIO) : AuthState()
     }
 
 }

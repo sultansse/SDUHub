@@ -10,6 +10,7 @@
     <string name="note">Note</string>
     <string name="community">Community</string>
     <string name="logout">Logout</string>
+    <string name="login">Login</string>
     <string name="saved_successfully">Saved successfully!</string>
     <string name="coming_soon">Coming soon!</string>
     <string name="news">News</string>

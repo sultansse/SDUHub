@@ -6,7 +6,7 @@ import com.softwareit.sduhub.ui.model.StudentDIO
 class GetStudentUseCase(
     private val repository: NetworkRepository,
 ) {
-    suspend operator fun invoke(): Result<StudentDIO> {
-        return repository.getStudent().mapCatching { it.map() }
+    suspend operator fun invoke(username: String, password: String): Result<StudentDIO> {
+        return repository.getStudent(username, password).mapCatching { it.map() }
     }
 }

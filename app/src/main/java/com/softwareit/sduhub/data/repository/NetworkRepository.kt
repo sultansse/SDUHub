@@ -9,7 +9,7 @@ import com.softwareit.sduhub.domain.model.StudentDTO
 
 interface NetworkRepository {
 
-    suspend fun getStudent(): Result<StudentDTO>
+    suspend fun getStudent(username: String, password: String): Result<StudentDTO>
 
     suspend fun getImportantInfo(): Result<ImportantInfoDTO>
 
@@ -30,8 +30,8 @@ class NetworkRepositoryImpl(
 
 //        logic of caching and converting Result to data
 
-    override suspend fun getStudent(): Result<StudentDTO> {
-        return backendDataSource.getStudent()
+    override suspend fun getStudent(username: String, password: String): Result<StudentDTO> {
+        return backendDataSource.getStudent(username, password)
     }
 
     override suspend fun getImportantInfo(): Result<ImportantInfoDTO> {
