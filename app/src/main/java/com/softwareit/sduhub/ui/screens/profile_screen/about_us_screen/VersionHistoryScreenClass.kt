@@ -101,43 +101,47 @@ private val versions = immutableListOf(
         id = 0,
         versionName = "1.0.0-alpha03",
         description = """
-             - Works faster and better
-             - added order bots
-             - added faculties
-             - added student clubs
-             - added about us screen
-             - auth goes to backend
+            - Enhanced performance and stability
+            - Introduced order bots
+            - Added faculties feature
+            - Included student clubs functionality
+            - Implemented about us screen
+            - Authentication now handled by backend
         """.trimIndent()
     ),
     VersionDIO(
         id = 1,
         versionName = "1.0.0-alpha02",
-        description = "Big refactoring:\n" +
-                "- fixed crashes when internet was not available\n" +
-                "- added lottie animations \n" +
-                "- refactored code\n" +
-                "- made ui faster via stable compose models\n" +
-                "- fixed colors for theme for screens Internship details and other places\n" +
-                "- faq works also via internet"
+        description = """
+            - Major refactoring:
+                - Resolved crashes occurring in absence of internet connectivity
+                - Integrated Lottie animations
+                - Streamlined codebase
+                - Improved UI responsiveness using stable Compose models
+                - Corrected theme colors for screens like Internship details
+                - FAQ now functional even without internet
+        """.trimIndent()
     ),
     VersionDIO(
         id = 2,
         versionName = "1.0.0-alpha01",
-        description = "The MVP of app SDUHub\n" +
-                "\n" +
-                "It has smooth animations, fast and good UX/UI. The app includes several features, including: \n" +
-                "- Note taking\n" +
-                "- Stories to up to date\n" +
-                "- Widgets for fast navigation to services\n" +
-                "- AI chat bot\n" +
-                "- Urgent and Important info from university\n" +
-                "- Interesting and recommended podcasts, news etc\n" +
-                "- Internships\n" +
-                "- News\n" +
-                "- Indoor Navigation\n" +
-                "- Dark/Light theme\n" +
-                "- Faq\n" +
-                "- Many useful links to telegram channels and groups"
+        description = """
+            - Initial release of SDUHub app MVP
+            - Features smooth animations and optimal UX/UI design
+            - Includes various functionalities such as:
+                - Note-taking
+                - Stories for staying updated
+                - Widgets for quick navigation to services
+                - AI chat bot
+                - Delivery of urgent and important university information
+                - Access to interesting podcasts, news, etc.
+                - Listings of available internships
+                - Latest news updates
+                - Indoor navigation support
+                - Dark/Light theme options
+                - FAQ section
+                - Numerous useful links to Telegram channels and groups
+        """.trimIndent()
     ),
 )
 
