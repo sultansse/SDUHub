@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -17,7 +16,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,7 +26,7 @@ import com.softwareit.sduhub.ui.model.StudentClubDIO
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.student_clubs_screen.StudentClubsContract
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
 
-@[Composable OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)]
+@[Composable OptIn(ExperimentalMaterial3Api::class)]
 fun StudentClubBottomSheetComponent(
     studentClub: StudentClubDIO,
     onUiEvent: (StudentClubsContract.Event) -> Unit,
@@ -36,8 +34,6 @@ fun StudentClubBottomSheetComponent(
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
-
-    val ss = LocalWindowInfo.current
 
     ModalBottomSheet(
         onDismissRequest = { onUiEvent(StudentClubsContract.Event.EmptyEffect) },

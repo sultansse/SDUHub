@@ -2,20 +2,22 @@ package com.softwareit.sduhub.ui.screens.profile_screen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,25 +31,45 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.softwareit.sduhub.R
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileScreenContract
 import com.softwareit.sduhub.ui.screens.profile_screen.ProfileScreenViewModel
 import com.softwareit.sduhub.ui.theme.colorSduBlue
-import com.softwareit.sduhub.ui.theme.colorWhite
+import com.softwareit.sduhub.ui.theme.colorSduDarkGray
+import com.softwareit.sduhub.ui.theme.colorSduLightBlue
+import com.softwareit.sduhub.ui.theme.colorSduLightGray
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AuthDialogComponent() {
     val viewModel: ProfileScreenViewModel = koinViewModel()
+    val dataStoreUtil: DataStoreUtil = koinInject()
+    val isDarkThemeEnabled by dataStoreUtil.getTheme()
+        .collectAsState(initial = isSystemInDarkTheme())
+
 
     BasicAlertDialog(onDismissRequest = {
         viewModel.setEvent(ProfileScreenContract.Event.EmptyEffect)
     }) {
+        val boxBackgroundColor = if (isDarkThemeEnabled) {
+            colorSduDarkGray
+        } else {
+            colorSduLightGray
+        }
+
+        val boxBorderColor = if (isDarkThemeEnabled) {
+            colorSduLightBlue
+        } else {
+            colorSduBlue
+        }
+
         Column(
             modifier = Modifier
-                .background(colorWhite, RoundedCornerShape(8.dp))
-                .border(1.dp, colorSduBlue, RoundedCornerShape(8.dp))
+                .background(boxBackgroundColor, RoundedCornerShape(8.dp))
+                .border(1.dp, boxBorderColor, RoundedCornerShape(8.dp))
                 .padding(16.dp),
         ) {
             var username by remember { mutableStateOf("") }

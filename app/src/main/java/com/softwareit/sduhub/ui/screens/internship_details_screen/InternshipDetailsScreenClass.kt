@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -49,6 +48,7 @@ import com.softwareit.sduhub.R
 import com.softwareit.sduhub.common.data.network.getLocalMessage
 import com.softwareit.sduhub.common.presentation.GenericLottieAnimationComponent
 import com.softwareit.sduhub.common.presentation.LoadingLottieComponent
+import com.softwareit.sduhub.common.presentation.openWebsite
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.ui.theme.colorSduBlue
 import com.softwareit.sduhub.ui.theme.colorSduDarkGray
@@ -88,7 +88,7 @@ class InternshipDetailsScreenClass(
         LaunchedEffect(key1 = true) {
             viewModel.setEvent(InternshipDetailsContract.Event.OnFetchInternship(internshipId))
         }
-
+        val context = LocalContext.current
         val uiState by viewModel.uiState.collectAsState()
 
         val dataStoreUtil: DataStoreUtil = koinInject()
@@ -189,18 +189,15 @@ class InternshipDetailsScreenClass(
                         if (isDarkThemeEnabled) mutableStateOf(colorSduLightBlue)
                         else mutableStateOf(colorSduBlue)
                     }
-                    val uriHandler = LocalUriHandler.current
                     Text(
                         text = internship.contacts,
                         color = contactsTextColor,
                         fontFamily = FontFamily(Font(R.font.amiko_semi_bold)),
                         modifier = Modifier
                             .clickable {
-                                internship.contactsLink?.let { uriHandler.openUri(it) }
+                                internship.contactsLink?.let { openWebsite(context, it) }
                             }
-
                     )
-
                 }
             }
 

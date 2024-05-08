@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.softwareit.sduhub.utils.empty
 
 
 /**
@@ -16,7 +17,7 @@ import androidx.core.content.ContextCompat
  * @param subject The subject of the email.
  * @param body The body text of the email.
  */
-fun openGmail(context: Context, to: String, subject: String, body: String) {
+fun openGmail(context: Context, to: String, subject: String? = String.empty, body: String? = String.empty) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
         data = Uri.parse("mailto:") // Only email apps should handle this
         putExtra(Intent.EXTRA_EMAIL, arrayOf(to))
