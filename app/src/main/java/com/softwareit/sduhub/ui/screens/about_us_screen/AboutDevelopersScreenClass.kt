@@ -187,7 +187,7 @@ private val developers = immutableListOf(
     DeveloperDIO(
         id = 0,
         fullname = "Sultan Suleimenov",
-        position = "Founder, Software Developer",
+        position = "Software Developer",
         linkedin = "https://www.linkedin.com/in/ssesultan/",
         email = "ss.softwareit@gmail.com",
         description = "I am a software developer with a passion for creating software that is both useful and enjoyable to use. I have experience in developing web applications, mobile applications, and Backend services. I am always looking for new challenges and opportunities to learn and grow as a developer.",
@@ -195,16 +195,16 @@ private val developers = immutableListOf(
     DeveloperDIO(
         id = 1,
         fullname = "Ulan Satybaldin",
-        position = "CEO",
+        position = "UX/UI Designer",
         email = "200107077@stu.sdu.edu.kz",
-        description = "I am a CEO of SoftwareIT company. I am responsible for the overall success of the company. I am a visionary leader who is able to see the big picture and plan for the future. I am also a strategic thinker who is able to make decisions that will benefit the company in the long run. I am passionate about technology and innovation, and I am always looking for ways to improve the company and its products.",
+        description = "I am a UX/UI designer with a passion for creating beautiful and intuitive user interfaces. I have experience in designing web applications, mobile applications, and websites. I am always looking for new challenges and opportunities to learn and grow as a designer.",
     ),
     DeveloperDIO(
         id = 2,
         fullname = "Bexultan Nurakyn",
-        position = "Founder, Project Manager, Developer",
+        position = "Project Manager",
         linkedin = "https://www.linkedin.com/in/bexultan-nurakyn-804737237/",
         email = "200107071@stu.sdu.edu.kz",
-        description = "I am a project manager and software developer with a passion for creating innovative software solutions. I have experience in managing software development projects from start to finish, and I am skilled in a variety of programming languages and technologies. I am always looking for new challenges and opportunities to learn and grow as a developer.",
+        description = "I am a project manager with a passion for leading teams and delivering high-quality software products. I have experience in managing software development projects from start to finish. I am always looking for new challenges and opportunities to learn and grow as a project manager.",
     ),
 )
