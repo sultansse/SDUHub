@@ -2,6 +2,7 @@ package com.softwareit.sduhub.ui.screens.home_screen.categories.services.faculti
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,15 +25,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.rememberAsyncImagePainter
+import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import com.softwareit.sduhub.ui.model.FacultyDIO
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.faculties_screen.FacultiesContract
+import com.softwareit.sduhub.ui.theme.colorSduDarkGray
 import com.softwareit.sduhub.ui.theme.colorSduLightGray
+import org.koin.compose.koinInject
 
 @Composable
 fun FacultyDialogComponent(
     faculty: FacultyDIO,
     onUiEvent: (FacultiesContract.Event) -> Unit,
 ) {
+    val dataStoreUtil: DataStoreUtil = koinInject()
+    val isDarkThemeEnabled by dataStoreUtil.getTheme()
+        .collectAsState(initial = isSystemInDarkTheme())
+
+    val boxBackgroundColor = if (isDarkThemeEnabled) {
+        colorSduDarkGray
+    } else {
+        colorSduLightGray
+    }
+
     Dialog(
         onDismissRequest = { onUiEvent(FacultiesContract.Event.EmptyEffect) },
     ) {
@@ -44,14 +60,13 @@ fun FacultyDialogComponent(
             modifier = Modifier
                 .size(width = dialogWidth, height = dialogHeight)
                 .clip(RoundedCornerShape(16.dp))
-                .background(colorSduLightGray)
+                .background(boxBackgroundColor)
                 .padding(16.dp)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .clip(RoundedCornerShape(16.dp))
-                    .background(colorSduLightGray)
                     .verticalScroll(rememberScrollState())
                     .padding(16.dp)
             ) {
