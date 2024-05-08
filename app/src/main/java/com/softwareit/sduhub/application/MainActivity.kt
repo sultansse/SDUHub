@@ -2,6 +2,7 @@ package com.softwareit.sduhub.application
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         rootScreen = Modo.init(savedInstanceState, rootScreen) {
             MainStackScreen(MainMultiScreen())
         }
-
+        enableEdgeToEdge()
         setContent {
             SduHubTheme {
                 Surface {

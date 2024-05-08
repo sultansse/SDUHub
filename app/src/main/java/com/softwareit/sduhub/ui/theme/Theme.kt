@@ -1,12 +1,16 @@
 package com.softwareit.sduhub.ui.theme
 
+import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import com.softwareit.sduhub.data.local.datastore.DataStoreUtil
 import org.koin.compose.koinInject
 
@@ -83,7 +87,13 @@ fun SduHubTheme(
     val dataStoreUtil: DataStoreUtil = koinInject()
     val systemTheme = isSystemInDarkTheme()
     val isDarkTheme by dataStoreUtil.getTheme().collectAsState(initial = systemTheme)
-
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
+        }
+    }
     val colors = if (isDarkTheme) {
         DarkColors
     } else {

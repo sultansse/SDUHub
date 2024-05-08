@@ -23,6 +23,7 @@
         <activity
             android:name=".application.MainActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SduHubTheme.MySplash">
             <intent-filter>
