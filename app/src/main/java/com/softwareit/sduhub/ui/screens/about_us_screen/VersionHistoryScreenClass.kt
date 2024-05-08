@@ -99,6 +99,17 @@ class VersionHistoryScreenClass(
 private val versions = immutableListOf(
     VersionDIO(
         id = 0,
+        versionName = "1.0.0",
+        description = """
+            - Added clubs to Student clubs screen
+            - Implemented order bots with a new design
+            - Fixed dark themes for all dialogs, screens and components
+            - Added About Developers screen
+            - Added version history screen
+        """.trimIndent()
+    ),
+    VersionDIO(
+        id = 1,
         versionName = "1.0.0-alpha03",
         description = """
             - Enhanced performance and stability
@@ -110,7 +121,7 @@ private val versions = immutableListOf(
         """.trimIndent()
     ),
     VersionDIO(
-        id = 1,
+        id = 2,
         versionName = "1.0.0-alpha02",
         description = """
             - Major refactoring:
@@ -123,7 +134,7 @@ private val versions = immutableListOf(
         """.trimIndent()
     ),
     VersionDIO(
-        id = 2,
+        id = 3,
         versionName = "1.0.0-alpha01",
         description = """
             - Initial release of SDUHub app MVP
