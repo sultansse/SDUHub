@@ -99,6 +99,16 @@ class VersionHistoryScreenClass(
 private val versions = immutableListOf(
     VersionDIO(
         id = 0,
+        versionName = "1.1.0",
+        description = """
+            - Fixed AiDOS TextField when keyboard is opened
+            - Added Alumni screen
+            - Added Specialities for each Faculty
+            - Now long welcome words of Dean can be expanded or collapsed in Dialog screen
+        """.trimIndent()
+    ),
+    VersionDIO(
+        id = 1,
         versionName = "1.0.0",
         description = """
             - Added clubs to Student clubs screen
@@ -109,7 +119,7 @@ private val versions = immutableListOf(
         """.trimIndent()
     ),
     VersionDIO(
-        id = 1,
+        id = 2,
         versionName = "1.0.0-alpha03",
         description = """
             - Enhanced performance and stability
@@ -121,7 +131,7 @@ private val versions = immutableListOf(
         """.trimIndent()
     ),
     VersionDIO(
-        id = 2,
+        id = 3,
         versionName = "1.0.0-alpha02",
         description = """
             - Major refactoring:
@@ -134,7 +144,7 @@ private val versions = immutableListOf(
         """.trimIndent()
     ),
     VersionDIO(
-        id = 3,
+        id = 4,
         versionName = "1.0.0-alpha01",
         description = """
             - Initial release of SDUHub app MVP
