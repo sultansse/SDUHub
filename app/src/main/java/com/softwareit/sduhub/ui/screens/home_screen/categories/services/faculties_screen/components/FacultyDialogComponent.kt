@@ -1,7 +1,9 @@
 package com.softwareit.sduhub.ui.screens.home_screen.categories.services.faculties_screen.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,7 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -91,13 +95,39 @@ fun FacultyDialogComponent(
                         .fillMaxWidth()
                         .padding(8.dp)
                 )
+                var expandedDescription by remember { mutableStateOf(false) }
+                val displayText =
+                    if (expandedDescription) faculty.facultyDescription else
+                        faculty.facultyDescription.take(200) +
+                                if (faculty.facultyDescription.length > 200) "..." else ""
                 Text(
-                    text = faculty.facultyDescription,
+                    text = "\"$displayText\"",
                     textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { expandedDescription = !expandedDescription }
+                        .padding(8.dp)
+                        .animateContentSize()
+                )
+
+                Text(
+                    text = "Специальности факультета: Бакалавриат",
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
                 )
+
+                faculty.facultySpecialities.forEach {
+                    Text(
+                        text = " • $it",
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                    )
+                }
             }
         }
 

@@ -9,4 +9,5 @@ data class FacultyDIO(
     val facultyName: String,
     val facultyImage: Int,
     val facultyDescription: String,
+    val facultySpecialities: List<String> = emptyList(),
 )
