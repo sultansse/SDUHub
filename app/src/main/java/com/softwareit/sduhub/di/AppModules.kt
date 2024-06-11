@@ -24,6 +24,7 @@ import com.softwareit.sduhub.domain.notes_usecase.UpsertNoteUseCase
 import com.softwareit.sduhub.domain.student_usecase.GetStudentUseCase
 import com.softwareit.sduhub.ui.screens.faq_screen.FaqDetailsViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.HomeScreenViewModel
+import com.softwareit.sduhub.ui.screens.home_screen.categories.services.alumni_screen.AlumniViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.faculties_screen.FacultiesViewModel
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.student_clubs_screen.StudentClubsViewModel
 import com.softwareit.sduhub.ui.screens.internship_details_screen.InternshipDetailsViewModel
@@ -164,6 +165,9 @@ val viewModelModule = module {
     }
     viewModel {
         StudentClubsViewModel()
+    }
+    viewModel {
+        AlumniViewModel()
     }
 }
 

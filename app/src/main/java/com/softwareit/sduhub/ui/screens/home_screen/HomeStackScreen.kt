@@ -44,6 +44,7 @@ import com.softwareit.sduhub.application.SlideTransition
 import com.softwareit.sduhub.common.presentation.GenericLottieAnimationComponent
 import com.softwareit.sduhub.common.presentation.openTelegramToUser
 import com.softwareit.sduhub.ui.model.ElementDIO
+import com.softwareit.sduhub.ui.screens.home_screen.categories.services.alumni_screen.AlumniScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.faculties_screen.FacultiesScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.sdu_library_screen.SduLibraryScreenClass
 import com.softwareit.sduhub.ui.screens.home_screen.categories.services.student_clubs_screen.StudentClubsScreenClass
@@ -269,6 +270,11 @@ val services = immutableListOf(
         icon = R.drawable.img_student_clubs,
         title = "Student Clubs" // todo stringres
     ),
+    ElementDIO(
+        id = 4,
+        icon = R.drawable.ic_alumni,
+        title = "Alumni" // todo stringres
+    ),
 )
 
 fun navigateToService(
@@ -281,6 +287,7 @@ fun navigateToService(
         1 -> openTelegramToUser(context, "SDU_Lost_AND_Found")
         2 -> navigator.forward(FacultiesScreenClass())
         3 -> navigator.forward(StudentClubsScreenClass())
+        4 -> navigator.forward(AlumniScreenClass())
     }
 }
 
